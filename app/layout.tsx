@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: 'PASTATARAM | باستاتا رام - Premium Pasta Kiosk Jeddah',
   description: 'PASTATARAM - Premium fast-casual pasta kiosk in Jeddah. Experience Italian-inspired pasta crafted with the finest ingredients.',
   keywords: 'PASTATARAM, pasta, Jeddah, fast casual, Italian, باستاتا رام, جدة',
+  themeColor: '#FCEEF4',
+  colorScheme: 'light',
   icons: {
     icon: '/images/logo.png',
     apple: '/images/logo.png',
@@ -21,8 +23,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="ar" suppressHydrationWarning>
       <head>
+        {/* Force light mode rendering on all browsers and devices */}
+        <meta name="color-scheme" content="light only" />
+        <meta name="theme-color" content="#FCEEF4" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
