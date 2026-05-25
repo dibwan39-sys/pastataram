@@ -4,9 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ShoppingCart, Menu, X, Sun, Moon, Globe, User } from 'lucide-react'
+import { ShoppingCart, Menu, X, Globe, User } from 'lucide-react'
 import { useUIStore, useCartStore, useAuthStore } from '@/lib/store'
-import { useTheme } from 'next-themes'
 import CartDrawer from '@/components/cart/CartDrawer'
 import Logo from '@/components/ui/Logo'
 
@@ -15,14 +14,11 @@ export default function Navbar() {
   const { language, setLanguage, cartOpen, setCartOpen, mobileMenuOpen, setMobileMenuOpen } = useUIStore()
   const { itemCount } = useCartStore()
   const { isLoggedIn } = useAuthStore()
-  const { theme, setTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
   const isAr = language === 'ar'
 
   useEffect(() => {
-    setMounted(true)
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -92,16 +88,6 @@ export default function Navbar() {
               <Globe className="w-4 h-4" />
               <span className="text-xs font-semibold hidden sm:block">{isAr ? 'EN' : 'ع'}</span>
             </button>
-
-            {/* Theme Toggle */}
-            {mounted && (
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full hover:bg-brand-blush/50 transition-colors text-brand-espresso dark:text-brand-ivory"
-              >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-            )}
 
             {/* Account */}
             <Link

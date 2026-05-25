@@ -49,8 +49,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark mode intentionally disabled — brand requires consistent pink identity */
-/* .dark body rules removed to prevent mobile OS dark mode from overriding */
+/* ── Absolute dark-mode lockout ── */
+/* Catches: OS dark mode, next-themes localStorage "dark", browser forced colors */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #FCEEF4 !important;
+    color: #3D1F2B !important;
+    color-scheme: light !important;
+  }
+}
+
+/* next-themes adds class="dark" to <html> — neutralise every Tailwind dark: utility */
+html.dark, .dark {
+  background-color: #FCEEF4 !important;
+  color: #3D1F2B !important;
+  color-scheme: light !important;
+}
+
+/* Prevent Windows/Android forced-colors (high-contrast mode) overriding brand palette */
+* {
+  forced-color-adjust: none;
+}
 
 /* RTL Support */
 [dir="rtl"] {

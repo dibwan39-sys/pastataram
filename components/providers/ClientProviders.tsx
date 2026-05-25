@@ -16,7 +16,7 @@ function LanguageSync() {
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} forcedTheme="light">
       <LanguageSync />
       {children}
       <Toaster
@@ -24,13 +24,14 @@ export default function ClientProviders({ children }: { children: React.ReactNod
         toastOptions={{
           duration: 3000,
           style: {
-            background: '#FFF8F5',
-            color: '#4A342B',
-            border: '1px solid #E9B7C7',
+            background: '#FCEEF4',
+            color: '#3D1F2B',
+            border: '1px solid rgba(196,134,154,0.4)',
             borderRadius: '16px',
             fontFamily: "'Cairo', 'Inter', sans-serif",
             fontWeight: '600',
             padding: '12px 20px',
+            boxShadow: '0 8px 24px rgba(160,69,94,0.15)',
           },
         }}
       />

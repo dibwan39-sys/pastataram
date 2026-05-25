@@ -53,10 +53,10 @@ export default function HomePage() {
 
         {/* Deep layered pink background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F5DAEA] via-[#FCEEF4] to-[#F8D7E2]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_30%,rgba(248,175,200,0.45)_0%,transparent_52%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_85%_70%,rgba(230,155,185,0.4)_0%,transparent_48%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(252,200,220,0.5)_0%,transparent_42%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(248,215,226,0.35)_0%,transparent_40%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_30%,rgba(240,185,210,0.3)_0%,transparent_52%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_85%_70%,rgba(225,170,195,0.28)_0%,transparent_48%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(245,205,222,0.32)_0%,transparent_42%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(242,215,228,0.25)_0%,transparent_40%)]" />
 
         {/* Static ambient orbs */}
         <div className="absolute top-10 right-[6%] w-96 h-96 rounded-full blur-3xl pointer-events-none" style={{ background: 'rgba(240,160,195,0.3)' }} />
@@ -418,8 +418,8 @@ export default function HomePage() {
           BUILD YOUR PASTA  — deep rose dark
       ══════════════════════════════════════════ */}
       <section className="section relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #3D1F2B 0%, #5C2F3D 50%, #3D1F2B 100%)' }} />
-        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(ellipse at 15% 50%, rgba(248,175,210,0.15) 0%, transparent 50%), radial-gradient(ellipse at 85% 50%, rgba(240,155,190,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% -10%, rgba(252,200,225,0.12) 0%, transparent 40%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #2B1F30 0%, #3D2645 50%, #2B1F30 100%)' }} />
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(ellipse at 15% 50%, rgba(220,170,210,0.12) 0%, transparent 50%), radial-gradient(ellipse at 85% 50%, rgba(200,150,190,0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% -10%, rgba(230,190,220,0.1) 0%, transparent 40%)' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
