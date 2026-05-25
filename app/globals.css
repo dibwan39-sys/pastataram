@@ -4,120 +4,147 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ════════════════════════════════════════════
+   COLOR LOCK — identical on every device
+   ════════════════════════════════════════════ */
 :root {
-  /* Force light color scheme — prevents browser auto-dark on any device */
-  color-scheme: light only;
+  color-scheme: light;            /* valid syntax — tells browser: light only */
 
-  --brand-blush: #F7D6DF;
-  --brand-rose: #E9B7C7;
-  --brand-nude: #EFD4CC;
-  --brand-cream: #FCEEF4;
-  --brand-pearl: #FFF7FA;
+  --brand-blush:     #F7D6DF;
+  --brand-rose:      #E9B7C7;
+  --brand-nude:      #EFD4CC;
+  --brand-cream:     #FCEEF4;
+  --brand-pearl:     #FFF7FA;
   --brand-rose-gold: #C4869A;
   --brand-champagne: #D4A0B5;
-  --brand-copper: #A0455E;
-  --brand-ivory: #F8D7E2;
-  --brand-mocha: #D4A0B5;
-  --brand-latte: #C4869A;
-  --brand-espresso: #3D1F2B;
-  --brand-brown: #5C2F3D;
+  --brand-copper:    #A0455E;
+  --brand-ivory:     #F8D7E2;
+  --brand-mocha:     #D4A0B5;
+  --brand-latte:     #C4869A;
+  --brand-espresso:  #3D1F2B;
+  --brand-brown:     #5C2F3D;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* Prevent Windows/Android high-contrast from overriding palette */
+  forced-color-adjust: none;
 }
 
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
-  /* Prevent iOS Safari from adjusting font sizes or colors */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Lock to light rendering on all browsers */
-  color-scheme: light;
+  /* Lock background even before body paint */
+  background-color: #FCEEF4;
 }
 
 body {
   font-family: 'Inter', 'Cairo', sans-serif;
-  /* Match the homepage hero base — no cream flash before JS hydrates */
   background-color: #FCEEF4;
   color: #3D1F2B;
   overflow-x: hidden;
-  /* Prevent any browser contrast/filter adjustments */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Absolute dark-mode lockout ── */
-/* Catches: OS dark mode, next-themes localStorage "dark", browser forced colors */
+/* ── Nuclear dark-mode lockout ──────────────────
+   Catches: OS dark mode on mobile, any .dark class,
+   and next-themes localStorage persistence          */
 @media (prefers-color-scheme: dark) {
-  html, body {
+  html {
+    background-color: #FCEEF4;
+    color: #3D1F2B;
+  }
+  body {
     background-color: #FCEEF4 !important;
     color: #3D1F2B !important;
-    color-scheme: light !important;
   }
 }
 
-/* next-themes adds class="dark" to <html> — neutralise every Tailwind dark: utility */
-html.dark, .dark {
+/* next-themes injects class="dark" on <html> — neutralise all Tailwind dark: utilities */
+html.dark,
+html.dark body {
   background-color: #FCEEF4 !important;
   color: #3D1F2B !important;
-  color-scheme: light !important;
 }
 
-/* Prevent Windows/Android forced-colors (high-contrast mode) overriding brand palette */
-* {
-  forced-color-adjust: none;
-}
-
-/* RTL Support */
+/* RTL */
 [dir="rtl"] {
   font-family: 'Cairo', 'Inter', sans-serif;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--brand-pearl);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--brand-rose-gold);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-copper);
-}
+/* ════════════════════════════════════════════
+   SCROLLBAR
+   ════════════════════════════════════════════ */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: #FFF7FA; }
+::-webkit-scrollbar-thumb  { background: #C4869A; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #A0455E; }
 
-/* Glass morphism utility — pink-tinted, consistent on all devices */
+/* ════════════════════════════════════════════
+   GLASS — solid fallback on mobile where
+   backdrop-filter causes color distortion
+   ════════════════════════════════════════════ */
 .glass {
-  background: rgba(252, 238, 244, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(252, 238, 244, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(196, 134, 154, 0.25);
 }
 
 .glass-card {
-  background: rgba(252, 238, 244, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(252, 238, 244, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(196, 134, 154, 0.3);
   box-shadow: 0 8px 32px rgba(160, 69, 94, 0.1);
 }
 
-/* Brand gradient text */
+/* On mobile, replace blur with solid pink — eliminates iOS backdrop-filter color shifts */
+@media (max-width: 767px) {
+  .glass {
+    background: #FCEEF4;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .glass-card {
+    background: #FCEEF4;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .mobile-nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ════════════════════════════════════════════
+   TYPOGRAPHY
+   ════════════════════════════════════════════ */
 .gradient-text {
-  background: linear-gradient(135deg, var(--brand-rose-gold), var(--brand-champagne), var(--brand-copper));
+  background: linear-gradient(135deg, #C4869A, #D4A0B5, #A0455E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Premium button */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* ════════════════════════════════════════════
+   BUTTONS
+   ════════════════════════════════════════════ */
 .btn-primary {
-  background: linear-gradient(135deg, #CFA18D, #D8B38A);
+  background: linear-gradient(135deg, #A0455E, #C4869A);
   color: white;
   border: none;
   border-radius: 50px;
@@ -125,18 +152,17 @@ html.dark, .dark {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(207, 161, 141, 0.4);
+  box-shadow: 0 4px 20px rgba(160, 69, 94, 0.35);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(207, 161, 141, 0.6);
+  box-shadow: 0 8px 30px rgba(160, 69, 94, 0.5);
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--brand-espresso);
-  border: 2px solid var(--brand-rose-gold);
+  color: #3D1F2B;
+  border: 2px solid #C4869A;
   border-radius: 50px;
   padding: 10px 30px;
   font-weight: 600;
@@ -145,104 +171,35 @@ html.dark, .dark {
 }
 
 .btn-secondary:hover {
-  background: var(--brand-rose-gold);
+  background: #C4869A;
   color: white;
-  transform: translateY(-2px);
 }
 
-/* Section spacing */
+/* ════════════════════════════════════════════
+   LAYOUT
+   ════════════════════════════════════════════ */
 .section {
   padding: 80px 0;
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 50px 0;
+    padding: 56px 0;
   }
 }
 
-/* Card hover effect */
+/* ════════════════════════════════════════════
+   COMPONENTS
+   ════════════════════════════════════════════ */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(74, 52, 43, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(160, 69, 94, 0.15);
 }
 
-/* Floating particles */
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.4;
-}
-
-/* Logo font */
-.logo-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-
-/* Admin sidebar */
-.admin-sidebar {
-  background: linear-gradient(180deg, #2A1F1C 0%, #3D2B26 100%);
-}
-
-/* Loading shimmer */
-.shimmer {
-  background: linear-gradient(90deg, var(--brand-pearl) 25%, var(--brand-blush) 50%, var(--brand-pearl) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Toast customization */
-.custom-toast {
-  background: var(--brand-cream) !important;
-  color: var(--brand-espresso) !important;
-  border: 1px solid var(--brand-rose) !important;
-  border-radius: 16px !important;
-  font-family: 'Cairo', 'Inter', sans-serif !important;
-}
-
-/* Navigation active state */
-.nav-active {
-  color: var(--brand-rose-gold);
-  position: relative;
-}
-
-.nav-active::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(135deg, var(--brand-rose-gold), var(--brand-champagne));
-  border-radius: 2px;
-}
-
-/* Star rating */
-.star-filled {
-  color: var(--brand-champagne);
-  fill: var(--brand-champagne);
-}
-
-.star-empty {
-  color: var(--brand-mocha);
-}
-
-/* Order status badge */
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* Mobile bottom nav — pink consistent on all devices */
 .mobile-nav {
   position: fixed;
   bottom: 0;
@@ -256,36 +213,14 @@ html.dark, .dark {
   box-shadow: 0 -4px 20px rgba(160, 69, 94, 0.1);
 }
 
-/* Gradient background sections */
 .bg-brand-gradient {
-  background: linear-gradient(135deg, #FCEEF4 0%, #F8D7E2 30%, #F2D0DF 60%, #FFF7FA 100%);
+  background: linear-gradient(135deg, #FCEEF4 0%, #F8D7E2 40%, #FCEEF4 100%);
 }
 
-/* Image overlay */
-.img-overlay {
-  position: relative;
-  overflow: hidden;
+.admin-sidebar {
+  background: linear-gradient(180deg, #2B1F30 0%, #3D2645 100%);
 }
 
-.img-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(74,52,43,0.5) 0%, transparent 50%);
-}
-
-/* Floating WhatsApp pulse */
-@keyframes wa-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-}
-
-.wa-pulse {
-  animation: wa-pulse 2s infinite;
-}
-
-/* Premium card */
 .premium-card {
   background: linear-gradient(145deg, rgba(252,238,244,0.95) 0%, rgba(248,215,226,0.7) 100%);
   border: 1px solid rgba(196,134,154,0.3);
@@ -295,8 +230,68 @@ html.dark, .dark {
 }
 
 .premium-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(160,69,94,0.18);
   border-color: rgba(196,134,154,0.5);
 }
-  
+
+.img-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(43,31,48,0.5) 0%, transparent 50%);
+}
+
+.nav-active {
+  color: #C4869A;
+  position: relative;
+}
+
+.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #C4869A, #D4A0B5);
+  border-radius: 2px;
+}
+
+.star-filled { color: #D4A0B5; fill: #D4A0B5; }
+.star-empty  { color: #D4A0B5; }
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #FFF7FA 25%, #F8D7E2 50%, #FFF7FA 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ════════════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════════════ */
+@keyframes wa-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70%  { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.wa-pulse {
+  animation: wa-pulse 2s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}

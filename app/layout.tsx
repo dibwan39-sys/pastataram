@@ -26,7 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" suppressHydrationWarning>
       <head>
         {/* Force light mode rendering on all browsers and devices */}
-        <meta name="color-scheme" content="light only" />
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
         <meta name="theme-color" content="#FCEEF4" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
