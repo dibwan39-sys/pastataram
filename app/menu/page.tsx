@@ -64,10 +64,13 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* 3 + 4. Search box & categories — sticky filter bar */}
+      {/* 3 + 4. Search box & categories — sticky filter bar.
+          NOTE: no backdrop-filter here — on iOS Safari an element that has both
+          position:sticky AND backdrop-filter fails to stick. We use a solid,
+          near-opaque background instead so sticky works on every browser. */}
       <section
-        className="sticky z-40 bg-brand-cream/85 dark:bg-[#1C1410]/85 backdrop-blur-xl border-b border-brand-rose/20 py-4"
-        style={{ top: '70px', boxShadow: '0 8px 24px rgba(160,69,94,0.12)' }}
+        className="sticky z-40 border-b border-brand-rose/20 py-4"
+        style={{ top: '70px', backgroundColor: 'rgba(252,238,244,0.97)', boxShadow: '0 8px 24px rgba(160,69,94,0.12)' }}
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row items-center gap-4">
