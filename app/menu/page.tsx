@@ -36,7 +36,10 @@ export default function MenuPage() {
 
   return (
     <PageWrapper>
-      {/* Header */}
+      {/* 1. Full menu image — first, before title/search/filters/products */}
+      <MenuImageSection showHeading={false} compact />
+
+      {/* 2. Menu Title */}
       <section className="relative py-20 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#1C1410] dark:via-[#2A1F1C] dark:to-[#1C1410]">
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 20% 80%, #CFA18D33 0%, transparent 50%)' }} />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
@@ -61,8 +64,11 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[#1C1410]/90 backdrop-blur-lg border-b border-brand-rose/20 py-4">
+      {/* 3 + 4. Search box & categories — sticky filter bar */}
+      <section
+        className="sticky z-40 bg-brand-cream/85 dark:bg-[#1C1410]/85 backdrop-blur-xl border-b border-brand-rose/20 py-4"
+        style={{ top: '70px', boxShadow: '0 8px 24px rgba(160,69,94,0.12)' }}
+      >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             {/* Search */}
@@ -130,9 +136,6 @@ export default function MenuPage() {
           </AnimatePresence>
         </div>
       </section>
-
-      {/* المنيو الكاملة — full official menu image (additive, below products) */}
-      <MenuImageSection />
 
       {/* Social QR codes */}
       <SocialQRSection />

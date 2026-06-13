@@ -7,16 +7,23 @@ import { ZoomIn, ZoomOut, X, Maximize2, RotateCcw, Download, Share2, BookOpen } 
 import toast from 'react-hot-toast'
 import { useUIStore } from '@/lib/store'
 
-const MENU_IMAGE = '/images/menu.png'
+const MENU_IMAGE = '/images/menu.jpg'
 const MIN_ZOOM = 1
 const MAX_ZOOM = 5
 
+interface MenuImageSectionProps {
+  /** Show the "المنيو الكاملة" heading block above the image (default true). */
+  showHeading?: boolean
+  /** Compact spacing for top-of-page placement (default false). */
+  compact?: boolean
+}
+
 /**
- * "المنيو الكاملة" — premium glassmorphism card showing the official menu image
- * with click-to-zoom (pinch / wheel / double-tap), plus download & share actions.
+ * Full official menu image in a premium glassmorphism card with click-to-zoom
+ * (pinch / wheel / double-tap), plus download & share actions.
  * Purely additive — does not affect the interactive ordering system.
  */
-export default function MenuImageSection() {
+export default function MenuImageSection({ showHeading = true, compact = false }: MenuImageSectionProps) {
   const { language } = useUIStore()
   const isAr = language === 'ar'
 
@@ -138,28 +145,33 @@ export default function MenuImageSection() {
   }
 
   return (
-    <section className="section" style={{ background: 'linear-gradient(180deg, #F8D7E2 0%, #FCEEF4 100%)' }}>
-      <div className="max-w-4xl mx-auto px-6">
+    <section
+      className={compact ? 'pt-6 pb-12' : 'section'}
+      style={{ background: 'linear-gradient(180deg, #F8D7E2 0%, #FCEEF4 100%)' }}
+    >
+      <div className={`${compact ? 'max-w-3xl' : 'max-w-4xl'} mx-auto px-4 sm:px-6`}>
         {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-10"
-        >
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#A0455E' }}>
-            <BookOpen className="w-3.5 h-3.5" />
-            {isAr ? 'المنيو الكاملة' : 'Full Menu'}
-          </span>
-          <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
-            {isAr ? 'المنيو الكاملة' : 'The Complete Menu'}
-          </h2>
-          <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(92,47,61,0.7)' }}>
-            {isAr ? 'منيو باستاتا رام الرسمي بالكامل والأسعار' : 'The official PASTATARAM menu & prices'}
-          </p>
-          <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
-        </motion.div>
+        {showHeading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center mb-10"
+          >
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#A0455E' }}>
+              <BookOpen className="w-3.5 h-3.5" />
+              {isAr ? 'المنيو الكاملة' : 'Full Menu'}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+              {isAr ? 'المنيو الكاملة' : 'The Complete Menu'}
+            </h2>
+            <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(92,47,61,0.7)' }}>
+              {isAr ? 'منيو باستاتا رام الرسمي بالكامل والأسعار' : 'The official PASTATARAM menu & prices'}
+            </p>
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+          </motion.div>
+        )}
 
         {/* Glassmorphism image card */}
         <motion.div
@@ -210,7 +222,7 @@ export default function MenuImageSection() {
         >
           <motion.a
             href={MENU_IMAGE}
-            download="PASTATARAM-Menu.png"
+            download="PASTATARAM-Menu.jpg"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
