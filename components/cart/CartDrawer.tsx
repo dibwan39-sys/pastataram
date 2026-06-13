@@ -198,6 +198,16 @@ export default function CartDrawer() {
                   {isAr ? 'اطلب عبر واتساب' : 'Order via WhatsApp'}
                 </motion.a>
 
+                {/* Full checkout — delivery, pre-order & invoice */}
+                <Link
+                  href="/checkout"
+                  onClick={() => setCartOpen(false)}
+                  className="w-full block text-center py-3 rounded-full font-bold text-sm"
+                  style={{ background: 'rgba(248,215,226,0.7)', border: '1.5px solid rgba(196,134,154,0.5)', color: '#8A3A56' }}
+                >
+                  {isAr ? 'توصيل · طلب مسبق · فاتورة' : 'Delivery · Pre-order · Invoice'}
+                </Link>
+
                 <Link
                   href="/menu"
                   onClick={() => setCartOpen(false)}

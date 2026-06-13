@@ -33,6 +33,8 @@ export interface CartItem {
   totalPrice: number
 }
 
+export type OrderType = 'pickup' | 'delivery'
+
 export interface Order {
   id: string
   orderNumber: string
@@ -45,6 +47,11 @@ export interface Order {
   createdAt: Date
   updatedAt: Date
   estimatedTime?: number
+  orderType?: OrderType
+  branchId?: number
+  address?: string
+  deliveryFee?: number
+  scheduledAt?: string
 }
 
 export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'completed' | 'cancelled'
