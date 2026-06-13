@@ -238,10 +238,10 @@ export default function AboutPage() {
               {isAr ? 'زورونا' : 'Visit Us'}
             </h2>
             <p className="text-brand-brown dark:text-brand-mocha mb-2 text-lg font-medium">
-              {isAr ? 'جدة - القرنية - شارع 80' : 'Jeddah – Al Qurainiyah – Street 80'}
+              {isAr ? 'جدة · ٣ فروع في خدمتكم' : 'Jeddah · 3 branches at your service'}
             </p>
             <p className="text-brand-latte mb-8">
-              {isAr ? 'بجوار الصالة الاقتصادية' : 'Next to Al-Salah Al-Eqtisadiyah Hall'}
+              {isAr ? 'القرنية · السنابل · الواحة' : 'Al Qurainiyah · Al Sanabel · Al Waha'}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/contact" className="btn-primary px-8 py-3">

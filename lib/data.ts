@@ -198,14 +198,53 @@ export const galleryImages: GalleryImage[] = [
   { id: '9', url: 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=800&q=80', alt: 'Gourmet Dish', altAr: 'طبق فاخر', category: 'food', featured: true },
 ]
 
+// Working hours — daily 3:00 PM to 3:00 AM
+export const workingHours = {
+  ar: 'يومياً · ٣:٠٠ مساءً – ٣:٠٠ فجراً',
+  en: 'Daily · 3:00 PM – 3:00 AM',
+}
+
 export const businessHours: BusinessHours[] = [
-  { day: 'Sunday', dayAr: 'الأحد', open: '12:00', close: '12:00', closed: false },
-  { day: 'Monday', dayAr: 'الاثنين', open: '12:00', close: '12:00', closed: false },
-  { day: 'Tuesday', dayAr: 'الثلاثاء', open: '12:00', close: '12:00', closed: false },
-  { day: 'Wednesday', dayAr: 'الأربعاء', open: '12:00', close: '12:00', closed: false },
-  { day: 'Thursday', dayAr: 'الخميس', open: '12:00', close: '01:00', closed: false },
-  { day: 'Friday', dayAr: 'الجمعة', open: '13:00', close: '01:00', closed: false },
-  { day: 'Saturday', dayAr: 'السبت', open: '12:00', close: '01:00', closed: false },
+  { day: 'Sunday', dayAr: 'الأحد', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Monday', dayAr: 'الاثنين', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Tuesday', dayAr: 'الثلاثاء', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Wednesday', dayAr: 'الأربعاء', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Thursday', dayAr: 'الخميس', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Friday', dayAr: 'الجمعة', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Saturday', dayAr: 'السبت', open: '3:00 PM', close: '3:00 AM', closed: false },
+]
+
+// PASTATARAM branches
+export interface Branch {
+  id: number
+  nameAr: string
+  nameEn: string
+  detailAr: string
+  detailEn: string
+}
+
+export const branches: Branch[] = [
+  {
+    id: 1,
+    nameAr: 'جدة - القرنية',
+    nameEn: 'Jeddah - Al Qurainiyah',
+    detailAr: 'بجوار الهيئة الاقتصادية',
+    detailEn: 'Next to the Economic Authority',
+  },
+  {
+    id: 2,
+    nameAr: 'حي السنابل',
+    nameEn: 'Al Sanabel District',
+    detailAr: 'خلف ماكدونالدز',
+    detailEn: 'Behind McDonald’s',
+  },
+  {
+    id: 3,
+    nameAr: 'حي الواحة',
+    nameEn: 'Al Waha District',
+    detailAr: 'بجوار المساحة الجيولوجية · مقابل الممشى',
+    detailEn: 'Next to the Geological Survey · Opposite the walkway',
+  },
 ]
 
 export const cmsContent: CMSContent = {
@@ -225,6 +264,6 @@ export const cmsContent: CMSContent = {
   },
   whatsappNumber: '966501938696',
   phone: '050 193 8696',
-  address: 'Jeddah – Al Qurainiyah – Street 80 – Next to Al-Salah Al-Eqtisadiyah Hall',
-  addressAr: 'جدة - القرنية - شارع 80 - بجوار الصالة الاقتصادية',
+  address: 'Jeddah - Al Qurainiyah - Next to the Economic Authority',
+  addressAr: 'جدة - القرنية - بجوار الهيئة الاقتصادية',
 }

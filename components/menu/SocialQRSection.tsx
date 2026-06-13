@@ -8,7 +8,7 @@ const socials = [
     platform: 'Snapchat',
     platformAr: 'سناب شات',
     handle: '@pastataram',
-    displayName: 'PASTATA RAM',
+    displayName: 'PASTATARAM',
     qr: '/images/snapchat-qr.jpg',
     href: '#',
     accentLight: 'rgba(247,197,33,0.12)',

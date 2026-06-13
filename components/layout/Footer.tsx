@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Instagram, Phone, MapPin, Clock, Heart } from 'lucide-react'
 import { useUIStore } from '@/lib/store'
-import { cmsContent } from '@/lib/data'
+import { cmsContent, branches, workingHours } from '@/lib/data'
 import Logo from '@/components/ui/Logo'
 
 export default function Footer() {
@@ -121,7 +121,14 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-start gap-2 text-sm text-brand-ivory/60">
                   <MapPin className="w-4 h-4 text-brand-rose-gold flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? cmsContent.addressAr : cmsContent.address}</span>
+                  <div className="space-y-1.5">
+                    {branches.map((b) => (
+                      <p key={b.id} className="leading-snug">
+                        <span className="text-brand-ivory/85 font-semibold">{isAr ? b.nameAr : b.nameEn}</span>
+                        <span className="block text-brand-ivory/50 text-xs">{isAr ? b.detailAr : b.detailEn}</span>
+                      </p>
+                    ))}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-brand-ivory/60">
                   <Phone className="w-4 h-4 text-brand-rose-gold flex-shrink-0" />
@@ -131,7 +138,7 @@ export default function Footer() {
                 </div>
                 <div className="flex items-start gap-2 text-sm text-brand-ivory/60">
                   <Clock className="w-4 h-4 text-brand-rose-gold flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? 'يومياً ١٢:٠٠ - ١٢:٠٠ م' : 'Daily 12:00 PM - 12:00 AM'}</span>
+                  <span>{isAr ? workingHours.ar : workingHours.en}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-brand-ivory/60">
                   <Instagram className="w-4 h-4 text-brand-rose-gold flex-shrink-0" />
@@ -147,7 +154,7 @@ export default function Footer() {
           <div className="border-t border-brand-ivory/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-brand-ivory/40">
             <p>
               {isAr
-                ? `© ${new Date().getFullYear()} باستاتا رام. جميع الحقوق محفوظة.`
+                ? `© ${new Date().getFullYear()} PASTATARAM. جميع الحقوق محفوظة.`
                 : `© ${new Date().getFullYear()} PASTATARAM. All rights reserved.`}
             </p>
             <p className="flex items-center gap-1">

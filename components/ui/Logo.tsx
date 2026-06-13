@@ -44,30 +44,17 @@ export default function Logo({
         />
       </div>
       {showText && (
-        <div className="flex flex-col leading-tight">
-          <span
-            className={cn(
-              'logo-text font-black tracking-wide',
-              text,
-              textColor === 'gradient' && 'gradient-text',
-              textColor === 'dark' && 'text-brand-espresso',
-              textColor === 'light' && 'text-white',
-            )}
-          >
-            PASTATA
-          </span>
-          <span
-            className={cn(
-              'logo-text font-black tracking-widest -mt-1',
-              size === 'sm' ? 'text-xs' : 'text-sm',
-              textColor === 'gradient' && 'gradient-text',
-              textColor === 'dark' && 'text-brand-espresso',
-              textColor === 'light' && 'text-white/80',
-            )}
-          >
-            RAM
-          </span>
-        </div>
+        <span
+          className={cn(
+            'logo-text font-black tracking-wide leading-tight',
+            text,
+            textColor === 'gradient' && 'gradient-text',
+            textColor === 'dark' && 'text-brand-espresso',
+            textColor === 'light' && 'text-white',
+          )}
+        >
+          PASTATARAM
+        </span>
       )}
     </div>
   )

@@ -3,8 +3,9 @@ import './globals.css'
 import ClientProviders from '@/components/providers/ClientProviders'
 
 export const metadata: Metadata = {
-  title: 'PASTATARAM | باستاتا رام - Premium Pasta Kiosk Jeddah',
-  description: 'PASTATARAM - Premium fast-casual pasta kiosk in Jeddah. Experience Italian-inspired pasta crafted with the finest ingredients.',
+  title: 'PASTATARAM',
+  applicationName: 'PASTATARAM',
+  description: 'PASTATARAM - Premium fast-casual pasta in Jeddah. Italian-inspired pasta crafted with the finest ingredients. Daily 3:00 PM – 3:00 AM.',
   keywords: 'PASTATARAM, pasta, Jeddah, fast casual, Italian, باستاتا رام, جدة',
   themeColor: '#FCEEF4',
   colorScheme: 'light',
@@ -14,10 +15,17 @@ export const metadata: Metadata = {
     shortcut: '/images/logo.png',
   },
   openGraph: {
-    title: 'PASTATARAM | Premium Pasta Kiosk',
+    title: 'PASTATARAM',
+    siteName: 'PASTATARAM',
     description: 'Premium fast-casual pasta experience in Jeddah',
     type: 'website',
     images: [{ url: '/images/logo.png', width: 400, height: 400, alt: 'PASTATARAM' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PASTATARAM',
+    description: 'Premium fast-casual pasta experience in Jeddah',
+    images: ['/images/logo.png'],
   },
 }
 

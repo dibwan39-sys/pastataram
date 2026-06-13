@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, He
 import PageWrapper from '@/components/layout/PageWrapper'
 import ProductCard from '@/components/menu/ProductCard'
 import { useUIStore } from '@/lib/store'
-import { menuItems, reviews } from '@/lib/data'
+import { menuItems, reviews, branches, workingHours } from '@/lib/data'
 import Image from 'next/image'
 
 const fadeUp = {
@@ -76,7 +76,7 @@ export default function HomePage() {
                 }}
               >
                 <MapPin className="w-3 h-3" />
-                {isAr ? 'جدة · القرنية · شارع 80' : 'Jeddah · Al Qurainiyah · Street 80'}
+                {isAr ? 'جدة · ٣ فروع' : 'Jeddah · 3 Branches'}
               </motion.span>
 
               {/* Headline */}
@@ -554,7 +554,7 @@ export default function HomePage() {
                 platform: 'Snapchat',
                 platformAr: 'سناب شات',
                 handle: '@pastataram',
-                displayName: 'PASTATA RAM',
+                displayName: 'PASTATARAM',
                 qr: '/images/snapchat-qr.jpg',
                 href: '#',
                 accent: '#F7C521',
@@ -710,137 +710,78 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          LOCATION  — premium map + info card
+          BRANCHES  — premium multi-branch location cards
       ══════════════════════════════════════════ */}
       <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #F8D7E2 100%)' }}>
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
 
-          <motion.div {...fadeUp} className="text-center mb-10">
+          <motion.div {...fadeUp} className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#A0455E' }}>
-              {isAr ? 'موقعنا' : 'Find Us'}
+              {isAr ? 'فروعنا' : 'Our Branches'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-2" style={{ color: '#3D1F2B' }}>
-              {isAr ? 'زورونا اليوم' : 'Visit Us Today'}
+            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+              {isAr ? 'زورونا في أقرب فرع' : 'Visit Your Nearest Branch'}
             </h2>
-            <p className="text-sm" style={{ color: 'rgba(92,47,61,0.6)' }}>
-              {isAr ? 'جدة · القرنية · شارع ٨٠' : 'Jeddah · Al Qurainiyah · Street 80'}
-            </p>
+            <div className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: 'rgba(92,47,61,0.72)' }}>
+              <Clock className="w-4 h-4" style={{ color: '#A0455E' }} />
+              {isAr ? workingHours.ar : workingHours.en}
+            </div>
+            <div className="w-10 h-0.5 rounded-full mx-auto mt-5" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
           </motion.div>
 
-          <motion.div
-            {...fadeUp}
-            className="rounded-3xl overflow-hidden"
-            style={{
-              border: '1px solid rgba(196,134,154,0.28)',
-              boxShadow: '0 12px 52px rgba(160,69,94,0.16)',
-            }}
-          >
-            {/* Google Maps embed */}
-            <div className="relative w-full" style={{ height: '340px' }}>
-              <div
-                className="absolute inset-0 pointer-events-none z-10"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {branches.map((b, i) => (
+              <motion.div
+                key={b.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="group text-center rounded-3xl p-8 transition-all duration-300"
                 style={{
-                  background: 'linear-gradient(to bottom, rgba(252,238,244,0.18) 0%, transparent 20%, transparent 80%, rgba(248,215,226,0.25) 100%)',
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,215,226,0.6) 100%)',
+                  border: '1px solid rgba(196,134,154,0.3)',
+                  boxShadow: '0 8px 32px rgba(160,69,94,0.12)',
+                  backdropFilter: 'blur(12px)',
                 }}
-              />
-              <iframe
-                src="https://maps.google.com/maps?q=القرنية+شارع+80+جدة+السعودية&output=embed&hl=ar&z=16"
-                width="100%"
-                height="100%"
-                style={{ border: 0, display: 'block' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="PASTATARAM Location"
-              />
-            </div>
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 20px 56px rgba(160,69,94,0.22)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(160,69,94,0.12)'; e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300"
+                  style={{ background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)' }}
+                >
+                  <MapPin className="w-6 h-6" style={{ color: '#7A3050' }} />
+                </div>
+                <span className="block text-[11px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#A0455E' }}>
+                  {isAr ? `الفرع ${b.id}` : `Branch ${b.id}`}
+                </span>
+                <h3 className="font-black text-lg mb-2" style={{ color: '#3D1F2B' }}>
+                  {isAr ? b.nameAr : b.nameEn}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(92,47,61,0.72)' }}>
+                  {isAr ? b.detailAr : b.detailEn}
+                </p>
+              </motion.div>
+            ))}
+          </div>
 
-            {/* Info row */}
-            <div
-              className="p-7 md:p-8"
-              style={{
-                background: 'linear-gradient(145deg, rgba(252,238,244,0.92) 0%, rgba(248,215,226,0.75) 100%)',
-                backdropFilter: 'blur(12px)',
-                borderTop: '1px solid rgba(196,134,154,0.2)',
-              }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-7">
-                {[
-                  {
-                    icon: MapPin,
-                    title: isAr ? 'العنوان' : 'Address',
-                    value: isAr ? 'جدة - القرنية - شارع 80\nبجوار الهيبة الاقتصادية' : 'Jeddah – Al Qurainiyah\nStreet 80, Near Al Hayba Economic',
-                  },
-                  {
-                    icon: Clock,
-                    title: isAr ? 'أوقات العمل' : 'Hours',
-                    value: isAr ? 'يومياً\nمن ٣ عصراً حتى ٣ فجراً' : 'Daily\nFrom 3 PM to 3 AM',
-                  },
-                  {
-                    icon: Phone,
-                    title: isAr ? 'للتواصل' : 'Contact',
-                    value: '050 193 8696',
-                    isPhone: true,
-                  },
-                ].map((info) => {
-                  const Icon = info.icon
-                  return (
-                    <div key={info.title} className="flex flex-col items-center gap-3">
-                      <div
-                        className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)' }}
-                      >
-                        <Icon className="w-5 h-5" style={{ color: '#7A3050' }} />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'rgba(92,47,61,0.5)' }}>{info.title}</p>
-                        {info.isPhone ? (
-                          <a href="tel:0501938696" className="font-bold text-base hover:opacity-75 transition-opacity" style={{ color: '#3D1F2B' }} dir="ltr">
-                            {info.value}
-                          </a>
-                        ) : (
-                          <p className="font-semibold text-sm whitespace-pre-line leading-relaxed" style={{ color: '#3D1F2B' }}>
-                            {info.value}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <a
-                    href="https://maps.app.goo.gl/rDzENzTP2bMWEgJ99"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-bold text-white text-sm"
-                    style={{
-                      background: 'linear-gradient(135deg, #A0455E, #C4869A)',
-                      boxShadow: '0 6px 20px rgba(160,69,94,0.35)',
-                    }}
-                  >
-                    <MapPin className="w-4 h-4" />
-                    {isAr ? 'افتح في خرائط جوجل' : 'Open in Google Maps'}
-                  </a>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <a
-                    href="tel:0501938696"
-                    className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-bold text-sm"
-                    style={{
-                      background: 'rgba(248,215,226,0.7)',
-                      border: '1.5px solid rgba(196,134,154,0.45)',
-                      color: '#7A3050',
-                    }}
-                  >
-                    <Phone className="w-4 h-4" />
-                    050 193 8696
-                  </a>
-                </motion.div>
-              </div>
-            </div>
+          {/* Contact CTA */}
+          <motion.div {...fadeUp} className="text-center mt-10">
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
+              <a
+                href="tel:0501938696"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
+                style={{
+                  background: 'linear-gradient(135deg, #A0455E, #C4869A)',
+                  boxShadow: '0 8px 24px rgba(160,69,94,0.35)',
+                }}
+                dir="ltr"
+              >
+                <Phone className="w-4 h-4" />
+                050 193 8696
+              </a>
+            </motion.div>
           </motion.div>
 
         </div>

@@ -199,7 +199,7 @@ export default function CheckoutPage() {
                         📍 {isAr ? 'الاستلام من الكشك' : 'Pickup from Kiosk'}
                       </p>
                       <p className="text-xs text-brand-brown dark:text-brand-mocha">
-                        {isAr ? 'جدة - القرنية - شارع 80 - بجوار الصالة الاقتصادية' : 'Jeddah – Al Qurainiyah – Street 80 – Next to Al-Salah Al-Eqtisadiyah Hall'}
+                        {isAr ? 'جدة - القرنية - بجوار الهيئة الاقتصادية' : 'Jeddah - Al Qurainiyah - Next to the Economic Authority'}
                       </p>
                       <p className="text-xs text-brand-rose-gold font-semibold mt-1">
                         ⏱ {isAr ? 'وقت التحضير: ١٠-١٥ دقيقة' : 'Prep time: 10-15 minutes'}

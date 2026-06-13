@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { MapPin, Phone, Clock, Instagram, Send, ExternalLink } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
 import { useUIStore } from '@/lib/store'
-import { cmsContent, businessHours } from '@/lib/data'
+import { cmsContent, branches, workingHours } from '@/lib/data'
 import { getWhatsAppLink } from '@/lib/utils'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -89,12 +89,24 @@ export default function ContactPage() {
                     <MapPin className="w-5 h-5 text-brand-rose-gold" />
                   </div>
                   <h3 className="font-bold text-brand-espresso dark:text-brand-ivory">
-                    {isAr ? 'موقعنا' : 'Our Location'}
+                    {isAr ? 'فروعنا' : 'Our Branches'}
                   </h3>
                 </div>
-                <p className="text-brand-brown dark:text-brand-mocha leading-relaxed mb-4">
-                  {isAr ? cmsContent.addressAr : cmsContent.address}
-                </p>
+                <div className="space-y-3 mb-4">
+                  {branches.map((b) => (
+                    <div key={b.id} className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 text-brand-rose-gold flex-shrink-0 mt-1" />
+                      <div>
+                        <p className="font-semibold text-brand-espresso dark:text-brand-ivory text-sm">
+                          {isAr ? `الفرع ${b.id} · ${b.nameAr}` : `Branch ${b.id} · ${b.nameEn}`}
+                        </p>
+                        <p className="text-sm text-brand-brown dark:text-brand-mocha">
+                          {isAr ? b.detailAr : b.detailEn}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
                 <a
                   href="https://maps.google.com/?q=Al+Qurainiyah+Jeddah"
                   target="_blank"
@@ -145,20 +157,9 @@ export default function ContactPage() {
                     {isAr ? 'أوقات العمل' : 'Working Hours'}
                   </h3>
                 </div>
-                <div className="space-y-2">
-                  {businessHours.map((day) => (
-                    <div key={day.day} className="flex justify-between text-sm">
-                      <span className="text-brand-brown dark:text-brand-mocha">
-                        {isAr ? day.dayAr : day.day}
-                      </span>
-                      <span className="font-semibold text-brand-espresso dark:text-brand-ivory">
-                        {day.closed
-                          ? (isAr ? 'مغلق' : 'Closed')
-                          : `${day.open} - ${day.close}`}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-brand-espresso dark:text-brand-ivory font-semibold">
+                  {isAr ? workingHours.ar : workingHours.en}
+                </p>
               </motion.div>
 
               {/* Social */}
