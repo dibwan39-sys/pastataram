@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useMemo, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, UtensilsCrossed } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { UtensilsCrossed } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
 import ProductCard from '@/components/menu/ProductCard'
 import MenuImageSection from '@/components/menu/MenuImageSection'
@@ -10,97 +9,12 @@ import SocialQRSection from '@/components/menu/SocialQRSection'
 import { useUIStore } from '@/lib/store'
 import { menuItems } from '@/lib/data'
 
-const categories = [
-  { id: 'all', labelAr: 'الكل', labelEn: 'All' },
-  { id: 'pasta', labelAr: 'باستا', labelEn: 'Pasta' },
-  { id: 'sides', labelAr: 'مقبلات', labelEn: 'Sides' },
-  { id: 'drinks', labelAr: 'مشروبات', labelEn: 'Drinks' },
-]
-
 export default function MenuPage() {
   const { language } = useUIStore()
   const isAr = language === 'ar'
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [search, setSearch] = useState('')
-
-  // Fixed bar: measure its real height and reserve exactly that much space below
-  // it, so products are never hidden regardless of viewport / wrapping.
-  const barRef = useRef<HTMLDivElement>(null)
-  const [barHeight, setBarHeight] = useState(112)
-  useEffect(() => {
-    const measure = () => {
-      if (barRef.current) setBarHeight(barRef.current.offsetHeight)
-    }
-    measure()
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
-    if (ro && barRef.current) ro.observe(barRef.current)
-    window.addEventListener('resize', measure)
-    window.addEventListener('orientationchange', measure)
-    return () => {
-      ro?.disconnect()
-      window.removeEventListener('resize', measure)
-      window.removeEventListener('orientationchange', measure)
-    }
-  }, [])
-
-  const filtered = useMemo(() => {
-    return menuItems.filter((item) => {
-      const matchesCat = activeCategory === 'all' || item.category === activeCategory
-      const matchesSearch =
-        !search ||
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.nameAr.includes(search)
-      return matchesCat && matchesSearch
-    })
-  }, [activeCategory, search])
 
   return (
     <PageWrapper>
-      {/* Search box & categories — FIXED bar, always visible directly below the navbar.
-          position: fixed so it never scrolls away on any browser/device. Its height is
-          measured and reserved via the spacer below so no content is hidden behind it. */}
-      <div
-        ref={barRef}
-        className="fixed left-0 right-0 z-40 border-b border-brand-rose/20 py-3"
-        style={{ top: '64px', backgroundColor: 'rgba(252,238,244,0.98)', boxShadow: '0 6px 20px rgba(160,69,94,0.12)' }}
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            {/* Search */}
-            <div className="relative w-full sm:flex-1 sm:max-w-sm">
-              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-latte" />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={isAr ? 'ابحث عن طبق...' : 'Search dishes...'}
-                className="w-full ps-10 pe-4 py-2.5 rounded-full border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold focus:ring-2 focus:ring-brand-rose-gold/20 text-sm"
-                dir={isAr ? 'rtl' : 'ltr'}
-              />
-            </div>
-
-            {/* Category tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-0.5 -mx-1 px-1 sm:mx-0 sm:px-0">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
-                    activeCategory === cat.id
-                      ? 'bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white shadow-brand'
-                      : 'bg-brand-pearl dark:bg-brand-espresso/30 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
-                  }`}
-                >
-                  {isAr ? cat.labelAr : cat.labelEn}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Spacer = fixed bar height, so nothing is hidden behind the fixed bar */}
-      <div aria-hidden style={{ height: barHeight }} />
-
       {/* 1. Full menu image */}
       <MenuImageSection showHeading={false} compact />
 
@@ -129,37 +43,14 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* Menu Grid */}
+      {/* 3. Interactive products */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <AnimatePresence mode="wait">
-            {filtered.length === 0 ? (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-center py-20"
-              >
-                <UtensilsCrossed className="w-12 h-12 text-brand-latte mx-auto mb-4" />
-                <p className="text-brand-brown dark:text-brand-mocha font-medium">
-                  {isAr ? 'لا توجد نتائج' : 'No results found'}
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="grid"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              >
-                {filtered.map((item, i) => (
-                  <ProductCard key={item.id} item={item} index={i} />
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {menuItems.map((item, i) => (
+              <ProductCard key={item.id} item={item} index={i} />
+            ))}
+          </div>
         </div>
       </section>
 
