@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, Maximize2, QrCode, BookOpen } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
+import MenuLightbox from '@/components/menu/MenuLightbox'
 import { useUIStore, useCartStore } from '@/lib/store'
 import { menuItems, reviews } from '@/lib/data'
 import { formatPrice } from '@/lib/utils'
@@ -237,6 +238,90 @@ export default function HomePage() {
           <div className="w-5 h-8 rounded-full flex items-start justify-center p-1.5" style={{ border: '1.5px solid rgba(160,69,94,0.4)' }}>
             <div className="w-1 h-1.5 rounded-full" style={{ background: '#A0455E' }} />
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          MENU  — official menu image + QR card
+      ══════════════════════════════════════════ */}
+      <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #F8D7E2 100%)' }}>
+        <div className="max-w-5xl mx-auto px-6">
+
+          {/* Heading */}
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#A0455E' }}>
+              <BookOpen className="w-3.5 h-3.5" />
+              {isAr ? 'المنيو' : 'The Menu'}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: '#3D1F2B' }}>
+              {isAr ? 'المنيو' : 'Our Menu'}
+            </h2>
+            <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(92,47,61,0.7)' }}>
+              {isAr ? 'قائمة الطعام والأسعار' : 'Full menu & prices'}
+            </p>
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+          </motion.div>
+
+          {/* Menu image (clickable → fullscreen zoomable lightbox) */}
+          <motion.div {...fadeUp} className="max-w-2xl mx-auto">
+            <MenuLightbox
+              src="/images/menu.jpg"
+              alt={isAr ? 'منيو باستاتا رام' : 'PASTATARAM Menu'}
+              hint={isAr ? 'اضغط للتكبير' : 'Tap to enlarge'}
+              caption={isAr ? 'اضغط على الصورة لعرضها بكامل الشاشة' : 'Tap the image to view fullscreen'}
+            />
+          </motion.div>
+
+          {/* Premium full-size button */}
+          <motion.div {...fadeUp} className="text-center mt-9">
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
+              <Link
+                href="/full-menu"
+                className="inline-flex items-center gap-2 px-9 py-4 rounded-full font-bold text-white text-sm"
+                style={{
+                  background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 60%, #D4A0B5 100%)',
+                  boxShadow: '0 10px 32px rgba(160,69,94,0.42)',
+                }}
+              >
+                <Maximize2 className="w-4 h-4" />
+                {isAr ? 'عرض المنيو بالحجم الكامل' : 'View Full-Size Menu'}
+                {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* QR Menu card */}
+          <motion.div {...fadeUp} className="mt-14 max-w-xl mx-auto">
+            <div
+              className="flex flex-col sm:flex-row items-center gap-6 p-7 md:p-8 rounded-3xl"
+              style={{
+                background: 'linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(248,215,226,0.7) 100%)',
+                border: '1px solid rgba(196,134,154,0.3)',
+                boxShadow: '0 12px 44px rgba(160,69,94,0.16)',
+                backdropFilter: 'blur(12px)',
+              }}
+            >
+              <div
+                className="w-40 h-40 rounded-2xl overflow-hidden flex-shrink-0 bg-white"
+                style={{ border: '2px solid rgba(196,134,154,0.4)', boxShadow: '0 6px 22px rgba(160,69,94,0.18)' }}
+              >
+                <img src="/images/menu-qr.jpg" alt={isAr ? 'باركود المنيو' : 'Menu QR code'} className="w-full h-full object-cover" />
+              </div>
+              <div className="text-center sm:text-start">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#A0455E' }}>
+                  <QrCode className="w-3.5 h-3.5" />
+                  {isAr ? 'منيو رقمي' : 'Digital Menu'}
+                </span>
+                <p className="font-black text-lg mb-1.5" style={{ color: '#3D1F2B' }}>
+                  {isAr ? 'امسح الباركود لعرض المنيو' : 'Scan the code to view the menu'}
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(92,47,61,0.65)' }}>
+                  {isAr ? 'وجّه كاميرا هاتفك نحو الباركود للوصول السريع إلى قائمتنا الكاملة' : 'Point your phone camera at the code for instant access to our full menu'}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
