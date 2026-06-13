@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, UtensilsCrossed } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
 import ProductCard from '@/components/menu/ProductCard'
+import MenuImageSection from '@/components/menu/MenuImageSection'
+import SocialQRSection from '@/components/menu/SocialQRSection'
 import { useUIStore } from '@/lib/store'
 import { menuItems } from '@/lib/data'
 
@@ -128,6 +130,14 @@ export default function MenuPage() {
           </AnimatePresence>
         </div>
       </section>
+
+      {/* المنيو الكاملة — full official menu image (additive, below products) */}
+      <MenuImageSection />
+
+      {/* Social QR codes */}
+      <SocialQRSection />
+
+      {/* Contact information is provided globally by the site Footer */}
     </PageWrapper>
   )
 }
