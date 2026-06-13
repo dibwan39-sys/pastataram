@@ -48,7 +48,10 @@ body {
   font-family: 'Inter', 'Cairo', sans-serif;
   background-color: #FCEEF4;
   color: #3D1F2B;
-  overflow-x: hidden;
+  /* Use `clip` (not `hidden`) so the body does NOT become a scroll container —
+     `overflow-x: hidden` forces overflow-y to `auto`, which breaks every
+     `position: sticky` descendant (e.g. the menu search/category bar). */
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -295,3 +298,5 @@ html.dark body {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
 }
+
+
