@@ -48,8 +48,8 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: '4',
-    name: 'Soft Drink',
-    nameAr: 'مشروب غازي',
+    name: 'Soft Drinks',
+    nameAr: 'مشروبات غازية',
     description: 'Refreshing soft drink',
     descriptionAr: 'مشروب غازي منعش',
     price: 2,

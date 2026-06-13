@@ -2,13 +2,11 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, Maximize2, QrCode, BookOpen } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, QrCode, BookOpen } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
-import MenuLightbox from '@/components/menu/MenuLightbox'
-import { useUIStore, useCartStore } from '@/lib/store'
+import ProductCard from '@/components/menu/ProductCard'
+import { useUIStore } from '@/lib/store'
 import { menuItems, reviews } from '@/lib/data'
-import { formatPrice } from '@/lib/utils'
-import toast from 'react-hot-toast'
 import Image from 'next/image'
 
 const fadeUp = {
@@ -26,10 +24,8 @@ const fadeUp = {
 
 export default function HomePage() {
   const { language } = useUIStore()
-  const { addItem } = useCartStore()
   const isAr = language === 'ar'
 
-  const featuredItems = menuItems.filter((m) => m.featured)
   const featuredReviews = reviews.filter((r) => r.featured).slice(0, 3)
 
   const features = isAr ? [
@@ -262,29 +258,25 @@ export default function HomePage() {
             <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
           </motion.div>
 
-          {/* Menu image (clickable → fullscreen zoomable lightbox) */}
-          <motion.div {...fadeUp} className="max-w-2xl mx-auto">
-            <MenuLightbox
-              src="/images/menu.jpg"
-              alt={isAr ? 'منيو باستاتا رام' : 'PASTATARAM Menu'}
-              hint={isAr ? 'اضغط للتكبير' : 'Tap to enlarge'}
-              caption={isAr ? 'اضغط على الصورة لعرضها بكامل الشاشة' : 'Tap the image to view fullscreen'}
-            />
-          </motion.div>
+          {/* Interactive menu — real product cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {menuItems.map((item, i) => (
+              <ProductCard key={item.id} item={item} index={i} />
+            ))}
+          </div>
 
-          {/* Premium full-size button */}
-          <motion.div {...fadeUp} className="text-center mt-9">
+          {/* Go to full menu page */}
+          <motion.div {...fadeUp} className="text-center mt-10">
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
               <Link
-                href="/full-menu"
+                href="/menu"
                 className="inline-flex items-center gap-2 px-9 py-4 rounded-full font-bold text-white text-sm"
                 style={{
                   background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 60%, #D4A0B5 100%)',
                   boxShadow: '0 10px 32px rgba(160,69,94,0.42)',
                 }}
               >
-                <Maximize2 className="w-4 h-4" />
-                {isAr ? 'عرض المنيو بالحجم الكامل' : 'View Full-Size Menu'}
+                {isAr ? 'تصفّح المنيو الكامل واطلب' : 'Browse Full Menu & Order'}
                 {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
               </Link>
             </motion.div>
@@ -320,114 +312,6 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          BEST SELLERS  — warm blush surface
-      ══════════════════════════════════════════ */}
-      <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #F8D7E2 100%)' }}>
-        <div className="max-w-7xl mx-auto px-6">
-
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-3" style={{ color: '#A0455E' }}>
-              {isAr ? 'الأكثر طلباً' : 'Most Ordered'}
-            </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: '#3D1F2B' }}>
-              {isAr ? 'أبرز أطباقنا' : 'Our Best Sellers'}
-            </h2>
-            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {featuredItems.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.65, delay: i * 0.1 }}
-                className="group rounded-3xl overflow-hidden transition-shadow duration-300"
-                style={{
-                  background: 'linear-gradient(145deg, rgba(252,238,244,0.9) 0%, rgba(248,215,226,0.7) 100%)',
-                  border: '1px solid rgba(196,134,154,0.3)',
-                  boxShadow: '0 6px 28px rgba(160,69,94,0.12)',
-                  backdropFilter: 'blur(12px)',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 18px 50px rgba(160,69,94,0.22)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 6px 28px rgba(160,69,94,0.12)' }}
-              >
-                <div className="relative h-52 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={isAr ? item.nameAr : item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#3D1F2B]/50 to-transparent" />
-                  {item.bestseller && (
-                    <span
-                      className="absolute top-3 start-3 px-3 py-1 rounded-full text-white text-xs font-bold"
-                      style={{ background: 'linear-gradient(135deg, #A0455E, #C4869A)' }}
-                    >
-                      {isAr ? '🔥 الأكثر مبيعاً' : '🔥 Bestseller'}
-                    </span>
-                  )}
-                  <p className="absolute bottom-3 start-4 font-black text-white text-base drop-shadow-sm">
-                    {isAr ? item.nameAr : item.name}
-                  </p>
-                </div>
-                <div className="p-5">
-                  <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: 'rgba(92,47,61,0.75)' }}>
-                    {isAr ? item.descriptionAr : item.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="text-xl font-black"
-                      style={{
-                        background: 'linear-gradient(135deg, #A0455E, #C4869A)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                      }}
-                    >
-                      {formatPrice(item.price, language)}
-                    </span>
-                    <motion.button
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.96 }}
-                      onClick={() => {
-                        addItem(item)
-                        toast.success(isAr ? `تمت إضافة ${item.nameAr} للسلة` : `${item.name} added to cart`)
-                      }}
-                      className="px-5 py-2 rounded-full text-sm font-bold text-white"
-                      style={{
-                        background: 'linear-gradient(135deg, #A0455E, #C4869A)',
-                        boxShadow: '0 4px 14px rgba(160,69,94,0.35)',
-                      }}
-                    >
-                      {isAr ? 'أضف للسلة' : 'Add to Cart'}
-                    </motion.button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div {...fadeUp} className="text-center mt-10">
-            <Link
-              href="/menu"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold backdrop-blur-sm transition-colors duration-200"
-              style={{
-                background: 'rgba(248,215,226,0.6)',
-                border: '1px solid rgba(196,134,154,0.4)',
-                color: '#A0455E',
-              }}
-            >
-              {isAr ? 'عرض كامل المنيو' : 'View Full Menu'}
-              {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </Link>
           </motion.div>
 
         </div>

@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://pastataram.com'
   const routes = [
-    '', '/menu', '/full-menu', '/build-your-pasta', '/offers', '/gallery',
+    '', '/menu', '/build-your-pasta', '/offers', '/gallery',
     '/reviews', '/about', '/contact', '/account', '/track-order',
   ]
   return routes.map((route) => ({

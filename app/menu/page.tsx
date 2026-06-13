@@ -2,12 +2,11 @@
 
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Filter, Star, Plus, Flame, UtensilsCrossed } from 'lucide-react'
+import { Search, UtensilsCrossed } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
-import { useUIStore, useCartStore } from '@/lib/store'
+import ProductCard from '@/components/menu/ProductCard'
+import { useUIStore } from '@/lib/store'
 import { menuItems } from '@/lib/data'
-import { formatPrice } from '@/lib/utils'
-import toast from 'react-hot-toast'
 
 const categories = [
   { id: 'all', labelAr: 'الكل', labelEn: 'All' },
@@ -18,7 +17,6 @@ const categories = [
 
 export default function MenuPage() {
   const { language } = useUIStore()
-  const { addItem } = useCartStore()
   const isAr = language === 'ar'
   const [activeCategory, setActiveCategory] = useState('all')
   const [search, setSearch] = useState('')
@@ -123,71 +121,7 @@ export default function MenuPage() {
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {filtered.map((item, i) => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: i * 0.05 }}
-                    className="premium-card overflow-hidden group"
-                  >
-                    {/* Image */}
-                    <div className="relative h-52 overflow-hidden">
-                      <motion.img
-                        src={item.image}
-                        alt={isAr ? item.nameAr : item.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {/* Tags */}
-                      <div className="absolute top-3 start-3 flex gap-2">
-                        {item.bestseller && (
-                          <span className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white text-xs font-bold rounded-full">
-                            <Flame className="w-3 h-3" />
-                            {isAr ? 'الأكثر مبيعاً' : 'Bestseller'}
-                          </span>
-                        )}
-                        {item.featured && !item.bestseller && (
-                          <span className="flex items-center gap-1 px-2.5 py-1 bg-brand-espresso/80 text-brand-champagne text-xs font-bold rounded-full">
-                            <Star className="w-3 h-3" />
-                            {isAr ? 'مميز' : 'Featured'}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-5">
-                      <h3 className="font-black text-lg text-brand-espresso dark:text-brand-ivory mb-1">
-                        {isAr ? item.nameAr : item.name}
-                      </h3>
-                      <p className="text-sm text-brand-brown dark:text-brand-mocha leading-relaxed mb-4">
-                        {isAr ? item.descriptionAr : item.description}
-                      </p>
-                      {item.calories && (
-                        <p className="text-xs text-brand-latte mb-4">
-                          {item.calories} {isAr ? 'سعرة حرارية' : 'calories'}
-                        </p>
-                      )}
-                      <div className="flex items-center justify-between">
-                        <span className="text-xl font-black gradient-text">
-                          {formatPrice(item.price, language)}
-                        </span>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => {
-                            addItem(item)
-                            toast.success(isAr ? `تمت إضافة ${item.nameAr}` : `${item.name} added!`)
-                          }}
-                          className="flex items-center gap-2 btn-primary text-sm py-2.5 px-5"
-                        >
-                          <Plus className="w-4 h-4" />
-                          {isAr ? 'أضف للسلة' : 'Add to Cart'}
-                        </motion.button>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <ProductCard key={item.id} item={item} index={i} />
                 ))}
               </motion.div>
             )}
