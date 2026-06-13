@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, QrCode, BookOpen } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
 import ProductCard from '@/components/menu/ProductCard'
+import QROrderSection from '@/components/menu/QROrderSection'
 import { useUIStore } from '@/lib/store'
 import { menuItems, reviews, branches, workingHours } from '@/lib/data'
 import Image from 'next/image'
@@ -316,6 +317,11 @@ export default function HomePage() {
 
         </div>
       </section>
+
+      {/* ══════════════════════════════════════════
+          QR ORDERING  — scan → menu → order from phone
+      ══════════════════════════════════════════ */}
+      <QROrderSection />
 
       {/* ══════════════════════════════════════════
           WHY CHOOSE US  — pearl pink surface
