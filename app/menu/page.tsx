@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, UtensilsCrossed } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
@@ -23,6 +23,26 @@ export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [search, setSearch] = useState('')
 
+  // Fixed bar: measure its real height and reserve exactly that much space below
+  // it, so products are never hidden regardless of viewport / wrapping.
+  const barRef = useRef<HTMLDivElement>(null)
+  const [barHeight, setBarHeight] = useState(112)
+  useEffect(() => {
+    const measure = () => {
+      if (barRef.current) setBarHeight(barRef.current.offsetHeight)
+    }
+    measure()
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
+    if (ro && barRef.current) ro.observe(barRef.current)
+    window.addEventListener('resize', measure)
+    window.addEventListener('orientationchange', measure)
+    return () => {
+      ro?.disconnect()
+      window.removeEventListener('resize', measure)
+      window.removeEventListener('orientationchange', measure)
+    }
+  }, [])
+
   const filtered = useMemo(() => {
     return menuItems.filter((item) => {
       const matchesCat = activeCategory === 'all' || item.category === activeCategory
@@ -36,7 +56,52 @@ export default function MenuPage() {
 
   return (
     <PageWrapper>
-      {/* 1. Full menu image — first, before title/search/filters/products */}
+      {/* Search box & categories — FIXED bar, always visible directly below the navbar.
+          position: fixed so it never scrolls away on any browser/device. Its height is
+          measured and reserved via the spacer below so no content is hidden behind it. */}
+      <div
+        ref={barRef}
+        className="fixed left-0 right-0 z-40 border-b border-brand-rose/20 py-3"
+        style={{ top: '64px', backgroundColor: 'rgba(252,238,244,0.98)', boxShadow: '0 6px 20px rgba(160,69,94,0.12)' }}
+      >
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            {/* Search */}
+            <div className="relative w-full sm:flex-1 sm:max-w-sm">
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-latte" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={isAr ? 'ابحث عن طبق...' : 'Search dishes...'}
+                className="w-full ps-10 pe-4 py-2.5 rounded-full border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold focus:ring-2 focus:ring-brand-rose-gold/20 text-sm"
+                dir={isAr ? 'rtl' : 'ltr'}
+              />
+            </div>
+
+            {/* Category tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-0.5 -mx-1 px-1 sm:mx-0 sm:px-0">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
+                    activeCategory === cat.id
+                      ? 'bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white shadow-brand'
+                      : 'bg-brand-pearl dark:bg-brand-espresso/30 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
+                  }`}
+                >
+                  {isAr ? cat.labelAr : cat.labelEn}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Spacer = fixed bar height, so nothing is hidden behind the fixed bar */}
+      <div aria-hidden style={{ height: barHeight }} />
+
+      {/* 1. Full menu image */}
       <MenuImageSection showHeading={false} compact />
 
       {/* 2. Menu Title */}
@@ -61,48 +126,6 @@ export default function MenuPage() {
                 : 'Premium pasta dishes crafted with the finest Italian ingredients'}
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      {/* 3 + 4. Search box & categories — sticky filter bar.
-          NOTE: no backdrop-filter here — on iOS Safari an element that has both
-          position:sticky AND backdrop-filter fails to stick. We use a solid,
-          near-opaque background instead so sticky works on every browser. */}
-      <section
-        className="sticky z-40 border-b border-brand-rose/20 py-4"
-        style={{ top: '70px', backgroundColor: 'rgba(252,238,244,0.97)', boxShadow: '0 8px 24px rgba(160,69,94,0.12)' }}
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            {/* Search */}
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-latte" />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={isAr ? 'ابحث عن طبق...' : 'Search dishes...'}
-                className="w-full ps-10 pe-4 py-2.5 rounded-full border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold focus:ring-2 focus:ring-brand-rose-gold/20 text-sm"
-                dir={isAr ? 'rtl' : 'ltr'}
-              />
-            </div>
-
-            {/* Category tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
-                    activeCategory === cat.id
-                      ? 'bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white shadow-brand'
-                      : 'bg-brand-pearl dark:bg-brand-espresso/30 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
-                  }`}
-                >
-                  {isAr ? cat.labelAr : cat.labelEn}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
