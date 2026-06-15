@@ -6,7 +6,6 @@ import { Plus, Minus, Flame, Star, ShoppingCart } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type { MenuItem } from '@/lib/types'
 import { useCartStore, useUIStore } from '@/lib/store'
-import { formatPrice } from '@/lib/utils'
 
 interface ProductCardProps {
   item: MenuItem
@@ -80,7 +79,10 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
       {/* Content */}
       <div className="flex flex-col flex-1 p-5">
         {(isAr ? item.descriptionAr : item.description) && (
-          <p className="text-sm leading-relaxed mb-3 line-clamp-2" style={{ color: 'rgba(201,187,168,0.75)' }}>
+          <p
+            className={`text-[13.5px] md:text-sm leading-7 tracking-[0.01em] mb-4 min-h-[3.5rem] ${isAr ? 'text-right' : ''}`}
+            style={{ color: 'rgba(201,187,168,0.82)' }}
+          >
             {isAr ? item.descriptionAr : item.description}
           </p>
         )}
@@ -90,13 +92,19 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
           </p>
         ) : <div className="mb-4" />}
 
-        <div className="mt-auto">
-          <span
-            className="text-2xl font-black"
-            style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-          >
-            {formatPrice(item.price, language)}
-          </span>
+        {/* Price + controls — clearly separated for visual hierarchy */}
+        <div className="mt-auto pt-4" style={{ borderTop: '1px solid rgba(184,115,51,0.15)' }}>
+          <div className="flex items-baseline gap-1.5">
+            <span
+              className="text-[1.7rem] leading-none font-black"
+              style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+            >
+              {item.price}
+            </span>
+            <span className="text-sm font-bold" style={{ color: 'rgba(184,115,51,0.95)' }}>
+              {isAr ? 'ر.س' : 'SAR'}
+            </span>
+          </div>
 
           {/* Quantity selector + add to cart */}
           <div className="flex items-center gap-3 mt-4">
