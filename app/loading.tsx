@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FCEEF4 0%, #F8D7E2 50%, #FCEEF4 100%)' }}>
+    <div className="fixed inset-0 z-[200] flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #14110F 0%, #211C19 50%, #14110F 100%)' }}>
       {/* Ambient glow */}
       <div className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: 'rgba(240,160,195,0.3)' }} />
 
@@ -18,7 +18,7 @@ export default function Loading() {
         {/* Outer ring */}
         <motion.div
           className="absolute inset-[-20%] rounded-full"
-          style={{ border: '1px solid rgba(196,134,154,0.25)' }}
+          style={{ border: '1px solid rgba(184,115,51,0.25)' }}
           animate={{ scale: [1, 1.04, 1], opacity: [0.4, 0.8, 0.4] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -40,7 +40,7 @@ export default function Loading() {
         </motion.div>
 
         {/* Brand name */}
-        <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#A0455E' }}>
+        <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#7B1E2B' }}>
           PASTATARAM
         </p>
 
@@ -50,7 +50,7 @@ export default function Loading() {
             <motion.div
               key={i}
               className="w-1.5 h-1.5 rounded-full"
-              style={{ background: '#C4869A' }}
+              style={{ background: '#B87333' }}
               animate={{ opacity: [0.3, 1, 0.3], y: [0, -5, 0] }}
               transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
             />

@@ -43,7 +43,7 @@ export default function AdminGalleryPage() {
       </div>
 
       {/* Add Image */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-5 shadow-card">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-4 flex items-center gap-2">
           <Upload className="w-4 h-4 text-brand-rose-gold" />
           Add New Image
@@ -53,18 +53,18 @@ export default function AdminGalleryPage() {
             value={newUrl}
             onChange={(e) => setNewUrl(e.target.value)}
             placeholder="Image URL (https://...)"
-            className="flex-1 px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+            className="flex-1 px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
           />
           <input
             value={newAlt}
             onChange={(e) => setNewAlt(e.target.value)}
             placeholder="Alt text"
-            className="sm:w-48 px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+            className="sm:w-48 px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
           />
           <select
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
-            className="sm:w-36 px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none text-sm"
+            className="sm:w-36 px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none text-sm"
           >
             <option value="food">Food</option>
             <option value="ingredients">Ingredients</option>

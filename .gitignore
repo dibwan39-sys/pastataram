@@ -45,3 +45,5 @@ Desktop.ini
 # Dev server logs
 dev-server.log
 dev-server2.log
+
+.vercel

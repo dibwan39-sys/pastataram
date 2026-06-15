@@ -5,14 +5,22 @@ import { MapPin, Phone, Clock, Instagram, Send, ExternalLink } from 'lucide-reac
 import PageWrapper from '@/components/layout/PageWrapper'
 import { useUIStore } from '@/lib/store'
 import { cmsContent, branches, workingHours } from '@/lib/data'
-import { getWhatsAppLink } from '@/lib/utils'
-import { useState } from 'react'
+import { getWhatsAppLink, getOpenStatus, type OpenStatus } from '@/lib/utils'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 export default function ContactPage() {
   const { language } = useUIStore()
   const isAr = language === 'ar'
   const [form, setForm] = useState({ name: '', phone: '', message: '' })
+
+  const [status, setStatus] = useState<OpenStatus | null>(null)
+  useEffect(() => {
+    const tick = () => setStatus(getOpenStatus(language))
+    tick()
+    const id = setInterval(tick, 60_000)
+    return () => clearInterval(id)
+  }, [language])
 
   const waLink = getWhatsAppLink(
     cmsContent.whatsappNumber,
@@ -55,7 +63,7 @@ export default function ContactPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#1C1410] dark:via-[#2A1F1C] dark:to-[#1C1410]">
+      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#14110F] dark:via-[#1A1614] dark:to-[#14110F]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">
@@ -157,9 +165,21 @@ export default function ContactPage() {
                     {isAr ? 'أوقات العمل' : 'Working Hours'}
                   </h3>
                 </div>
-                <p className="text-brand-espresso dark:text-brand-ivory font-semibold">
+                <p className="text-brand-espresso dark:text-brand-ivory font-semibold mb-3">
                   {isAr ? workingHours.ar : workingHours.en}
                 </p>
+                {status && (
+                  <span
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+                    style={{
+                      background: status.open ? 'rgba(34,77,46,0.4)' : 'rgba(94,21,33,0.4)',
+                      color: status.open ? '#7FD89A' : '#E0A0A8',
+                    }}
+                  >
+                    <span className="w-2 h-2 rounded-full" style={{ background: status.open ? '#4FCB6F' : '#C0566A', boxShadow: status.open ? '0 0 8px #4FCB6F' : 'none' }} />
+                    {status.label} · {status.detail}
+                  </span>
+                )}
               </motion.div>
 
               {/* Social */}
@@ -179,7 +199,7 @@ export default function ContactPage() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-brand-blush/50 dark:hover:bg-brand-espresso/30 transition-colors group"
+                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-brand-blush/50 dark:hover:bg-brand-surface/30 transition-colors group"
                     >
                       <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${social.color} flex items-center justify-center flex-shrink-0`}>
                         {social.icon}
@@ -242,7 +262,7 @@ export default function ContactPage() {
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         placeholder={isAr ? 'اسمك' : 'Your name'}
-                        className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+                        className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
                         dir={isAr ? 'rtl' : 'ltr'}
                       />
                     </div>
@@ -254,7 +274,7 @@ export default function ContactPage() {
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         placeholder="05xxxxxxxx"
-                        className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+                        className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
                         dir="ltr"
                       />
                     </div>
@@ -268,7 +288,7 @@ export default function ContactPage() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder={isAr ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
                       rows={4}
-                      className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold resize-none text-sm"
+                      className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold resize-none text-sm"
                       dir={isAr ? 'rtl' : 'ltr'}
                     />
                   </div>

@@ -39,7 +39,7 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setCartOpen(false)}
-            className="fixed inset-0 z-[60] bg-brand-espresso/30 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] bg-brand-surface/30"
           />
 
           {/* Drawer */}
@@ -203,7 +203,7 @@ export default function CartDrawer() {
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
                   className="w-full block text-center py-3 rounded-full font-bold text-sm"
-                  style={{ background: 'rgba(248,215,226,0.7)', border: '1.5px solid rgba(196,134,154,0.5)', color: '#8A3A56' }}
+                  style={{ background: 'rgba(33,28,25,0.7)', border: '1.5px solid rgba(184,115,51,0.5)', color: '#C9BBA8' }}
                 >
                   {isAr ? 'توصيل · طلب مسبق · فاتورة' : 'Delivery · Pre-order · Invoice'}
                 </Link>

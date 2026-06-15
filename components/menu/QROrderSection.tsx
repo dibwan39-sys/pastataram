@@ -29,7 +29,7 @@ export default function QROrderSection() {
       ]
 
   return (
-    <section className="section relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #F8D7E2 0%, #FCEEF4 100%)' }}>
+    <section className="section relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #211C19 0%, #14110F 100%)' }}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,17 +38,17 @@ export default function QROrderSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12"
         >
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#A0455E' }}>
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#7B1E2B' }}>
             <QrCode className="w-3.5 h-3.5" />
             {isAr ? 'الطلب الذكي' : 'Smart Ordering'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+          <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#F2E8DA' }}>
             {isAr ? 'اطلب عبر الباركود' : 'Order via QR'}
           </h2>
-          <p className="text-sm md:text-base" style={{ color: 'rgba(92,47,61,0.7)' }}>
+          <p className="text-sm md:text-base" style={{ color: 'rgba(201,187,168,0.7)' }}>
             {isAr ? 'امسح · تصفّح المنيو · اطلب من هاتفك مباشرة' : 'Scan · browse the menu · order right from your phone'}
           </p>
-          <div className="w-10 h-0.5 rounded-full mx-auto mt-4" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+          <div className="w-10 h-0.5 rounded-full mx-auto mt-4" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -65,16 +65,16 @@ export default function QROrderSection() {
               return (
                 <div key={s.title} className="flex items-start gap-4">
                   <div className="relative flex-shrink-0">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)' }}>
-                      <Icon className="w-5 h-5" style={{ color: '#7A3050' }} />
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #211C19, #D8A24A)' }}>
+                      <Icon className="w-5 h-5" style={{ color: '#C9BBA8' }} />
                     </div>
-                    <span className="absolute -top-1.5 -end-1.5 w-5 h-5 rounded-full text-white text-[11px] font-black flex items-center justify-center" style={{ background: '#A0455E' }}>
+                    <span className="absolute -top-1.5 -end-1.5 w-5 h-5 rounded-full text-white text-[11px] font-black flex items-center justify-center" style={{ background: '#7B1E2B' }}>
                       {i + 1}
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-black text-base mb-0.5" style={{ color: '#3D1F2B' }}>{s.title}</h3>
-                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(92,47,61,0.7)' }}>{s.desc}</p>
+                    <h3 className="font-black text-base mb-0.5" style={{ color: '#F2E8DA' }}>{s.title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(201,187,168,0.7)' }}>{s.desc}</p>
                   </div>
                 </div>
               )
@@ -85,7 +85,7 @@ export default function QROrderSection() {
               <Link
                 href="/menu"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
-                style={{ background: 'linear-gradient(135deg, #A0455E, #C4869A)', boxShadow: '0 8px 24px rgba(160,69,94,0.35)' }}
+                style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', boxShadow: '0 8px 24px rgba(123,30,43,0.35)' }}
               >
                 {isAr ? 'افتح المنيو واطلب الآن' : 'Open the menu & order now'}
                 {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
@@ -104,17 +104,16 @@ export default function QROrderSection() {
             <div
               className="rounded-3xl p-6 sm:p-8 text-center max-w-xs w-full"
               style={{
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(248,215,226,0.7) 100%)',
-                border: '1px solid rgba(196,134,154,0.3)',
-                boxShadow: '0 18px 60px rgba(160,69,94,0.2)',
-                backdropFilter: 'blur(14px)',
+                background: 'linear-gradient(145deg, rgba(33,28,25,0.96) 0%, rgba(33,28,25,0.7) 100%)',
+                border: '1px solid rgba(184,115,51,0.3)',
+                boxShadow: '0 18px 60px rgba(123,30,43,0.2)',
               }}
             >
-              <div className="rounded-2xl bg-white p-4 mb-4" style={{ border: '2px solid rgba(196,134,154,0.35)', boxShadow: '0 6px 22px rgba(160,69,94,0.16)' }}>
+              <div className="rounded-2xl bg-[#1A1614] p-4 mb-4" style={{ border: '2px solid rgba(184,115,51,0.35)', boxShadow: '0 6px 22px rgba(123,30,43,0.16)' }}>
                 <img src={ORDER_QR} alt={isAr ? 'باركود الطلب' : 'Order QR code'} className="w-full h-auto" />
               </div>
-              <p className="font-black text-base mb-1" style={{ color: '#3D1F2B' }}>PASTATARAM</p>
-              <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(92,47,61,0.55)' }}>
+              <p className="font-black text-base mb-1" style={{ color: '#F2E8DA' }}>PASTATARAM</p>
+              <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(201,187,168,0.55)' }}>
                 {isAr ? 'امسح لعرض المنيو والطلب' : 'Scan to view the menu & order'}
               </p>
             </div>

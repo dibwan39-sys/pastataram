@@ -108,7 +108,7 @@ export default function BuildYourPastaPage() {
     <PageWrapper>
       {/* Header */}
       <section className="relative py-20 bg-gradient-to-br from-brand-espresso via-brand-brown to-brand-espresso overflow-hidden">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #CFA18D 0%, transparent 60%)' }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #B87333 0%, transparent 60%)' }} />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-ivory/10 text-brand-champagne text-sm font-bold mb-6">
@@ -138,7 +138,7 @@ export default function BuildYourPastaPage() {
                     ? 'bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white'
                     : i < step
                     ? 'bg-brand-blush text-brand-espresso'
-                    : 'bg-brand-pearl dark:bg-brand-espresso/30 text-brand-latte'
+                    : 'bg-brand-pearl dark:bg-brand-surface/30 text-brand-latte'
                 }`}
               >
                 {i < step && <Check className="w-3 h-3" />}
@@ -213,7 +213,7 @@ export default function BuildYourPastaPage() {
                           className={`p-4 rounded-2xl border-2 transition-all text-start ${
                             selectedToppings.includes(t.id)
                               ? 'border-brand-rose-gold bg-brand-blush/50 dark:bg-brand-rose-gold/10'
-                              : 'border-brand-rose/20 bg-brand-pearl dark:bg-brand-espresso/20 hover:border-brand-rose/50'
+                              : 'border-brand-rose/20 bg-brand-pearl dark:bg-brand-surface/20 hover:border-brand-rose/50'
                           }`}
                         >
                           <div className="text-2xl mb-1">{t.emoji}</div>
@@ -251,7 +251,7 @@ export default function BuildYourPastaPage() {
                           className={`p-6 rounded-2xl border-2 transition-all text-center ${
                             spiceLevel === s.level
                               ? 'border-brand-rose-gold bg-brand-blush/50 dark:bg-brand-rose-gold/10'
-                              : 'border-brand-rose/20 bg-brand-pearl dark:bg-brand-espresso/20 hover:border-brand-rose/50'
+                              : 'border-brand-rose/20 bg-brand-pearl dark:bg-brand-surface/20 hover:border-brand-rose/50'
                           }`}
                         >
                           <div className="text-3xl mb-2">{s.emoji}</div>
@@ -267,7 +267,7 @@ export default function BuildYourPastaPage() {
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                         placeholder={isAr ? 'أي تعليمات خاصة...' : 'Any special instructions...'}
-                        className="w-full p-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold resize-none h-24 text-sm"
+                        className="w-full p-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold resize-none h-24 text-sm"
                         dir={isAr ? 'rtl' : 'ltr'}
                       />
                     </div>
@@ -422,7 +422,7 @@ function StepSection({ title, items, selected, onSelect, isAr, language }: {
             className={`p-4 rounded-2xl border-2 transition-all text-center ${
               selected === item.id
                 ? 'border-brand-rose-gold bg-brand-blush/50 dark:bg-brand-rose-gold/10 shadow-brand'
-                : 'border-brand-rose/20 bg-brand-pearl dark:bg-brand-espresso/20 hover:border-brand-rose/50'
+                : 'border-brand-rose/20 bg-brand-pearl dark:bg-brand-surface/20 hover:border-brand-rose/50'
             }`}
           >
             <div className="text-3xl mb-2">{item.emoji}</div>

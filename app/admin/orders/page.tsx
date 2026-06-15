@@ -62,14 +62,14 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-latte" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search orders..."
-            className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+            className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
           />
         </div>
         <div className="flex items-center gap-2 overflow-x-auto">
@@ -80,7 +80,7 @@ export default function AdminOrdersPage() {
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 filter === s.value
                   ? 'bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white'
-                  : 'bg-brand-pearl dark:bg-brand-espresso/20 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
+                  : 'bg-brand-pearl dark:bg-brand-surface/20 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
               }`}
             >
               {s.label}
@@ -90,10 +90,10 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-brand-pearl dark:bg-brand-espresso/20 text-xs text-brand-latte">
+            <thead className="bg-brand-pearl dark:bg-brand-surface/20 text-xs text-brand-latte">
               <tr>
                 <th className="text-start px-5 py-3 font-semibold">Order</th>
                 <th className="text-start px-5 py-3 font-semibold">Customer</th>
@@ -108,7 +108,7 @@ export default function AdminOrdersPage() {
               {filtered.map((order, i) => (
                 <tr
                   key={order.id}
-                  className={`border-b border-brand-rose/10 hover:bg-brand-pearl/30 dark:hover:bg-brand-espresso/10 transition-colors ${i % 2 === 0 ? '' : 'bg-brand-pearl/10'}`}
+                  className={`border-b border-brand-rose/10 hover:bg-brand-pearl/30 dark:hover:bg-brand-surface/10 transition-colors ${i % 2 === 0 ? '' : 'bg-brand-pearl/10'}`}
                 >
                   <td className="px-5 py-4">
                     <p className="font-mono font-bold text-sm text-brand-espresso dark:text-brand-ivory">{order.orderNumber}</p>
@@ -125,11 +125,11 @@ export default function AdminOrdersPage() {
                           key={j}
                           src={item.menuItem.image}
                           alt=""
-                          className="w-8 h-8 rounded-full object-cover border-2 border-white dark:border-[#2A1F1C]"
+                          className="w-8 h-8 rounded-full object-cover border-2 border-white dark:border-[#1A1614]"
                         />
                       ))}
                       {order.items.length > 3 && (
-                        <div className="w-8 h-8 rounded-full bg-brand-blush border-2 border-white dark:border-[#2A1F1C] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-brand-blush border-2 border-white dark:border-[#1A1614] flex items-center justify-center">
                           <span className="text-xs font-bold text-brand-espresso">+{order.items.length - 3}</span>
                         </div>
                       )}

@@ -56,7 +56,7 @@ function TrackOrderContent() {
               value={searchNum}
               onChange={(e) => setSearchNum(e.target.value)}
               placeholder={isAr ? 'أدخل رقم الطلب...' : 'Enter order number...'}
-              className="w-full ps-10 pe-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold"
+              className="w-full ps-10 pe-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold"
               dir={isAr ? 'rtl' : 'ltr'}
             />
           </div>
@@ -94,7 +94,7 @@ function TrackOrderContent() {
                   {isAr ? 'حالة الطلب' : 'Order Status'}
                 </h3>
                 <div className="relative">
-                  <div className="absolute start-5 top-5 bottom-5 w-0.5 bg-brand-blush dark:bg-brand-espresso/30" />
+                  <div className="absolute start-5 top-5 bottom-5 w-0.5 bg-brand-blush dark:bg-brand-surface/30" />
                   {statusSteps.map((step, i) => {
                     const Icon = statusIcons[step] ?? Clock
                     const isCompleted = i <= currentStepIndex
@@ -105,7 +105,7 @@ function TrackOrderContent() {
                           className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                             isCompleted
                               ? 'bg-gradient-to-br from-brand-rose-gold to-brand-champagne shadow-brand'
-                              : 'bg-brand-blush dark:bg-brand-espresso/30'
+                              : 'bg-brand-blush dark:bg-brand-surface/30'
                           }`}
                         >
                           <Icon className={`w-4 h-4 ${isCompleted ? 'text-white' : 'text-brand-latte'}`} />
@@ -132,7 +132,7 @@ function TrackOrderContent() {
                   })}
                 </div>
                 {foundOrder.estimatedTime && foundOrder.status === 'preparing' && (
-                  <div className="mt-6 p-4 rounded-xl bg-brand-blush/50 dark:bg-brand-espresso/20 border border-brand-rose/20 text-center">
+                  <div className="mt-6 p-4 rounded-xl bg-brand-blush/50 dark:bg-brand-surface/20 border border-brand-rose/20 text-center">
                     <p className="text-brand-espresso dark:text-brand-ivory font-semibold">
                       ⏱ {isAr ? `الوقت المتوقع: ${foundOrder.estimatedTime} دقيقة` : `Estimated: ${foundOrder.estimatedTime} minutes`}
                     </p>
@@ -199,7 +199,7 @@ export default function TrackOrderPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#1C1410] dark:via-[#2A1F1C] dark:to-[#1C1410]">
+      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#14110F] dark:via-[#1A1614] dark:to-[#14110F]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">

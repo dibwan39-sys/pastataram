@@ -79,7 +79,7 @@ export default function AdminReviewsPage() {
         {filtered.map((review) => (
           <div
             key={review.id}
-            className={`bg-white dark:bg-[#2A1F1C] rounded-2xl p-5 shadow-card ${!review.approved ? 'border-l-4 border-amber-400' : review.featured ? 'border-l-4 border-brand-rose-gold' : ''}`}
+            className={`bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card ${!review.approved ? 'border-l-4 border-amber-400' : review.featured ? 'border-l-4 border-brand-rose-gold' : ''}`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-3">

@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   applicationName: 'PASTATARAM',
   description: 'PASTATARAM - Premium fast-casual pasta in Jeddah. Italian-inspired pasta crafted with the finest ingredients. Daily 3:00 PM – 3:00 AM.',
   keywords: 'PASTATARAM, pasta, Jeddah, fast casual, Italian, باستاتا رام, جدة',
-  themeColor: '#FCEEF4',
-  colorScheme: 'light',
+  themeColor: '#14110F',
+  colorScheme: 'dark',
   icons: {
     icon: '/images/logo.png',
     apple: '/images/logo.png',
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" suppressHydrationWarning>
+    <html lang="ar" className="dark" suppressHydrationWarning>
       <head>
-        {/* Force light mode rendering on all browsers and devices */}
-        <meta name="color-scheme" content="light" />
-        <meta name="supported-color-schemes" content="light" />
-        <meta name="theme-color" content="#FCEEF4" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* Force dark, premium charcoal rendering on all browsers and devices */}
+        <meta name="color-scheme" content="dark" />
+        <meta name="supported-color-schemes" content="dark" />
+        <meta name="theme-color" content="#14110F" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

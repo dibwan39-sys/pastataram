@@ -96,7 +96,7 @@ export default function AdminMenuPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search menu items..."
-          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-white dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-[#1A1614] dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
         />
       </div>
 
@@ -108,7 +108,7 @@ export default function AdminMenuPage() {
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={`bg-white dark:bg-[#2A1F1C] rounded-2xl shadow-card overflow-hidden ${!item.available ? 'opacity-60' : ''}`}
+            className={`bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden ${!item.available ? 'opacity-60' : ''}`}
           >
             <div className="relative h-40">
               <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -134,7 +134,7 @@ export default function AdminMenuPage() {
               </div>
               <p className="text-xs text-brand-brown dark:text-brand-mocha mb-4 line-clamp-2">{item.description}</p>
               <div className="flex items-center justify-between">
-                <span className="text-xs bg-brand-blush dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory px-2.5 py-1 rounded-full capitalize font-medium">
+                <span className="text-xs bg-brand-blush dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory px-2.5 py-1 rounded-full capitalize font-medium">
                   {item.category}
                 </span>
                 <div className="flex items-center gap-1">
@@ -177,7 +177,7 @@ export default function AdminMenuPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-[60] bg-white dark:bg-[#2A1F1C] rounded-3xl shadow-brand-lg overflow-y-auto max-h-[90vh]"
+              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-[60] bg-[#1A1614] dark:bg-[#1A1614] rounded-3xl shadow-brand-lg overflow-y-auto max-h-[90vh]"
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-5">
@@ -192,21 +192,21 @@ export default function AdminMenuPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Name (EN) *</label>
-                      <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
+                      <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Name (AR)</label>
-                      <input value={form.nameAr} onChange={(e) => setForm({ ...form, nameAr: e.target.value })} dir="rtl" className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
+                      <input value={form.nameAr} onChange={(e) => setForm({ ...form, nameAr: e.target.value })} dir="rtl" className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Price (SAR) *</label>
-                      <input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
+                      <input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Category</label>
-                      <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm">
+                      <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm">
                         <option value="pasta">Pasta</option>
                         <option value="sides">Sides</option>
                         <option value="drinks">Drinks</option>
@@ -215,15 +215,15 @@ export default function AdminMenuPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Description (EN)</label>
-                    <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm resize-none" />
+                    <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm resize-none" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Description (AR)</label>
-                    <textarea value={form.descriptionAr} onChange={(e) => setForm({ ...form, descriptionAr: e.target.value })} rows={2} dir="rtl" className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm resize-none" />
+                    <textarea value={form.descriptionAr} onChange={(e) => setForm({ ...form, descriptionAr: e.target.value })} rows={2} dir="rtl" className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm resize-none" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-brand-espresso dark:text-brand-ivory mb-1">Image URL</label>
-                    <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="https://..." className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
+                    <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="https://..." className="w-full px-3 py-2 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm" />
                   </div>
                   <div className="flex items-center gap-6">
                     {[

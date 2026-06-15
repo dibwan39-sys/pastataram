@@ -30,7 +30,7 @@ export default function GalleryPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#1C1410] dark:via-[#2A1F1C] dark:to-[#1C1410]">
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#14110F] dark:via-[#1A1614] dark:to-[#14110F]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">
@@ -57,7 +57,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[#1C1410]/90 backdrop-blur-lg border-b border-brand-rose/20 py-4">
+      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[#14110F]/90 border-b border-brand-rose/20 py-4">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto">
             {galleryCategories.map((cat) => (
@@ -67,7 +67,7 @@ export default function GalleryPage() {
                 className={`px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
                   activeCategory === cat.id
                     ? 'bg-gradient-to-r from-brand-rose-gold to-brand-champagne text-white shadow-brand'
-                    : 'bg-brand-pearl dark:bg-brand-espresso/30 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
+                    : 'bg-brand-pearl dark:bg-brand-surface/30 text-brand-brown dark:text-brand-mocha hover:bg-brand-blush/50'
                 }`}
               >
                 {isAr ? cat.labelAr : cat.labelEn}
@@ -179,7 +179,7 @@ export default function GalleryPage() {
       </AnimatePresence>
 
       {/* Instagram CTA */}
-      <section className="section bg-brand-pearl dark:bg-[#231A17]">
+      <section className="section bg-brand-pearl dark:bg-[#1A1614]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

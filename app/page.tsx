@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, QrCode, BookOpen } from 'lucide-react'
@@ -8,6 +9,7 @@ import ProductCard from '@/components/menu/ProductCard'
 import QROrderSection from '@/components/menu/QROrderSection'
 import { useUIStore } from '@/lib/store'
 import { menuItems, reviews, branches, workingHours } from '@/lib/data'
+import { getOpenStatus, type OpenStatus } from '@/lib/utils'
 import Image from 'next/image'
 
 const fadeUp = {
@@ -18,16 +20,26 @@ const fadeUp = {
 }
 
 // Luxury pink palette
-// Base surfaces:   #FCEEF4 (pearl pink), #F8D7E2 (blush), #F2D0DF (deeper blush)
-// Cream accents:   #FFF4F8 (cream pink), #FEF0F5 (soft pearl)
-// Rose-gold:       #C4869A (primary), #D4A0B5 (mid), #E6B7C8 (light)
-// Dark text:       #3D1F2B, #5C2F3D, #8A5A6A
+// Base surfaces:   #14110F (pearl pink), #211C19 (blush), #211C19 (deeper blush)
+// Cream accents:   #1A1614 (cream pink), #1A1614 (soft pearl)
+// Rose-gold:       #B87333 (primary), #D8A24A (mid), #E0B566 (light)
+// Dark text:       #F2E8DA, #E8DCC8, #9A8B7C
 
 export default function HomePage() {
   const { language } = useUIStore()
   const isAr = language === 'ar'
 
+  // Live Open/Closed status (Jeddah time) — computed after mount to avoid SSR/CSR drift
+  const [status, setStatus] = useState<OpenStatus | null>(null)
+  useEffect(() => {
+    const tick = () => setStatus(getOpenStatus(language))
+    tick()
+    const id = setInterval(tick, 60_000)
+    return () => clearInterval(id)
+  }, [language])
+
   const featuredReviews = reviews.filter((r) => r.featured).slice(0, 3)
+  const bestSellers = menuItems.filter((m) => m.bestseller)
 
   const features = isAr ? [
     { icon: Zap, title: 'سريع وطازج', desc: 'طلبك جاهز في دقائق بأجود المكونات' },
@@ -47,10 +59,10 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           HERO  — rich blush pink atmosphere
       ══════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: '#F5DAEA' }}>
+      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: '#1A1614' }}>
 
         {/* Single clean gradient — no stacking, identical on all devices */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #F8D7E2 0%, #FCEEF4 55%, #F5DAEA 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #211C19 0%, #14110F 55%, #1A1614 100%)' }} />
 
         {/* Content grid */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-24 pb-16">
@@ -63,33 +75,54 @@ export default function HomePage() {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-center lg:items-start text-center lg:text-start order-2 lg:order-1"
             >
-              {/* Location badge */}
-              <motion.span
+              {/* Location + live Open Now badges */}
+              <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.6 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold mb-7"
-                style={{
-                  background: 'rgba(248,215,226,0.75)',
-                  border: '1px solid rgba(196,134,154,0.35)',
-                  color: '#8A3A56',
-                  boxShadow: '0 2px 16px rgba(196,134,154,0.2)',
-                }}
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-7"
               >
-                <MapPin className="w-3 h-3" />
-                {isAr ? 'جدة · ٣ فروع' : 'Jeddah · 3 Branches'}
-              </motion.span>
+                <span
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold"
+                  style={{
+                    background: 'rgba(33,28,25,0.75)',
+                    border: '1px solid rgba(184,115,51,0.35)',
+                    color: '#C9BBA8',
+                  }}
+                >
+                  <MapPin className="w-3 h-3" />
+                  {isAr ? 'جدة · ٣ فروع' : 'Jeddah · 3 Branches'}
+                </span>
+                {status && (
+                  <span
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold"
+                    style={{
+                      background: status.open ? 'rgba(34,77,46,0.35)' : 'rgba(94,21,33,0.35)',
+                      border: `1px solid ${status.open ? 'rgba(74,170,104,0.55)' : 'rgba(168,66,79,0.55)'}`,
+                      color: status.open ? '#7FD89A' : '#E0A0A8',
+                    }}
+                    title={status.detail}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full"
+                      style={{ background: status.open ? '#4FCB6F' : '#C0566A', boxShadow: status.open ? '0 0 8px #4FCB6F' : 'none' }}
+                    />
+                    {status.label}
+                    <span className="font-medium opacity-70">· {status.detail}</span>
+                  </span>
+                )}
+              </motion.div>
 
               {/* Headline */}
               <h1 className="font-black leading-[1.08] tracking-tight mb-5" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)' }}>
                 {isAr ? (
                   <>
-                    <span style={{ color: '#3D1F2B' }}>تجربة باستا عصرية</span>
+                    <span style={{ color: '#F2E8DA' }}>تجربة باستا عصرية</span>
                     <br />
-                    <span style={{ color: '#3D1F2B' }}>تجمع بين الأناقة</span>
+                    <span style={{ color: '#F2E8DA' }}>تجمع بين الأناقة</span>
                     <br />
                     <span style={{
-                      background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 50%, #D4A0B5 100%)',
+                      background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 50%, #D8A24A 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
@@ -97,12 +130,12 @@ export default function HomePage() {
                   </>
                 ) : (
                   <>
-                    <span style={{ color: '#3D1F2B' }}>A Modern Pasta</span>
+                    <span style={{ color: '#F2E8DA' }}>A Modern Pasta</span>
                     <br />
-                    <span style={{ color: '#3D1F2B' }}>Experience of</span>
+                    <span style={{ color: '#F2E8DA' }}>Experience of</span>
                     <br />
                     <span style={{
-                      background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 50%, #D4A0B5 100%)',
+                      background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 50%, #D8A24A 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
@@ -111,7 +144,7 @@ export default function HomePage() {
                 )}
               </h1>
 
-              <p className="text-sm md:text-base leading-relaxed mb-9 max-w-sm" style={{ color: 'rgba(92,47,61,0.8)' }}>
+              <p className="text-sm md:text-base leading-relaxed mb-9 max-w-sm" style={{ color: 'rgba(201,187,168,0.8)' }}>
                 {isAr
                   ? 'نكهات إيطالية مصممة بعناية لتمنحكم تجربة لا تُنسى'
                   : 'Italian flavors carefully crafted to give you an unforgettable experience'}
@@ -124,8 +157,8 @@ export default function HomePage() {
                     href="/menu"
                     className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
                     style={{
-                      background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 60%, #D4A0B5 100%)',
-                      boxShadow: '0 8px 28px rgba(160,69,94,0.4)',
+                      background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 60%, #D8A24A 100%)',
+                      boxShadow: '0 8px 28px rgba(123,30,43,0.4)',
                     }}
                   >
                     {isAr ? 'استكشف المنيو' : 'Explore Menu'}
@@ -135,12 +168,12 @@ export default function HomePage() {
                 <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                   <Link
                     href="/order"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm backdrop-blur-sm"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm"
                     style={{
-                      background: 'rgba(248,215,226,0.65)',
-                      border: '1.5px solid rgba(196,134,154,0.5)',
-                      color: '#8A3A56',
-                      boxShadow: '0 4px 16px rgba(196,134,154,0.2)',
+                      background: 'rgba(33,28,25,0.65)',
+                      border: '1.5px solid rgba(184,115,51,0.5)',
+                      color: '#C9BBA8',
+                      boxShadow: '0 4px 16px rgba(184,115,51,0.2)',
                     }}
                   >
                     {isAr ? 'اطلب الآن' : 'Order Now'}
@@ -157,74 +190,64 @@ export default function HomePage() {
                 ].map((s, i) => (
                   <div key={s.num} className="relative text-center">
                     {i > 0 && (
-                      <div className="absolute -start-3.5 top-1 h-6 w-px" style={{ background: 'rgba(196,134,154,0.4)' }} />
+                      <div className="absolute -start-3.5 top-1 h-6 w-px" style={{ background: 'rgba(184,115,51,0.4)' }} />
                     )}
-                    <p className="text-xl font-black" style={{ color: '#A0455E' }}>{s.num}</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-wide mt-0.5" style={{ color: 'rgba(92,47,61,0.55)' }}>{s.label}</p>
+                    <p className="text-xl font-black" style={{ color: '#7B1E2B' }}>{s.num}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wide mt-0.5" style={{ color: 'rgba(201,187,168,0.55)' }}>{s.label}</p>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* ── Visual side ── */}
+            {/* ── Visual side — food-first editorial frame ── */}
             <motion.div
               initial={{ opacity: 0, x: isAr ? -24 : 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="flex items-center justify-center relative order-1 lg:order-2"
+              className="relative order-1 lg:order-2"
             >
-              {/* Single soft glow — low opacity, no stacking */}
-              <div className="absolute w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(220,180,200,0.2) 0%, transparent 70%)' }} />
-
-              {/* Static rings */}
-              {[{ inset: '-14%', op: 0.3 }, { inset: '-26%', op: 0.22 }, { inset: '-38%', op: 0.14 }].map((r, i) => (
-                <div
-                  key={i}
-                  className="absolute rounded-full pointer-events-none"
-                  style={{ inset: r.inset, border: `1px solid rgba(196,134,154,${r.op})` }}
+              <div
+                className="relative w-full overflow-hidden rounded-[2rem]"
+                style={{
+                  aspectRatio: '4 / 5',
+                  border: '1px solid rgba(58,50,44,0.9)',
+                  boxShadow: '0 30px 80px rgba(0,0,0,0.6)',
+                }}
+              >
+                <Image
+                  src="/images/f1.png"
+                  alt={isAr ? 'باستاتا رام — الطبق المميز' : 'Pastata Ram — signature dish'}
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 45vw"
+                  className="object-cover"
+                  priority
+                  unoptimized
                 />
-              ))}
+                {/* Editorial bottom scrim keeps focus on the food while seating the caption */}
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(15,13,11,0.92) 0%, rgba(15,13,11,0.15) 45%, transparent 70%)' }} />
 
-              {/* Logo — ambient light integration */}
-              <div className="relative z-10" style={{ width: 'clamp(280px, 38vw, 400px)', height: 'clamp(280px, 38vw, 400px)' }}>
-                {/* Single subtle halo — no stacking */}
-                <div className="absolute inset-[-15%] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(220,185,205,0.18) 0%, transparent 70%)' }} />
+                {/* Signature caption */}
+                <div className="absolute bottom-0 inset-x-0 p-6">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.22em] mb-2" style={{ color: '#D8A24A' }}>
+                    <Star className="w-3 h-3" style={{ fill: '#D8A24A' }} />
+                    {isAr ? 'الطبق المميز' : 'Signature Dish'}
+                  </span>
+                  <p className="font-display text-2xl md:text-3xl font-bold" style={{ color: '#F2E8DA' }}>
+                    {isAr ? 'باستاتا رام' : 'Pastata Ram'}
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: 'rgba(201,187,168,0.75)' }}>
+                    {isAr ? 'دجاج · طماطم مشوية · باذنجان · أعشاب خاصة' : 'Chicken · roasted tomato · eggplant · special herbs'}
+                  </p>
+                </div>
 
-                {/* Logo — transparent SVG, no blend needed */}
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/images/logo.png"
-                    alt="PASTATARAM"
-                    fill
-                    className="object-contain"
-                    priority
-                    unoptimized
-                  />
+                {/* Price tab — editorial, not floating */}
+                <div
+                  className="absolute top-5 end-5 px-3.5 py-2 rounded-full text-sm font-black"
+                  style={{ background: 'linear-gradient(135deg, #5E1521, #7B1E2B)', color: '#F2E8DA', border: '1px solid rgba(216,162,74,0.5)' }}
+                >
+                  {isAr ? '٢٧ ر.س' : '27 SAR'}
                 </div>
               </div>
-
-              {/* Floating chips */}
-              {[
-                { label: isAr ? '🍝 باستا فريش' : '🍝 Fresh Pasta', pos: 'top-6 -start-2 lg:-start-8', delay: 1.2 },
-                { label: isAr ? '⭐ 4.9 تقييم' : '⭐ 4.9 Rated', pos: 'bottom-10 -start-2 lg:-start-6', delay: 1.5 },
-                { label: isAr ? '🔥 الأكثر طلباً' : '🔥 Best Seller', pos: 'top-10 -end-2 lg:-end-8', delay: 1.8 },
-              ].map((chip) => (
-                <motion.div
-                  key={chip.label}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: chip.delay, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className={`absolute ${chip.pos} px-3 py-2 rounded-2xl text-xs font-bold whitespace-nowrap backdrop-blur-md`}
-                  style={{
-                    background: 'rgba(252,220,235,0.92)',
-                    border: '1px solid rgba(196,134,154,0.4)',
-                    color: '#7A3050',
-                    boxShadow: '0 4px 16px rgba(196,134,154,0.2)',
-                  }}
-                >
-                  {chip.label}
-                </motion.div>
-              ))}
             </motion.div>
 
           </div>
@@ -232,8 +255,8 @@ export default function HomePage() {
 
         {/* Scroll hint */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-          <div className="w-5 h-8 rounded-full flex items-start justify-center p-1.5" style={{ border: '1.5px solid rgba(160,69,94,0.4)' }}>
-            <div className="w-1 h-1.5 rounded-full" style={{ background: '#A0455E' }} />
+          <div className="w-5 h-8 rounded-full flex items-start justify-center p-1.5" style={{ border: '1.5px solid rgba(123,30,43,0.4)' }}>
+            <div className="w-1 h-1.5 rounded-full" style={{ background: '#7B1E2B' }} />
           </div>
         </div>
       </section>
@@ -241,22 +264,22 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           MENU  — official menu image + QR card
       ══════════════════════════════════════════ */}
-      <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #F8D7E2 100%)' }}>
+      <section className="section" style={{ background: 'linear-gradient(180deg, #14110F 0%, #211C19 100%)' }}>
         <div className="max-w-5xl mx-auto px-6">
 
           {/* Heading */}
           <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#A0455E' }}>
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#7B1E2B' }}>
               <BookOpen className="w-3.5 h-3.5" />
               {isAr ? 'المنيو' : 'The Menu'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: '#3D1F2B' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: '#F2E8DA' }}>
               {isAr ? 'المنيو' : 'Our Menu'}
             </h2>
-            <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(92,47,61,0.7)' }}>
+            <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(201,187,168,0.7)' }}>
               {isAr ? 'قائمة الطعام والأسعار' : 'Full menu & prices'}
             </p>
-            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
           </motion.div>
 
           {/* Interactive menu — real product cards */}
@@ -273,8 +296,8 @@ export default function HomePage() {
                 href="/menu"
                 className="inline-flex items-center gap-2 px-9 py-4 rounded-full font-bold text-white text-sm"
                 style={{
-                  background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 60%, #D4A0B5 100%)',
-                  boxShadow: '0 10px 32px rgba(160,69,94,0.42)',
+                  background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 60%, #D8A24A 100%)',
+                  boxShadow: '0 10px 32px rgba(123,30,43,0.42)',
                 }}
               >
                 {isAr ? 'تصفّح المنيو الكامل واطلب' : 'Browse Full Menu & Order'}
@@ -288,27 +311,26 @@ export default function HomePage() {
             <div
               className="flex flex-col sm:flex-row items-center gap-6 p-7 md:p-8 rounded-3xl"
               style={{
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(248,215,226,0.7) 100%)',
-                border: '1px solid rgba(196,134,154,0.3)',
-                boxShadow: '0 12px 44px rgba(160,69,94,0.16)',
-                backdropFilter: 'blur(12px)',
+                background: 'linear-gradient(145deg, rgba(33,28,25,0.96) 0%, rgba(33,28,25,0.7) 100%)',
+                border: '1px solid rgba(184,115,51,0.3)',
+                boxShadow: '0 12px 44px rgba(123,30,43,0.16)',
               }}
             >
               <div
-                className="w-40 h-40 rounded-2xl overflow-hidden flex-shrink-0 bg-white"
-                style={{ border: '2px solid rgba(196,134,154,0.4)', boxShadow: '0 6px 22px rgba(160,69,94,0.18)' }}
+                className="w-40 h-40 rounded-2xl overflow-hidden flex-shrink-0 bg-[#1A1614]"
+                style={{ border: '2px solid rgba(184,115,51,0.4)', boxShadow: '0 6px 22px rgba(123,30,43,0.18)' }}
               >
                 <img src="/images/menu-qr.jpg" alt={isAr ? 'باركود المنيو' : 'Menu QR code'} className="w-full h-full object-cover" />
               </div>
               <div className="text-center sm:text-start">
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#A0455E' }}>
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#7B1E2B' }}>
                   <QrCode className="w-3.5 h-3.5" />
                   {isAr ? 'منيو رقمي' : 'Digital Menu'}
                 </span>
-                <p className="font-black text-lg mb-1.5" style={{ color: '#3D1F2B' }}>
+                <p className="font-black text-lg mb-1.5" style={{ color: '#F2E8DA' }}>
                   {isAr ? 'امسح الباركود لعرض المنيو' : 'Scan the code to view the menu'}
                 </p>
-                <p className="text-sm leading-relaxed" style={{ color: 'rgba(92,47,61,0.65)' }}>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(201,187,168,0.65)' }}>
                   {isAr ? 'وجّه كاميرا هاتفك نحو الباركود للوصول السريع إلى قائمتنا الكاملة' : 'Point your phone camera at the code for instant access to our full menu'}
                 </p>
               </div>
@@ -326,17 +348,17 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           WHY CHOOSE US  — pearl pink surface
       ══════════════════════════════════════════ */}
-      <section className="section" style={{ background: 'linear-gradient(180deg, #F8D7E2 0%, #FCEEF4 100%)' }}>
+      <section className="section" style={{ background: 'linear-gradient(180deg, #211C19 0%, #14110F 100%)' }}>
         <div className="max-w-7xl mx-auto px-6">
 
           <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-3" style={{ color: '#A0455E' }}>
+            <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-3" style={{ color: '#7B1E2B' }}>
               {isAr ? 'مميزاتنا' : 'Our Promise'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: '#3D1F2B' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: '#F2E8DA' }}>
               {isAr ? 'لماذا باستاتا رام؟' : 'Why PASTATARAM?'}
             </h2>
-            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -351,22 +373,21 @@ export default function HomePage() {
                   transition={{ duration: 0.6, delay: i * 0.1 }}
                   className="group text-center p-6 rounded-3xl transition-all duration-300"
                   style={{
-                    background: 'linear-gradient(145deg, rgba(252,238,244,0.85) 0%, rgba(248,215,226,0.55) 100%)',
-                    border: '1px solid rgba(196,134,154,0.3)',
-                    boxShadow: '0 4px 20px rgba(160,69,94,0.1)',
-                    backdropFilter: 'blur(8px)',
+                    background: 'linear-gradient(145deg, rgba(20,17,15,0.85) 0%, rgba(33,28,25,0.55) 100%)',
+                    border: '1px solid rgba(184,115,51,0.3)',
+                    boxShadow: '0 4px 20px rgba(123,30,43,0.1)',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 12px 36px rgba(160,69,94,0.18)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(160,69,94,0.1)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 12px 36px rgba(123,30,43,0.18)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(123,30,43,0.1)' }}
                 >
                   <div
                     className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
-                    style={{ background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)' }}
+                    style={{ background: 'linear-gradient(135deg, #211C19, #D8A24A)' }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: '#7A3050' }} />
+                    <Icon className="w-5 h-5" style={{ color: '#C9BBA8' }} />
                   </div>
-                  <h3 className="font-bold text-sm mb-1.5" style={{ color: '#3D1F2B' }}>{f.title}</h3>
-                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(92,47,61,0.7)' }}>{f.desc}</p>
+                  <h3 className="font-bold text-sm mb-1.5" style={{ color: '#F2E8DA' }}>{f.title}</h3>
+                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(201,187,168,0.7)' }}>{f.desc}</p>
                 </motion.div>
               )
             })}
@@ -379,14 +400,14 @@ export default function HomePage() {
           BUILD YOUR PASTA  — deep rose dark
       ══════════════════════════════════════════ */}
       <section className="section relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #2B1F30 0%, #3D2645 50%, #2B1F30 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1A1614 0%, #211C19 50%, #1A1614 100%)' }} />
         <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(ellipse at 15% 50%, rgba(220,170,210,0.12) 0%, transparent 50%), radial-gradient(ellipse at 85% 50%, rgba(200,150,190,0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% -10%, rgba(230,190,220,0.1) 0%, transparent 40%)' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
             <motion.div {...fadeUp}>
-              <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-4" style={{ color: '#E6B7C8' }}>
+              <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-4" style={{ color: '#E0B566' }}>
                 {isAr ? 'تجربة فريدة' : 'Unique Experience'}
               </span>
               <h2 className="font-black text-white leading-tight mb-5" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -402,8 +423,8 @@ export default function HomePage() {
                   href="/build-your-pasta"
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm"
                   style={{
-                    background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)',
-                    color: '#3D1F2B',
+                    background: 'linear-gradient(135deg, #211C19, #D8A24A)',
+                    color: '#F2E8DA',
                     boxShadow: '0 8px 28px rgba(242,196,216,0.35)',
                   }}
                 >
@@ -458,21 +479,21 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           REVIEWS  — soft blush pink
       ══════════════════════════════════════════ */}
-      <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #F8D7E2 50%, #FCEEF4 100%)' }}>
+      <section className="section" style={{ background: 'linear-gradient(180deg, #14110F 0%, #211C19 50%, #14110F 100%)' }}>
         <div className="max-w-7xl mx-auto px-6">
 
           <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-3" style={{ color: '#A0455E' }}>
+            <span className="text-xs font-bold uppercase tracking-[0.22em] block mb-3" style={{ color: '#7B1E2B' }}>
               {isAr ? 'آراء عملاؤنا' : 'Customer Reviews'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#F2E8DA' }}>
               {isAr ? 'ماذا يقولون عنا' : 'What They Say'}
             </h2>
             <div className="flex items-center justify-center gap-0.5 mb-3">
-              {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4" style={{ fill: '#C4869A', color: '#C4869A' }} />)}
-              <span className="text-sm font-semibold ms-2" style={{ color: 'rgba(92,47,61,0.7)' }}>4.9 / 5</span>
+              {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4" style={{ fill: '#B87333', color: '#B87333' }} />)}
+              <span className="text-sm font-semibold ms-2" style={{ color: 'rgba(201,187,168,0.7)' }}>4.9 / 5</span>
             </div>
-            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -485,31 +506,30 @@ export default function HomePage() {
                 transition={{ duration: 0.65, delay: i * 0.12 }}
                 className="p-6 rounded-3xl"
                 style={{
-                  background: 'linear-gradient(145deg, rgba(252,238,244,0.9) 0%, rgba(248,215,226,0.6) 100%)',
-                  border: '1px solid rgba(196,134,154,0.3)',
-                  boxShadow: '0 4px 24px rgba(160,69,94,0.12)',
-                  backdropFilter: 'blur(10px)',
+                  background: 'linear-gradient(145deg, rgba(20,17,15,0.9) 0%, rgba(33,28,25,0.6) 100%)',
+                  border: '1px solid rgba(184,115,51,0.3)',
+                  boxShadow: '0 4px 24px rgba(123,30,43,0.12)',
                 }}
               >
                 <div className="flex items-center gap-0.5 mb-3">
                   {[...Array(review.rating)].map((_, j) => (
-                    <Star key={j} className="w-3.5 h-3.5" style={{ fill: '#C4869A', color: '#C4869A' }} />
+                    <Star key={j} className="w-3.5 h-3.5" style={{ fill: '#B87333', color: '#B87333' }} />
                   ))}
                 </div>
-                <p className="text-sm leading-relaxed mb-5 italic" style={{ color: 'rgba(92,47,61,0.8)' }}>
+                <p className="text-sm leading-relaxed mb-5 italic" style={{ color: 'rgba(201,187,168,0.8)' }}>
                   "{review.comment}"
                 </p>
                 <div className="flex items-center gap-3">
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #A0455E, #C4869A)' }}
+                    style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)' }}
                   >
                     {review.customerName.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-bold text-sm" style={{ color: '#3D1F2B' }}>{review.customerName}</p>
+                    <p className="font-bold text-sm" style={{ color: '#F2E8DA' }}>{review.customerName}</p>
                     {review.verified && (
-                      <p className="text-xs font-medium" style={{ color: '#A0455E' }}>✓ {isAr ? 'عميل موثق' : 'Verified Customer'}</p>
+                      <p className="text-xs font-medium" style={{ color: '#7B1E2B' }}>✓ {isAr ? 'عميل موثق' : 'Verified Customer'}</p>
                     )}
                   </div>
                 </div>
@@ -522,9 +542,9 @@ export default function HomePage() {
               href="/reviews"
               className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold transition-colors duration-200"
               style={{
-                background: 'rgba(248,215,226,0.6)',
-                border: '1px solid rgba(196,134,154,0.4)',
-                color: '#A0455E',
+                background: 'rgba(33,28,25,0.6)',
+                border: '1px solid rgba(184,115,51,0.4)',
+                color: '#7B1E2B',
               }}
             >
               {isAr ? 'عرض كل التقييمات' : 'View All Reviews'}
@@ -538,20 +558,20 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           SOCIAL MEDIA  — premium QR cards
       ══════════════════════════════════════════ */}
-      <section className="section" style={{ background: 'linear-gradient(180deg, #F8D7E2 0%, #FEF0F5 50%, #FCEEF4 100%)' }}>
+      <section className="section" style={{ background: 'linear-gradient(180deg, #211C19 0%, #1A1614 50%, #14110F 100%)' }}>
         <div className="max-w-5xl mx-auto px-6">
 
           <motion.div {...fadeUp} className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#A0455E' }}>
+            <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#7B1E2B' }}>
               {isAr ? 'تابعونا' : 'Follow Us'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#F2E8DA' }}>
               {isAr ? 'تواصل معنا' : 'Stay Connected'}
             </h2>
-            <p className="text-sm mb-5" style={{ color: 'rgba(92,47,61,0.6)' }}>
+            <p className="text-sm mb-5" style={{ color: 'rgba(201,187,168,0.6)' }}>
               {isAr ? 'امسح الكود للمتابعة والاستمتاع بآخر العروض' : 'Scan to follow and enjoy exclusive offers'}
             </p>
-            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -630,17 +650,16 @@ export default function HomePage() {
                 transition={{ duration: 0.65, delay: i * 0.12 }}
                 className="group flex flex-col items-center rounded-3xl overflow-hidden transition-all duration-300"
                 style={{
-                  background: 'rgba(255,255,255,0.82)',
-                  border: '1px solid rgba(196,134,154,0.22)',
-                  boxShadow: '0 4px 24px rgba(160,69,94,0.1)',
-                  backdropFilter: 'blur(16px)',
+                  background: 'rgba(33,28,25,0.96)',
+                  border: '1px solid rgba(184,115,51,0.22)',
+                  boxShadow: '0 4px 24px rgba(123,30,43,0.1)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = `0 16px 48px rgba(160,69,94,0.2), 0 0 0 1px ${s.accentBorder}`
+                  e.currentTarget.style.boxShadow = `0 16px 48px rgba(123,30,43,0.2), 0 0 0 1px ${s.accentBorder}`
                   e.currentTarget.style.transform = 'translateY(-4px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 24px rgba(160,69,94,0.1)'
+                  e.currentTarget.style.boxShadow = '0 4px 24px rgba(123,30,43,0.1)'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }}
               >
@@ -648,15 +667,15 @@ export default function HomePage() {
                 <div
                   className="w-full flex items-center justify-between px-6 py-4"
                   style={{
-                    background: `linear-gradient(135deg, ${s.accentLight}, rgba(252,238,244,0.6))`,
-                    borderBottom: `1px solid rgba(196,134,154,0.15)`,
+                    background: `linear-gradient(135deg, ${s.accentLight}, rgba(20,17,15,0.6))`,
+                    borderBottom: `1px solid rgba(184,115,51,0.15)`,
                   }}
                 >
                   <div className="flex items-center gap-2.5">
                     <div
                       className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
                       style={{
-                        background: 'rgba(255,255,255,0.9)',
+                        background: 'rgba(33,28,25,0.96)',
                         boxShadow: `0 2px 12px ${s.accentLight}`,
                         border: `1px solid ${s.accentBorder}`,
                       }}
@@ -664,10 +683,10 @@ export default function HomePage() {
                       {s.icon}
                     </div>
                     <div className="text-start">
-                      <p className="font-black text-sm leading-tight" style={{ color: '#3D1F2B' }}>
+                      <p className="font-black text-sm leading-tight" style={{ color: '#F2E8DA' }}>
                         {isAr ? s.platformAr : s.platform}
                       </p>
-                      <p className="text-xs font-semibold" style={{ color: '#A0455E' }}>{s.handle}</p>
+                      <p className="text-xs font-semibold" style={{ color: '#7B1E2B' }}>{s.handle}</p>
                     </div>
                   </div>
                   <span
@@ -675,7 +694,7 @@ export default function HomePage() {
                     style={{
                       background: s.accentLight,
                       border: `1px solid ${s.accentBorder}`,
-                      color: '#8A3A56',
+                      color: '#C9BBA8',
                     }}
                   >
                     {isAr ? 'تابع' : 'Follow'}
@@ -699,10 +718,10 @@ export default function HomePage() {
                   </div>
 
                   <div className="text-center">
-                    <p className="font-black text-base mb-0.5" style={{ color: '#3D1F2B' }}>{s.displayName}</p>
+                    <p className="font-black text-base mb-0.5" style={{ color: '#F2E8DA' }}>{s.displayName}</p>
                     <p
                       className="text-xs font-semibold uppercase tracking-widest"
-                      style={{ color: 'rgba(92,47,61,0.5)' }}
+                      style={{ color: 'rgba(201,187,168,0.5)' }}
                     >
                       {isAr ? 'امسح للمتابعة' : 'Scan to Follow'}
                     </p>
@@ -718,21 +737,21 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           BRANCHES  — premium multi-branch location cards
       ══════════════════════════════════════════ */}
-      <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #F8D7E2 100%)' }}>
+      <section className="section" style={{ background: 'linear-gradient(180deg, #14110F 0%, #211C19 100%)' }}>
         <div className="max-w-6xl mx-auto px-6">
 
           <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#A0455E' }}>
+            <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#7B1E2B' }}>
               {isAr ? 'فروعنا' : 'Our Branches'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#F2E8DA' }}>
               {isAr ? 'زورونا في أقرب فرع' : 'Visit Your Nearest Branch'}
             </h2>
-            <div className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: 'rgba(92,47,61,0.72)' }}>
-              <Clock className="w-4 h-4" style={{ color: '#A0455E' }} />
+            <div className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: 'rgba(201,187,168,0.72)' }}>
+              <Clock className="w-4 h-4" style={{ color: '#7B1E2B' }} />
               {isAr ? workingHours.ar : workingHours.en}
             </div>
-            <div className="w-10 h-0.5 rounded-full mx-auto mt-5" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+            <div className="w-10 h-0.5 rounded-full mx-auto mt-5" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -745,27 +764,26 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="group text-center rounded-3xl p-8 transition-all duration-300"
                 style={{
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,215,226,0.6) 100%)',
-                  border: '1px solid rgba(196,134,154,0.3)',
-                  boxShadow: '0 8px 32px rgba(160,69,94,0.12)',
-                  backdropFilter: 'blur(12px)',
+                  background: 'linear-gradient(145deg, rgba(33,28,25,0.96) 0%, rgba(33,28,25,0.6) 100%)',
+                  border: '1px solid rgba(184,115,51,0.3)',
+                  boxShadow: '0 8px 32px rgba(123,30,43,0.12)',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 20px 56px rgba(160,69,94,0.22)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(160,69,94,0.12)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 20px 56px rgba(123,30,43,0.22)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(123,30,43,0.12)'; e.currentTarget.style.transform = 'translateY(0)' }}
               >
                 <div
                   className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300"
-                  style={{ background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)' }}
+                  style={{ background: 'linear-gradient(135deg, #211C19, #D8A24A)' }}
                 >
-                  <MapPin className="w-6 h-6" style={{ color: '#7A3050' }} />
+                  <MapPin className="w-6 h-6" style={{ color: '#C9BBA8' }} />
                 </div>
-                <span className="block text-[11px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#A0455E' }}>
+                <span className="block text-[11px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: '#7B1E2B' }}>
                   {isAr ? `الفرع ${b.id}` : `Branch ${b.id}`}
                 </span>
-                <h3 className="font-black text-lg mb-2" style={{ color: '#3D1F2B' }}>
+                <h3 className="font-black text-lg mb-2" style={{ color: '#F2E8DA' }}>
                   {isAr ? b.nameAr : b.nameEn}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'rgba(92,47,61,0.72)' }}>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(201,187,168,0.72)' }}>
                   {isAr ? b.detailAr : b.detailEn}
                 </p>
               </motion.div>
@@ -779,8 +797,8 @@ export default function HomePage() {
                 href="tel:0501938696"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
                 style={{
-                  background: 'linear-gradient(135deg, #A0455E, #C4869A)',
-                  boxShadow: '0 8px 24px rgba(160,69,94,0.35)',
+                  background: 'linear-gradient(135deg, #7B1E2B, #B87333)',
+                  boxShadow: '0 8px 24px rgba(123,30,43,0.35)',
                 }}
                 dir="ltr"
               >

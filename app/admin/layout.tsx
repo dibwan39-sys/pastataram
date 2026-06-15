@@ -55,7 +55,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     exact ? pathname === href : pathname.startsWith(href)
 
   return (
-    <div className="min-h-screen flex bg-[#F5F0ED] dark:bg-[#1C1410]">
+    <div className="min-h-screen flex bg-[#1A1614] dark:bg-[#14110F]">
       {/* Sidebar */}
       <AnimatePresence>
         {(sidebarOpen || true) && (
@@ -137,7 +137,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#231A17]/80 backdrop-blur-lg border-b border-brand-rose/20 px-4 py-3 flex items-center justify-between gap-4">
+        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#1A1614]/80 backdrop-blur-lg border-b border-brand-rose/20 px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -176,7 +176,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute end-0 top-12 w-72 bg-white dark:bg-[#2A1F1C] rounded-2xl shadow-brand-lg border border-brand-rose/20 overflow-hidden"
+                    className="absolute end-0 top-12 w-72 bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-brand-lg border border-brand-rose/20 overflow-hidden"
                   >
                     <div className="p-3 border-b border-brand-rose/20">
                       <p className="font-bold text-brand-espresso dark:text-brand-ivory text-sm">Notifications</p>

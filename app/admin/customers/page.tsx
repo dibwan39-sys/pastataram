@@ -43,14 +43,14 @@ export default function AdminCustomersPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search customers..."
-          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-white dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-[#1A1614] dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
         />
       </div>
 
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-brand-pearl dark:bg-brand-espresso/20 text-xs text-brand-latte">
+            <thead className="bg-brand-pearl dark:bg-brand-surface/20 text-xs text-brand-latte">
               <tr>
                 <th className="text-start px-5 py-3 font-semibold">Customer</th>
                 <th className="text-start px-5 py-3 font-semibold">Phone</th>
@@ -62,7 +62,7 @@ export default function AdminCustomersPage() {
             </thead>
             <tbody>
               {filtered.map((customer, i) => (
-                <tr key={customer.id} className={`border-b border-brand-rose/10 hover:bg-brand-pearl/30 dark:hover:bg-brand-espresso/10 transition-colors ${i % 2 === 0 ? '' : 'bg-brand-pearl/10'}`}>
+                <tr key={customer.id} className={`border-b border-brand-rose/10 hover:bg-brand-pearl/30 dark:hover:bg-brand-surface/10 transition-colors ${i % 2 === 0 ? '' : 'bg-brand-pearl/10'}`}>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-blush to-brand-nude flex items-center justify-center font-bold text-brand-espresso text-sm flex-shrink-0">

@@ -58,7 +58,7 @@ export default function AdminCMSPage() {
       {sections.map((section) => {
         const Icon = section.icon
         return (
-          <div key={section.id} className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+          <div key={section.id} className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-8 h-8 rounded-lg bg-brand-blush flex items-center justify-center">
                 <Icon className="w-4 h-4 text-brand-rose-gold" />
@@ -77,7 +77,7 @@ export default function AdminCMSPage() {
                       onChange={(e) => setContent({ ...content, [field.key]: e.target.value })}
                       rows={field.rows}
                       dir={field.dir}
-                      className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm resize-none"
+                      className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm resize-none"
                     />
                   ) : (
                     <input
@@ -85,7 +85,7 @@ export default function AdminCMSPage() {
                       value={(content as any)[field.key]}
                       onChange={(e) => setContent({ ...content, [field.key]: e.target.value })}
                       dir={field.dir}
-                      className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm"
+                      className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm"
                     />
                   )}
                 </div>
@@ -96,7 +96,7 @@ export default function AdminCMSPage() {
       })}
 
       {/* Preview */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-4">Hero Preview</h3>
         <div className="relative rounded-xl overflow-hidden h-40">
           <img src={content.heroImage} alt="Hero" className="w-full h-full object-cover" />

@@ -38,7 +38,7 @@ export default function AccountPage() {
   if (!isLoggedIn) {
     return (
       <PageWrapper>
-        <section className="min-h-[80vh] flex items-center justify-center py-20 bg-gradient-to-br from-brand-cream via-brand-blush/20 to-brand-pearl dark:from-[#1C1410] dark:to-[#231A17]">
+        <section className="min-h-[80vh] flex items-center justify-center py-20 bg-gradient-to-br from-brand-cream via-brand-blush/20 to-brand-pearl dark:from-[#14110F] dark:to-[#1A1614]">
           <div className="w-full max-w-md mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -67,7 +67,7 @@ export default function AccountPage() {
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       placeholder={isAr ? 'الاسم الكامل' : 'Full name'}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+                      className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
                       dir={isAr ? 'rtl' : 'ltr'}
                     />
                   </div>
@@ -81,7 +81,7 @@ export default function AccountPage() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="email@example.com"
-                    className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
                     dir="ltr"
                   />
                 </div>
@@ -94,7 +94,7 @@ export default function AccountPage() {
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       placeholder="05xxxxxxxx"
-                      className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+                      className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
                       dir="ltr"
                     />
                   </div>
@@ -109,7 +109,7 @@ export default function AccountPage() {
                       value={form.password}
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
                       placeholder="••••••••"
-                      className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm pe-10"
+                      className="w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm pe-10"
                     />
                     <button
                       type="button"

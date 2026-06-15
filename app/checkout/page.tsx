@@ -219,7 +219,7 @@ export default function CheckoutPage() {
   }
 
   const inputCls =
-    'w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold'
+    'w-full px-4 py-3 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold'
 
   return (
     <PageWrapper>
@@ -256,8 +256,8 @@ export default function CheckoutPage() {
                             }`}
                             style={active ? { background: 'linear-gradient(135deg, rgba(242,196,216,0.5), rgba(230,160,186,0.3))' } : undefined}
                           >
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #F2C4D8, #E6A0BA)' }}>
-                              <Icon className="w-5 h-5" style={{ color: '#7A3050' }} />
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #211C19, #D8A24A)' }}>
+                              <Icon className="w-5 h-5" style={{ color: '#C9BBA8' }} />
                             </div>
                             <span className="font-bold text-sm text-brand-espresso dark:text-brand-ivory">{opt.label}</span>
                           </button>
@@ -441,7 +441,7 @@ export default function CheckoutPage() {
                   </div>
 
                   {/* fulfillment hint */}
-                  <div className="mt-5 p-3 rounded-xl bg-brand-blush/40 dark:bg-brand-espresso/20 border border-brand-rose/20 text-xs text-brand-brown dark:text-brand-mocha flex items-start gap-2">
+                  <div className="mt-5 p-3 rounded-xl bg-brand-blush/40 dark:bg-brand-surface/20 border border-brand-rose/20 text-xs text-brand-brown dark:text-brand-mocha flex items-start gap-2">
                     <MapPin className="w-3.5 h-3.5 text-brand-rose-gold flex-shrink-0 mt-0.5" />
                     {orderType === 'delivery'
                       ? (isAr ? 'سيتم التوصيل إلى عنوانك بعد تأكيد الطلب عبر واتساب.' : 'Delivered to your address after WhatsApp confirmation.')

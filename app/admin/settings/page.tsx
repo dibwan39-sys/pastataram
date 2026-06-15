@@ -70,7 +70,7 @@ export default function AdminSettingsPage() {
       {sections.map((section) => {
         const Icon = section.icon
         return (
-          <div key={section.title} className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+          <div key={section.title} className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-8 h-8 rounded-lg bg-brand-blush flex items-center justify-center">
                 <Icon className="w-4 h-4 text-brand-rose-gold" />
@@ -88,7 +88,7 @@ export default function AdminSettingsPage() {
                     value={(settings as any)[field.key]}
                     onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })}
                     dir={field.dir}
-                    className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none focus:border-brand-rose-gold text-sm"
                   />
                 </div>
               ))}
@@ -98,7 +98,7 @@ export default function AdminSettingsPage() {
       })}
 
       {/* Business Hours */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
         <div className="flex items-center gap-2 mb-5">
           <div className="w-8 h-8 rounded-lg bg-brand-blush flex items-center justify-center">
             <Clock className="w-4 h-4 text-brand-rose-gold" />
@@ -127,14 +127,14 @@ export default function AdminSettingsPage() {
                     type="time"
                     value={day.open}
                     onChange={(e) => updateHour(i, 'open', e.target.value)}
-                    className="px-3 py-1.5 rounded-lg border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none text-sm"
+                    className="px-3 py-1.5 rounded-lg border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none text-sm"
                   />
                   <span className="text-brand-latte text-sm">to</span>
                   <input
                     type="time"
                     value={day.close}
                     onChange={(e) => updateHour(i, 'close', e.target.value)}
-                    className="px-3 py-1.5 rounded-lg border border-brand-rose/30 bg-brand-pearl dark:bg-brand-espresso/30 text-brand-espresso dark:text-brand-ivory focus:outline-none text-sm"
+                    className="px-3 py-1.5 rounded-lg border border-brand-rose/30 bg-brand-pearl dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory focus:outline-none text-sm"
                   />
                 </>
               )}

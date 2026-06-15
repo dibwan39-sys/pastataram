@@ -33,7 +33,7 @@ export default function OffersPage() {
     <PageWrapper>
       {/* Header */}
       <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-espresso to-brand-brown">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #CFA18D 0%, transparent 50%)' }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #B87333 0%, transparent 50%)' }} />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-ivory/10 text-brand-champagne text-sm font-bold mb-6">
@@ -142,7 +142,7 @@ export default function OffersPage() {
                         <span className="text-xs text-brand-latte">{isAr ? 'كود الخصم:' : 'Promo Code:'}</span>
                         <button
                           onClick={() => copyCode(offer.code!)}
-                          className="flex items-center gap-1.5 bg-brand-blush dark:bg-brand-espresso/30 hover:bg-brand-rose/30 px-3 py-1.5 rounded-full font-mono text-sm font-bold text-brand-espresso dark:text-brand-ivory transition-colors"
+                          className="flex items-center gap-1.5 bg-brand-blush dark:bg-brand-surface/30 hover:bg-brand-rose/30 px-3 py-1.5 rounded-full font-mono text-sm font-bold text-brand-espresso dark:text-brand-ivory transition-colors"
                         >
                           {copiedCode === offer.code ? (
                             <Check className="w-3 h-3 text-green-500" />
@@ -173,7 +173,7 @@ export default function OffersPage() {
       </section>
 
       {/* CTA */}
-      <section className="section bg-brand-pearl dark:bg-[#231A17]">
+      <section className="section bg-brand-pearl dark:bg-[#1A1614]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

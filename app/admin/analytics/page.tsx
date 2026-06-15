@@ -25,8 +25,8 @@ const peakHours = [
 ]
 
 const customerTypes = [
-  { name: 'Returning', value: 68, color: '#CFA18D' },
-  { name: 'New', value: 32, color: '#E9B7C7' },
+  { name: 'Returning', value: 68, color: '#B87333' },
+  { name: 'New', value: 32, color: '#E0B566' },
 ]
 
 const topItemsData = [
@@ -61,7 +61,7 @@ export default function AdminAnalyticsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-5 shadow-card"
+              className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card"
             >
               <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center mb-3`}>
                 <Icon className="w-5 h-5 text-white" />
@@ -79,42 +79,42 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Revenue Chart */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Revenue Trend (Last 6 Months)</h3>
         <ResponsiveContainer width="100%" height={250}>
           <AreaChart data={monthlyRevenue}>
             <defs>
               <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#CFA18D" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#CFA18D" stopOpacity={0} />
+                <stop offset="5%" stopColor="#B87333" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#B87333" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#F7D6DF" />
-            <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#B89E90' }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 12, fill: '#B89E90' }} axisLine={false} tickLine={false} />
-            <Tooltip contentStyle={{ background: '#FFF8F5', border: '1px solid #E9B7C7', borderRadius: 12 }} />
-            <Area type="monotone" dataKey="revenue" stroke="#CFA18D" strokeWidth={2} fill="url(#revenueGrad)" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#211C19" />
+            <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#9A8B7C' }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 12, fill: '#9A8B7C' }} axisLine={false} tickLine={false} />
+            <Tooltip contentStyle={{ background: '#14110F', border: '1px solid #E0B566', borderRadius: 12 }} />
+            <Area type="monotone" dataKey="revenue" stroke="#B87333" strokeWidth={2} fill="url(#revenueGrad)" />
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Peak Hours */}
-        <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+        <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Peak Order Hours</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={peakHours}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F7D6DF" />
-              <XAxis dataKey="hour" tick={{ fontSize: 11, fill: '#B89E90' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#B89E90' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ background: '#FFF8F5', border: '1px solid #E9B7C7', borderRadius: 12 }} />
-              <Bar dataKey="orders" fill="#D8B38A" radius={[4, 4, 0, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#211C19" />
+              <XAxis dataKey="hour" tick={{ fontSize: 11, fill: '#9A8B7C' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#9A8B7C' }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: '#14110F', border: '1px solid #E0B566', borderRadius: 12 }} />
+              <Bar dataKey="orders" fill="#D8A24A" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Customer Types */}
-        <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl p-6 shadow-card">
+        <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Customer Breakdown</h3>
           <ResponsiveContainer width="100%" height={160}>
             <PieChart>
@@ -123,7 +123,7 @@ export default function AdminAnalyticsPage() {
                   <Cell key={i} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ background: '#FFF8F5', border: '1px solid #E9B7C7', borderRadius: 12 }} />
+              <Tooltip contentStyle={{ background: '#14110F', border: '1px solid #E0B566', borderRadius: 12 }} />
             </PieChart>
           </ResponsiveContainer>
           <div className="flex items-center justify-center gap-6 mt-2">
@@ -138,12 +138,12 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Top Items Table */}
-      <div className="bg-white dark:bg-[#2A1F1C] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden">
         <div className="p-5 border-b border-brand-rose/20">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory">Top Performing Items</h3>
         </div>
         <table className="w-full">
-          <thead className="bg-brand-pearl dark:bg-brand-espresso/20 text-xs text-brand-latte">
+          <thead className="bg-brand-pearl dark:bg-brand-surface/20 text-xs text-brand-latte">
             <tr>
               <th className="text-start px-5 py-3 font-semibold">Item</th>
               <th className="text-start px-5 py-3 font-semibold">Orders</th>
@@ -161,7 +161,7 @@ export default function AdminAnalyticsPage() {
                   <td className="px-5 py-3 text-sm font-bold text-brand-espresso dark:text-brand-ivory">{item.revenue} SAR</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 h-2 bg-brand-blush dark:bg-brand-espresso/30 rounded-full overflow-hidden max-w-24">
+                      <div className="flex-1 h-2 bg-brand-blush dark:bg-brand-surface/30 rounded-full overflow-hidden max-w-24">
                         <div
                           className="h-full bg-gradient-to-r from-brand-rose-gold to-brand-champagne rounded-full"
                           style={{ width: `${(item.orders / maxOrders) * 100}%` }}

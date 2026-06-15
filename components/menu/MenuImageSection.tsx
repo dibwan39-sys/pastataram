@@ -147,7 +147,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
   return (
     <section
       className={compact ? 'pt-6 pb-12' : 'section'}
-      style={{ background: 'linear-gradient(180deg, #F8D7E2 0%, #FCEEF4 100%)' }}
+      style={{ background: 'linear-gradient(180deg, #211C19 0%, #14110F 100%)' }}
     >
       <div className={`${compact ? 'max-w-3xl' : 'max-w-4xl'} mx-auto px-4 sm:px-6`}>
         {/* Heading */}
@@ -159,17 +159,17 @@ export default function MenuImageSection({ showHeading = true, compact = false }
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="text-center mb-10"
           >
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#A0455E' }}>
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: '#7B1E2B' }}>
               <BookOpen className="w-3.5 h-3.5" />
               {isAr ? 'المنيو الكاملة' : 'Full Menu'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#F2E8DA' }}>
               {isAr ? 'المنيو الكاملة' : 'The Complete Menu'}
             </h2>
-            <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(92,47,61,0.7)' }}>
+            <p className="text-sm md:text-base mb-4" style={{ color: 'rgba(201,187,168,0.7)' }}>
               {isAr ? 'منيو باستاتا رام الرسمي بالكامل والأسعار' : 'The official PASTATARAM menu & prices'}
             </p>
-            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+            <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
           </motion.div>
         )}
 
@@ -181,11 +181,9 @@ export default function MenuImageSection({ showHeading = true, compact = false }
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="rounded-3xl p-3 sm:p-5"
           style={{
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.55) 0%, rgba(248,215,226,0.35) 100%)',
-            border: '1px solid rgba(196,134,154,0.32)',
-            boxShadow: '0 18px 60px rgba(160,69,94,0.2)',
-            backdropFilter: 'blur(18px)',
-            WebkitBackdropFilter: 'blur(18px)',
+            background: 'linear-gradient(145deg, rgba(33,28,25,0.96) 0%, rgba(33,28,25,0.35) 100%)',
+            border: '1px solid rgba(184,115,51,0.32)',
+            boxShadow: '0 18px 60px rgba(123,30,43,0.2)',
           }}
         >
           <motion.button
@@ -194,17 +192,17 @@ export default function MenuImageSection({ showHeading = true, compact = false }
             whileHover={{ scale: 1.008 }}
             whileTap={{ scale: 0.992 }}
             className="group relative block w-full overflow-hidden rounded-2xl cursor-zoom-in"
-            style={{ border: '1px solid rgba(196,134,154,0.25)', boxShadow: '0 8px 30px rgba(160,69,94,0.14)' }}
+            style={{ border: '1px solid rgba(184,115,51,0.25)', boxShadow: '0 8px 30px rgba(123,30,43,0.14)' }}
             aria-label={isAr ? 'تكبير المنيو' : 'Zoom menu'}
           >
             <img
               src={MENU_IMAGE}
               alt={isAr ? 'منيو باستاتا رام الكامل' : 'PASTATARAM full menu'}
-              className="w-full h-auto object-contain bg-white transition-transform duration-500 group-hover:scale-[1.015]"
+              className="w-full h-auto object-contain bg-[#1A1614] transition-transform duration-500 group-hover:scale-[1.015]"
             />
             <span
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md"
-              style={{ background: 'rgba(252,220,235,0.92)', border: '1px solid rgba(196,134,154,0.4)', color: '#7A3050', boxShadow: '0 4px 16px rgba(160,69,94,0.22)' }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+              style={{ background: 'rgba(252,220,235,0.92)', border: '1px solid rgba(184,115,51,0.4)', color: '#C9BBA8', boxShadow: '0 4px 16px rgba(123,30,43,0.22)' }}
             >
               <Maximize2 className="w-3.5 h-3.5" />
               {isAr ? 'اضغط للتكبير' : 'Tap to zoom'}
@@ -226,7 +224,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
-            style={{ background: 'linear-gradient(135deg, #A0455E 0%, #C4869A 60%, #D4A0B5 100%)', boxShadow: '0 8px 28px rgba(160,69,94,0.4)' }}
+            style={{ background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 60%, #D8A24A 100%)', boxShadow: '0 8px 28px rgba(123,30,43,0.4)' }}
           >
             <Download className="w-4 h-4" />
             {isAr ? 'تحميل المنيو' : 'Download Menu'}
@@ -237,7 +235,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm"
-            style={{ background: 'rgba(248,215,226,0.7)', border: '1.5px solid rgba(196,134,154,0.5)', color: '#8A3A56' }}
+            style={{ background: 'rgba(33,28,25,0.7)', border: '1.5px solid rgba(184,115,51,0.5)', color: '#C9BBA8' }}
           >
             <Share2 className="w-4 h-4" />
             {isAr ? 'مشاركة المنيو' : 'Share Menu'}
@@ -256,23 +254,23 @@ export default function MenuImageSection({ showHeading = true, compact = false }
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
                 className="fixed inset-0 z-[200] flex items-center justify-center"
-                style={{ background: 'rgba(43,31,48,0.92)', backdropFilter: 'blur(8px)' }}
+                style={{ background: 'rgba(15,13,11,0.92)', backdropFilter: 'blur(8px)' }}
                 onClick={close}
               >
                 {/* Toolbar */}
                 <div
                   className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-3 py-2 rounded-full"
-                  style={{ background: 'rgba(252,238,244,0.95)', border: '1px solid rgba(196,134,154,0.4)', boxShadow: '0 6px 24px rgba(0,0,0,0.3)' }}
+                  style={{ background: 'rgba(20,17,15,0.95)', border: '1px solid rgba(184,115,51,0.4)', boxShadow: '0 6px 24px rgba(0,0,0,0.3)' }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button aria-label="zoom out" onClick={() => setZoom((z) => { const nz = Math.max(MIN_ZOOM, z - 0.5); if (nz === 1) setOffset({ x: 0, y: 0 }); return nz })} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[rgba(196,134,154,0.18)]" style={{ color: '#7A3050' }}>
+                  <button aria-label="zoom out" onClick={() => setZoom((z) => { const nz = Math.max(MIN_ZOOM, z - 0.5); if (nz === 1) setOffset({ x: 0, y: 0 }); return nz })} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[rgba(184,115,51,0.18)]" style={{ color: '#C9BBA8' }}>
                     <ZoomOut className="w-5 h-5" />
                   </button>
-                  <span className="text-xs font-bold tabular-nums w-12 text-center" style={{ color: '#7A3050' }}>{Math.round(zoom * 100)}%</span>
-                  <button aria-label="zoom in" onClick={() => setZoom((z) => Math.min(MAX_ZOOM, z + 0.5))} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[rgba(196,134,154,0.18)]" style={{ color: '#7A3050' }}>
+                  <span className="text-xs font-bold tabular-nums w-12 text-center" style={{ color: '#C9BBA8' }}>{Math.round(zoom * 100)}%</span>
+                  <button aria-label="zoom in" onClick={() => setZoom((z) => Math.min(MAX_ZOOM, z + 0.5))} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[rgba(184,115,51,0.18)]" style={{ color: '#C9BBA8' }}>
                     <ZoomIn className="w-5 h-5" />
                   </button>
-                  <button aria-label="reset" onClick={reset} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[rgba(196,134,154,0.18)]" style={{ color: '#7A3050' }}>
+                  <button aria-label="reset" onClick={reset} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[rgba(184,115,51,0.18)]" style={{ color: '#C9BBA8' }}>
                     <RotateCcw className="w-4 h-4" />
                   </button>
                 </div>
@@ -282,7 +280,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
                   onClick={close}
                   aria-label={isAr ? 'إغلاق' : 'Close'}
                   className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                  style={{ background: 'rgba(252,238,244,0.95)', border: '1px solid rgba(196,134,154,0.4)', color: '#7A3050', boxShadow: '0 6px 24px rgba(0,0,0,0.3)' }}
+                  style={{ background: 'rgba(20,17,15,0.95)', border: '1px solid rgba(184,115,51,0.4)', color: '#C9BBA8', boxShadow: '0 6px 24px rgba(0,0,0,0.3)' }}
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -306,7 +304,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
                     src={MENU_IMAGE}
                     alt={isAr ? 'منيو باستاتا رام الكامل' : 'PASTATARAM full menu'}
                     draggable={false}
-                    className="max-w-[94vw] max-h-[88vh] object-contain rounded-lg bg-white"
+                    className="max-w-[94vw] max-h-[88vh] object-contain rounded-lg bg-[#1A1614]"
                     style={{
                       transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})`,
                       transition: pointers.current.size ? 'none' : 'transform 0.18s ease-out',
@@ -316,7 +314,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
                   />
                 </motion.div>
 
-                <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs font-medium pointer-events-none" style={{ color: 'rgba(252,238,244,0.7)' }}>
+                <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs font-medium pointer-events-none" style={{ color: 'rgba(20,17,15,0.7)' }}>
                   {isAr ? 'قرّب بإصبعين أو اضغط مرتين للتكبير' : 'Pinch or double-tap to zoom'}
                 </p>
               </motion.div>

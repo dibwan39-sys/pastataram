@@ -64,7 +64,7 @@ export default function SocialQRSection() {
   const isAr = language === 'ar'
 
   return (
-    <section className="section" style={{ background: 'linear-gradient(180deg, #FCEEF4 0%, #FEF0F5 50%, #F8D7E2 100%)' }}>
+    <section className="section" style={{ background: 'linear-gradient(180deg, #14110F 0%, #1A1614 50%, #211C19 100%)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,16 +73,16 @@ export default function SocialQRSection() {
           transition={{ duration: 0.7 }}
           className="text-center mb-12"
         >
-          <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#A0455E' }}>
+          <span className="text-xs font-bold uppercase tracking-[0.28em] block mb-3" style={{ color: '#7B1E2B' }}>
             {isAr ? 'تابعونا' : 'Follow Us'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#3D1F2B' }}>
+          <h2 className="text-3xl md:text-4xl font-black mb-3" style={{ color: '#F2E8DA' }}>
             {isAr ? 'باركود مواقع التواصل' : 'Social QR Codes'}
           </h2>
-          <p className="text-sm mb-5" style={{ color: 'rgba(92,47,61,0.6)' }}>
+          <p className="text-sm mb-5" style={{ color: 'rgba(201,187,168,0.6)' }}>
             {isAr ? 'امسح الكود للمتابعة والاستمتاع بآخر العروض' : 'Scan to follow and enjoy exclusive offers'}
           </p>
-          <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #A0455E, #D4A0B5)' }} />
+          <div className="w-10 h-0.5 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #7B1E2B, #D8A24A)' }} />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -98,28 +98,27 @@ export default function SocialQRSection() {
               transition={{ duration: 0.65, delay: i * 0.12 }}
               className="group flex flex-col items-center rounded-3xl overflow-hidden transition-all duration-300"
               style={{
-                background: 'rgba(255,255,255,0.82)',
-                border: '1px solid rgba(196,134,154,0.22)',
-                boxShadow: '0 4px 24px rgba(160,69,94,0.1)',
-                backdropFilter: 'blur(16px)',
+                background: 'rgba(33,28,25,0.96)',
+                border: '1px solid rgba(184,115,51,0.22)',
+                boxShadow: '0 4px 24px rgba(123,30,43,0.1)',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 16px 48px rgba(160,69,94,0.2), 0 0 0 1px ${s.accentBorder}`; e.currentTarget.style.transform = 'translateY(-4px)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(160,69,94,0.1)'; e.currentTarget.style.transform = 'translateY(0)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 16px 48px rgba(123,30,43,0.2), 0 0 0 1px ${s.accentBorder}`; e.currentTarget.style.transform = 'translateY(-4px)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(123,30,43,0.1)'; e.currentTarget.style.transform = 'translateY(0)' }}
             >
               <div
                 className="w-full flex items-center justify-between px-6 py-4"
-                style={{ background: `linear-gradient(135deg, ${s.accentLight}, rgba(252,238,244,0.6))`, borderBottom: '1px solid rgba(196,134,154,0.15)' }}
+                style={{ background: `linear-gradient(135deg, ${s.accentLight}, rgba(20,17,15,0.6))`, borderBottom: '1px solid rgba(184,115,51,0.15)' }}
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(255,255,255,0.9)', boxShadow: `0 2px 12px ${s.accentLight}`, border: `1px solid ${s.accentBorder}` }}>
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(33,28,25,0.96)', boxShadow: `0 2px 12px ${s.accentLight}`, border: `1px solid ${s.accentBorder}` }}>
                     {s.icon}
                   </div>
                   <div className="text-start">
-                    <p className="font-black text-sm leading-tight" style={{ color: '#3D1F2B' }}>{isAr ? s.platformAr : s.platform}</p>
-                    <p className="text-xs font-semibold" style={{ color: '#A0455E' }}>{s.handle}</p>
+                    <p className="font-black text-sm leading-tight" style={{ color: '#F2E8DA' }}>{isAr ? s.platformAr : s.platform}</p>
+                    <p className="text-xs font-semibold" style={{ color: '#7B1E2B' }}>{s.handle}</p>
                   </div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: s.accentLight, border: `1px solid ${s.accentBorder}`, color: '#8A3A56' }}>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: s.accentLight, border: `1px solid ${s.accentBorder}`, color: '#C9BBA8' }}>
                   {isAr ? 'تابع' : 'Follow'}
                 </span>
               </div>
@@ -129,8 +128,8 @@ export default function SocialQRSection() {
                   <img src={s.qr} alt={`${s.platform} QR`} className="w-full h-full object-cover" />
                 </div>
                 <div className="text-center">
-                  <p className="font-black text-base mb-0.5" style={{ color: '#3D1F2B' }}>{s.displayName}</p>
-                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(92,47,61,0.5)' }}>{isAr ? 'امسح للمتابعة' : 'Scan to Follow'}</p>
+                  <p className="font-black text-base mb-0.5" style={{ color: '#F2E8DA' }}>{s.displayName}</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(201,187,168,0.5)' }}>{isAr ? 'امسح للمتابعة' : 'Scan to Follow'}</p>
                 </div>
               </div>
             </motion.a>

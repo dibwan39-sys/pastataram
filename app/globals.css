@@ -5,24 +5,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ════════════════════════════════════════════
-   COLOR LOCK — identical on every device
+   PASTATARAM — premium identity
+   Dark charcoal · wine · copper · cream
+   Locked identical on every device
    ════════════════════════════════════════════ */
 :root {
-  color-scheme: light;            /* valid syntax — tells browser: light only */
+  color-scheme: dark;
 
-  --brand-blush:     #F7D6DF;
-  --brand-rose:      #E9B7C7;
-  --brand-nude:      #EFD4CC;
-  --brand-cream:     #FCEEF4;
-  --brand-pearl:     #FFF7FA;
-  --brand-rose-gold: #C4869A;
-  --brand-champagne: #D4A0B5;
-  --brand-copper:    #A0455E;
-  --brand-ivory:     #F8D7E2;
-  --brand-mocha:     #D4A0B5;
-  --brand-latte:     #C4869A;
-  --brand-espresso:  #3D1F2B;
-  --brand-brown:     #5C2F3D;
+  --brand-ink:         #0F0D0B;
+  --brand-charcoal:    #14110F;
+  --brand-charcoal-2:  #1A1614;
+  --brand-surface:     #211C19;
+  --brand-surface-2:   #2B2521;
+  --brand-line:        #3A322C;
+
+  --brand-wine:        #7B1E2B;
+  --brand-wine-deep:   #5E1521;
+  --brand-wine-soft:   #8C2D3D;
+
+  --brand-copper:      #B87333;
+  --brand-copper-light:#D8A24A;
+  --brand-gold:        #E0B566;
+
+  --brand-cream:       #F2E8DA;
+  --brand-cream-soft:  #E8DCC8;
+  --brand-cream-dim:   #C9BBA8;
+  --brand-muted:       #9A8B7C;
 }
 
 *,
@@ -36,45 +44,44 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   /* Lock background even before body paint */
-  background-color: #FCEEF4;
+  background-color: #14110F;
 }
 
 body {
   font-family: 'Inter', 'Cairo', sans-serif;
-  background-color: #FCEEF4;
-  color: #3D1F2B;
+  background-color: #14110F;
+  color: #F2E8DA;
   /* Use `clip` (not `hidden`) so the body does NOT become a scroll container —
      `overflow-x: hidden` forces overflow-y to `auto`, which breaks every
-     `position: sticky` descendant (e.g. the menu search/category bar). */
+     `position: sticky` descendant (e.g. the menu category bar). */
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Nuclear dark-mode lockout ──────────────────
-   Catches: OS dark mode on mobile, any .dark class,
-   and next-themes localStorage persistence          */
-@media (prefers-color-scheme: dark) {
+/* ── Color lock ─────────────────────────────────
+   Keep the charcoal identity regardless of OS theme,
+   any injected .dark class, or next-themes persistence. */
+@media (prefers-color-scheme: light) {
   html {
-    background-color: #FCEEF4;
-    color: #3D1F2B;
+    background-color: #14110F;
+    color: #F2E8DA;
   }
   body {
-    background-color: #FCEEF4 !important;
-    color: #3D1F2B !important;
+    background-color: #14110F !important;
+    color: #F2E8DA !important;
   }
 }
 
-/* next-themes injects class="dark" on <html> — neutralise all Tailwind dark: utilities */
 html.dark,
 html.dark body {
-  background-color: #FCEEF4 !important;
-  color: #3D1F2B !important;
+  background-color: #14110F !important;
+  color: #F2E8DA !important;
 }
 
 /* RTL */
@@ -85,53 +92,46 @@ html.dark body {
 /* ════════════════════════════════════════════
    SCROLLBAR
    ════════════════════════════════════════════ */
-::-webkit-scrollbar        { width: 6px; }
-::-webkit-scrollbar-track  { background: #FFF7FA; }
-::-webkit-scrollbar-thumb  { background: #C4869A; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #A0455E; }
+::-webkit-scrollbar        { width: 7px; }
+::-webkit-scrollbar-track  { background: #14110F; }
+::-webkit-scrollbar-thumb  { background: #5E1521; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #B87333; }
+
+::selection { background: rgba(184,115,51,0.35); color: #F2E8DA; }
 
 /* ════════════════════════════════════════════
-   GLASS — solid fallback on mobile where
-   backdrop-filter causes color distortion
+   SURFACES — solid editorial panels (no glassmorphism)
+   Class names retained for backward compatibility.
    ════════════════════════════════════════════ */
 .glass {
-  background: rgba(252, 238, 244, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(196, 134, 154, 0.25);
+  background: #1A1614;
+  border: 1px solid rgba(58,50,44,0.9);
 }
 
 .glass-card {
-  background: rgba(252, 238, 244, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(196, 134, 154, 0.3);
-  box-shadow: 0 8px 32px rgba(160, 69, 94, 0.1);
+  background: #211C19;
+  border: 1px solid rgba(58,50,44,0.9);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
 }
 
-/* On mobile, replace blur with solid pink — eliminates iOS backdrop-filter color shifts */
-@media (max-width: 767px) {
-  .glass {
-    background: #FCEEF4;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  .glass-card {
-    background: #FCEEF4;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  .mobile-nav {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
+.premium-card {
+  background: linear-gradient(145deg, #211C19 0%, #1A1614 100%);
+  border: 1px solid rgba(58,50,44,0.9);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.premium-card:hover {
+  border-color: rgba(184,115,51,0.55);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
 }
 
 /* ════════════════════════════════════════════
    TYPOGRAPHY
    ════════════════════════════════════════════ */
 .gradient-text {
-  background: linear-gradient(135deg, #C4869A, #D4A0B5, #A0455E);
+  background: linear-gradient(135deg, #B87333, #D8A24A, #E0B566);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -140,32 +140,35 @@ html.dark body {
 .logo-text {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
+
+.font-display { font-family: 'Playfair Display', serif; }
 
 /* ════════════════════════════════════════════
    BUTTONS
    ════════════════════════════════════════════ */
 .btn-primary {
-  background: linear-gradient(135deg, #A0455E, #C4869A);
-  color: white;
-  border: none;
+  background: linear-gradient(135deg, #5E1521 0%, #7B1E2B 55%, #8C2D3D 100%);
+  color: #F2E8DA;
+  border: 1px solid rgba(184,115,51,0.35);
   border-radius: 50px;
   padding: 12px 32px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(160, 69, 94, 0.35);
+  box-shadow: 0 10px 30px rgba(123,30,43,0.45);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 8px 30px rgba(160, 69, 94, 0.5);
+  box-shadow: 0 14px 40px rgba(123,30,43,0.6);
+  border-color: rgba(216,162,74,0.6);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #3D1F2B;
-  border: 2px solid #C4869A;
+  color: #F2E8DA;
+  border: 1.5px solid #B87333;
   border-radius: 50px;
   padding: 10px 30px;
   font-weight: 600;
@@ -174,8 +177,8 @@ html.dark body {
 }
 
 .btn-secondary:hover {
-  background: #C4869A;
-  color: white;
+  background: #B87333;
+  color: #14110F;
 }
 
 /* ════════════════════════════════════════════
@@ -200,7 +203,7 @@ html.dark body {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(160, 69, 94, 0.15);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
 }
 
 .mobile-nav {
@@ -209,34 +212,30 @@ html.dark body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(252, 238, 244, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(196, 134, 154, 0.25);
-  box-shadow: 0 -4px 20px rgba(160, 69, 94, 0.1);
+  background: rgba(20,17,15,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(58,50,44,0.9);
+  box-shadow: 0 -6px 24px rgba(0,0,0,0.5);
+}
+
+@media (max-width: 767px) {
+  .mobile-nav {
+    background: #14110F;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .bg-brand-gradient {
-  background: linear-gradient(135deg, #FCEEF4 0%, #F8D7E2 40%, #FCEEF4 100%);
+  background: linear-gradient(160deg, #14110F 0%, #1A1614 55%, #211C19 100%);
 }
 
 .admin-sidebar {
-  background: linear-gradient(180deg, #2B1F30 0%, #3D2645 100%);
+  background: linear-gradient(180deg, #14110F 0%, #211C19 100%);
 }
 
-.premium-card {
-  background: linear-gradient(145deg, rgba(252,238,244,0.95) 0%, rgba(248,215,226,0.7) 100%);
-  border: 1px solid rgba(196,134,154,0.3);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(160,69,94,0.1);
-  transition: all 0.3s ease;
-}
-
-.premium-card:hover {
-  box-shadow: 0 20px 60px rgba(160,69,94,0.18);
-  border-color: rgba(196,134,154,0.5);
-}
-
+/* Editorial image treatment — keeps food the focus */
 .img-overlay {
   position: relative;
   overflow: hidden;
@@ -246,11 +245,11 @@ html.dark body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(43,31,48,0.5) 0%, transparent 50%);
+  background: linear-gradient(to top, rgba(15,13,11,0.85) 0%, rgba(15,13,11,0.1) 55%, transparent 100%);
 }
 
 .nav-active {
-  color: #C4869A;
+  color: #D8A24A;
   position: relative;
 }
 
@@ -261,12 +260,12 @@ html.dark body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(135deg, #C4869A, #D4A0B5);
+  background: linear-gradient(135deg, #B87333, #E0B566);
   border-radius: 2px;
 }
 
-.star-filled { color: #D4A0B5; fill: #D4A0B5; }
-.star-empty  { color: #D4A0B5; }
+.star-filled { color: #D8A24A; fill: #D8A24A; }
+.star-empty  { color: #4A3F36; }
 
 .status-badge {
   padding: 4px 12px;
@@ -276,7 +275,7 @@ html.dark body {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #FFF7FA 25%, #F8D7E2 50%, #FFF7FA 75%);
+  background: linear-gradient(90deg, #1A1614 25%, #2B2521 50%, #1A1614 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -298,5 +297,3 @@ html.dark body {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
 }
-
-

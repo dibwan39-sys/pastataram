@@ -37,7 +37,7 @@ export default function MobileBottomNav() {
               >
                 <div className="relative -mt-6">
                   {/* Logo as cart button centerpiece */}
-                  <div className="w-14 h-14 rounded-full shadow-lg overflow-hidden border-2 border-[#F2C4D4]" style={{ background: '#F8D7E2' }}>
+                  <div className="w-14 h-14 rounded-full shadow-lg overflow-hidden border-2 border-[#211C19]" style={{ background: '#211C19' }}>
                     <Image
                       src="/images/logo.png"
                       alt="PASTATARAM"
@@ -52,13 +52,13 @@ export default function MobileBottomNav() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className="absolute -top-1 -right-1 w-5 h-5 text-white text-[10px] font-bold rounded-full flex items-center justify-center"
-                      style={{ background: '#A0455E' }}
+                      style={{ background: '#7B1E2B' }}
                     >
                       {itemCount()}
                     </motion.span>
                   )}
                 </div>
-                <span className="text-[10px] font-semibold" style={{ color: '#A0455E' }}>{tab.label}</span>
+                <span className="text-[10px] font-semibold" style={{ color: '#7B1E2B' }}>{tab.label}</span>
               </button>
             )
           }

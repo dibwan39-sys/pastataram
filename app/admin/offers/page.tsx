@@ -35,7 +35,7 @@ export default function AdminOffersPage() {
         {offers.map((offer) => (
           <div
             key={offer.id}
-            className={`bg-white dark:bg-[#2A1F1C] rounded-2xl shadow-card overflow-hidden ${!offer.active ? 'opacity-60' : ''}`}
+            className={`bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden ${!offer.active ? 'opacity-60' : ''}`}
           >
             <div className="relative h-36">
               <img src={offer.image} alt={offer.title} className="w-full h-full object-cover" />
@@ -57,7 +57,7 @@ export default function AdminOffersPage() {
               {offer.code && (
                 <div className="flex items-center gap-2 mb-3">
                   <Tag className="w-3.5 h-3.5 text-brand-rose-gold" />
-                  <span className="font-mono text-sm font-bold text-brand-espresso dark:text-brand-ivory bg-brand-blush dark:bg-brand-espresso/30 px-2 py-0.5 rounded">
+                  <span className="font-mono text-sm font-bold text-brand-espresso dark:text-brand-ivory bg-brand-blush dark:bg-brand-surface/30 px-2 py-0.5 rounded">
                     {offer.code}
                   </span>
                 </div>

@@ -1,15 +1,25 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Instagram, Phone, MapPin, Clock, Heart } from 'lucide-react'
+import { Instagram, Phone, MapPin, Clock, Heart, MessageCircle } from 'lucide-react'
 import { useUIStore } from '@/lib/store'
 import { cmsContent, branches, workingHours } from '@/lib/data'
+import { getOpenStatus, type OpenStatus } from '@/lib/utils'
 import Logo from '@/components/ui/Logo'
 
 export default function Footer() {
   const { language } = useUIStore()
   const isAr = language === 'ar'
+
+  const [status, setStatus] = useState<OpenStatus | null>(null)
+  useEffect(() => {
+    const tick = () => setStatus(getOpenStatus(language))
+    tick()
+    const id = setInterval(tick, 60_000)
+    return () => clearInterval(id)
+  }, [language])
 
   const links = isAr ? [
     { href: '/', label: 'الرئيسية' },
@@ -32,11 +42,11 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative overflow-hidden bg-brand-espresso dark:bg-[#1C1410] text-brand-ivory/90">
+    <footer className="relative overflow-hidden bg-brand-surface dark:bg-[#14110F] text-brand-ivory/90">
       {/* Top wave */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-brand-cream dark:bg-[#1C1410]">
+      <div className="absolute top-0 left-0 right-0 h-16 bg-brand-cream dark:bg-[#14110F]">
         <svg viewBox="0 0 1440 64" fill="none" className="absolute bottom-0 w-full h-full">
-          <path d="M0 64L1440 64L1440 0C1200 48 720 64 0 0V64Z" fill="#4A342B" />
+          <path d="M0 64L1440 64L1440 0C1200 48 720 64 0 0V64Z" fill="#211C19" />
         </svg>
       </div>
 
@@ -53,6 +63,16 @@ export default function Footer() {
                   ? 'تجربة باستا فاخرة في قلب جدة. نكهات إيطالية مصنوعة بعناية من أجود المكونات.'
                   : 'Premium pasta experience in the heart of Jeddah. Italian flavors crafted with the finest ingredients.'}
               </p>
+              <a
+                href={`https://wa.me/${cmsContent.whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-transform hover:scale-[1.03]"
+                style={{ background: '#25D366', color: '#0A2616', boxShadow: '0 8px 24px rgba(37,211,102,0.3)' }}
+              >
+                <MessageCircle className="w-4 h-4" />
+                {isAr ? 'اطلب عبر واتساب' : 'Order via WhatsApp'}
+              </a>
               <div className="flex items-center gap-3 mt-4">
                 <a
                   href="https://instagram.com/pastataram"
@@ -138,7 +158,21 @@ export default function Footer() {
                 </div>
                 <div className="flex items-start gap-2 text-sm text-brand-ivory/60">
                   <Clock className="w-4 h-4 text-brand-rose-gold flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? workingHours.ar : workingHours.en}</span>
+                  <span className="flex flex-wrap items-center gap-2">
+                    <span>{isAr ? workingHours.ar : workingHours.en}</span>
+                    {status && (
+                      <span
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold"
+                        style={{
+                          background: status.open ? 'rgba(34,77,46,0.4)' : 'rgba(94,21,33,0.4)',
+                          color: status.open ? '#7FD89A' : '#E0A0A8',
+                        }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: status.open ? '#4FCB6F' : '#C0566A' }} />
+                        {status.label}
+                      </span>
+                    )}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-brand-ivory/60">
                   <Instagram className="w-4 h-4 text-brand-rose-gold flex-shrink-0" />
