@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, QrCode, BookOpen } from 'lucide-react'
@@ -9,7 +8,6 @@ import ProductCard from '@/components/menu/ProductCard'
 import QROrderSection from '@/components/menu/QROrderSection'
 import { useUIStore } from '@/lib/store'
 import { menuItems, reviews, branches, workingHours } from '@/lib/data'
-import { getOpenStatus, type OpenStatus } from '@/lib/utils'
 import Image from 'next/image'
 
 const fadeUp = {
@@ -28,15 +26,6 @@ const fadeUp = {
 export default function HomePage() {
   const { language } = useUIStore()
   const isAr = language === 'ar'
-
-  // Live Open/Closed status (Jeddah time) — computed after mount to avoid SSR/CSR drift
-  const [status, setStatus] = useState<OpenStatus | null>(null)
-  useEffect(() => {
-    const tick = () => setStatus(getOpenStatus(language))
-    tick()
-    const id = setInterval(tick, 60_000)
-    return () => clearInterval(id)
-  }, [language])
 
   const featuredReviews = reviews.filter((r) => r.featured).slice(0, 3)
   const bestSellers = menuItems.filter((m) => m.bestseller)
@@ -57,208 +46,121 @@ export default function HomePage() {
     <PageWrapper>
 
       {/* ══════════════════════════════════════════
-          HERO  — rich blush pink atmosphere
+          HERO  — full-screen cinematic brand statement
       ══════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: '#1A1614' }}>
+      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center overflow-hidden" style={{ background: '#0F0D0B' }}>
 
-        {/* Single clean gradient — no stacking, identical on all devices */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #211C19 0%, #14110F 55%, #1A1614 100%)' }} />
+        {/* Background food photo with a very subtle, slow zoom */}
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1.04 }}
+          animate={{ scale: 1.16 }}
+          transition={{ duration: 24, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+        >
+          <Image
+            src="/images/f1.png"
+            alt={isAr ? 'باستاتا رام — أطباق فاخرة' : 'PASTATARAM — premium pasta'}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+            unoptimized
+          />
+        </motion.div>
 
-        {/* Content grid */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-24 pb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center min-h-[calc(100vh-160px)]">
+        {/* Dark cinematic overlay for readability */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(15,13,11,0.74) 0%, rgba(15,13,11,0.58) 42%, rgba(15,13,11,0.88) 100%)' }} />
+        {/* Soft vignette to draw the eye to the centre */}
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 32%, rgba(15,13,11,0.55) 100%)' }} />
 
-            {/* ── Text side ── */}
-            <motion.div
-              initial={{ opacity: 0, x: isAr ? 24 : -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col items-center lg:items-start text-center lg:text-start order-2 lg:order-1"
-            >
-              {/* Location + live Open Now badges */}
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.6 }}
-                className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-7"
-              >
-                <span
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold"
-                  style={{
-                    background: 'rgba(33,28,25,0.75)',
-                    border: '1px solid rgba(184,115,51,0.35)',
-                    color: '#C9BBA8',
-                  }}
-                >
-                  <MapPin className="w-3 h-3" />
-                  {isAr ? 'جدة · ٣ فروع' : 'Jeddah · 3 Branches'}
-                </span>
-                {status && (
-                  <span
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold"
-                    style={{
-                      background: status.open ? 'rgba(34,77,46,0.35)' : 'rgba(94,21,33,0.35)',
-                      border: `1px solid ${status.open ? 'rgba(74,170,104,0.55)' : 'rgba(168,66,79,0.55)'}`,
-                      color: status.open ? '#7FD89A' : '#E0A0A8',
-                    }}
-                    title={status.detail}
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ background: status.open ? '#4FCB6F' : '#C0566A', boxShadow: status.open ? '0 0 8px #4FCB6F' : 'none' }}
-                    />
-                    {status.label}
-                    <span className="font-medium opacity-70">· {status.detail}</span>
-                  </span>
-                )}
-              </motion.div>
+        {/* Centred brand content */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 flex flex-col items-center text-center px-6"
+        >
+          {/* Logo — the main focal point */}
+          <motion.img
+            src="/images/logo.png"
+            alt="PASTATARAM"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-36 h-36 md:w-52 md:h-52 object-contain mb-6"
+            style={{ filter: 'drop-shadow(0 14px 44px rgba(0,0,0,0.65))' }}
+          />
 
-              {/* Headline */}
-              <h1 className="font-black leading-[1.08] tracking-tight mb-5" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)' }}>
-                {isAr ? (
-                  <>
-                    <span style={{ color: '#F2E8DA' }}>تجربة باستا عصرية</span>
-                    <br />
-                    <span style={{ color: '#F2E8DA' }}>تجمع بين الأناقة</span>
-                    <br />
-                    <span style={{
-                      background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 50%, #D8A24A 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}>والطعم الاستثنائي</span>
-                  </>
-                ) : (
-                  <>
-                    <span style={{ color: '#F2E8DA' }}>A Modern Pasta</span>
-                    <br />
-                    <span style={{ color: '#F2E8DA' }}>Experience of</span>
-                    <br />
-                    <span style={{
-                      background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 50%, #D8A24A 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}>Elegance & Taste</span>
-                  </>
-                )}
-              </h1>
+          {/* Wordmark */}
+          <h1
+            className="font-display font-bold tracking-[0.18em] mb-3"
+            style={{ fontSize: 'clamp(2.4rem, 7vw, 4.5rem)', color: '#F2E8DA', textShadow: '0 4px 24px rgba(0,0,0,0.6)' }}
+          >
+            PASTATARAM
+          </h1>
 
-              <p className="text-sm md:text-base leading-relaxed mb-9 max-w-sm" style={{ color: 'rgba(201,187,168,0.8)' }}>
-                {isAr
-                  ? 'نكهات إيطالية مصممة بعناية لتمنحكم تجربة لا تُنسى'
-                  : 'Italian flavors carefully crafted to give you an unforgettable experience'}
-              </p>
+          {/* Tagline */}
+          <p className="text-sm md:text-lg font-medium uppercase tracking-[0.32em] mb-7" style={{ color: '#D8A24A' }}>
+            Premium Pasta Experience
+          </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 mb-10">
-                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-                  <Link
-                    href="/menu"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
-                    style={{
-                      background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 60%, #D8A24A 100%)',
-                      boxShadow: '0 8px 28px rgba(123,30,43,0.4)',
-                    }}
-                  >
-                    {isAr ? 'استكشف المنيو' : 'Explore Menu'}
-                    {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-                  <Link
-                    href="/order"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm"
-                    style={{
-                      background: 'rgba(33,28,25,0.65)',
-                      border: '1.5px solid rgba(184,115,51,0.5)',
-                      color: '#C9BBA8',
-                      boxShadow: '0 4px 16px rgba(184,115,51,0.2)',
-                    }}
-                  >
-                    {isAr ? 'اطلب الآن' : 'Order Now'}
-                  </Link>
-                </motion.div>
-              </div>
+          {/* Refined gold divider */}
+          <div className="w-16 h-px mb-7" style={{ background: 'linear-gradient(90deg, transparent, #B87333, transparent)' }} />
 
-              {/* Stats row */}
-              <div className="flex items-center gap-7">
-                {[
-                  { num: '500+', label: isAr ? 'طلب يومي' : 'Daily Orders' },
-                  { num: '4.9★', label: isAr ? 'التقييم' : 'Rating' },
-                  { num: '100%', label: isAr ? 'طازج' : 'Fresh' },
-                ].map((s, i) => (
-                  <div key={s.num} className="relative text-center">
-                    {i > 0 && (
-                      <div className="absolute -start-3.5 top-1 h-6 w-px" style={{ background: 'rgba(184,115,51,0.4)' }} />
-                    )}
-                    <p className="text-xl font-black" style={{ color: '#7B1E2B' }}>{s.num}</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-wide mt-0.5" style={{ color: 'rgba(201,187,168,0.55)' }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+          {/* Location + daily hours */}
+          <p className="text-base md:text-xl font-bold mb-2" style={{ color: '#F2E8DA' }}>
+            {isAr ? 'جدة • 3 فروع' : 'Jeddah • 3 Branches'}
+          </p>
+          <p className="text-sm md:text-base mb-9" style={{ color: 'rgba(201,187,168,0.88)' }}>
+            {isAr ? 'يومياً من 3:00 مساءً إلى 3:00 فجراً' : 'Daily 3:00 PM – 3:00 AM'}
+          </p>
 
-            {/* ── Visual side — food-first editorial frame ── */}
-            <motion.div
-              initial={{ opacity: 0, x: isAr ? -24 : 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="relative order-1 lg:order-2"
-            >
-              <div
-                className="relative w-full overflow-hidden rounded-[2rem]"
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+              <Link
+                href="/order"
+                className="inline-flex items-center justify-center px-9 py-4 rounded-full font-bold text-white text-sm md:text-base min-w-[180px]"
                 style={{
-                  aspectRatio: '4 / 5',
-                  border: '1px solid rgba(58,50,44,0.9)',
-                  boxShadow: '0 30px 80px rgba(0,0,0,0.6)',
+                  background: 'linear-gradient(135deg, #7B1E2B 0%, #B87333 100%)',
+                  boxShadow: '0 10px 30px rgba(123,30,43,0.45)',
                 }}
               >
-                <Image
-                  src="/images/f1.png"
-                  alt={isAr ? 'باستاتا رام — الطبق المميز' : 'Pastata Ram — signature dish'}
-                  fill
-                  sizes="(max-width: 1024px) 90vw, 45vw"
-                  className="object-cover"
-                  priority
-                  unoptimized
-                />
-                {/* Editorial bottom scrim keeps focus on the food while seating the caption */}
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(15,13,11,0.92) 0%, rgba(15,13,11,0.15) 45%, transparent 70%)' }} />
-
-                {/* Signature caption */}
-                <div className="absolute bottom-0 inset-x-0 p-6">
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.22em] mb-2" style={{ color: '#D8A24A' }}>
-                    <Star className="w-3 h-3" style={{ fill: '#D8A24A' }} />
-                    {isAr ? 'الطبق المميز' : 'Signature Dish'}
-                  </span>
-                  <p className="font-display text-2xl md:text-3xl font-bold" style={{ color: '#F2E8DA' }}>
-                    {isAr ? 'باستاتا رام' : 'Pastata Ram'}
-                  </p>
-                  <p className="text-xs mt-1" style={{ color: 'rgba(201,187,168,0.75)' }}>
-                    {isAr ? 'دجاج · طماطم مشوية · باذنجان · أعشاب خاصة' : 'Chicken · roasted tomato · eggplant · special herbs'}
-                  </p>
-                </div>
-
-                {/* Price tab — editorial, not floating */}
-                <div
-                  className="absolute top-5 end-5 px-3.5 py-2 rounded-full text-sm font-black"
-                  style={{ background: 'linear-gradient(135deg, #5E1521, #7B1E2B)', color: '#F2E8DA', border: '1px solid rgba(216,162,74,0.5)' }}
-                >
-                  {isAr ? '٢٧ ر.س' : '27 SAR'}
-                </div>
-              </div>
+                {isAr ? 'اطلب الآن' : 'Order Now'}
+              </Link>
             </motion.div>
-
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+              <Link
+                href="/menu"
+                className="inline-flex items-center justify-center px-9 py-4 rounded-full font-bold text-sm md:text-base min-w-[180px]"
+                style={{
+                  background: 'transparent',
+                  border: '1.5px solid rgba(216,162,74,0.7)',
+                  color: '#F2E8DA',
+                }}
+              >
+                {isAr ? 'تصفح المنيو' : 'Browse Menu'}
+              </Link>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-          <div className="w-5 h-8 rounded-full flex items-start justify-center p-1.5" style={{ border: '1.5px solid rgba(123,30,43,0.4)' }}>
-            <div className="w-1 h-1.5 rounded-full" style={{ background: '#7B1E2B' }} />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
+        >
+          <div className="w-5 h-8 rounded-full flex items-start justify-center p-1.5" style={{ border: '1.5px solid rgba(216,162,74,0.5)' }}>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-1 h-1.5 rounded-full"
+              style={{ background: '#D8A24A' }}
+            />
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════
