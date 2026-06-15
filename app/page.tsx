@@ -87,7 +87,7 @@ export default function HomePage() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-48 h-48 md:w-72 md:h-72 object-contain mb-6"
+            className="w-60 h-60 md:w-96 md:h-96 object-contain mb-6"
             style={{ filter: 'drop-shadow(0 14px 44px rgba(0,0,0,0.65))' }}
           />
 
