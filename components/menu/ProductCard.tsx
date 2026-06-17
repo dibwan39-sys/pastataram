@@ -49,12 +49,12 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
       onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(123,30,43,0.12)'; e.currentTarget.style.transform = 'translateY(0)' }}
     >
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden">
         <img
           src={item.image}
           alt={isAr ? item.nameAr : item.name}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[600ms]"
+          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-[600ms]"
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(61,31,43,0.5) 0%, transparent 55%)' }} />
         <div className="absolute top-3 start-3 flex gap-2">
