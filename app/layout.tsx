@@ -1,14 +1,13 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import ClientProviders from '@/components/providers/ClientProviders'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://pastataram.vercel.app'),
   title: 'PASTATARAM',
   applicationName: 'PASTATARAM',
   description: 'PASTATARAM - Premium fast-casual pasta in Jeddah. Italian-inspired pasta crafted with the finest ingredients. Daily 3:00 PM – 3:00 AM.',
   keywords: 'PASTATARAM, pasta, Jeddah, fast casual, Italian, باستاتا رام, جدة',
-  themeColor: '#14110F',
-  colorScheme: 'dark',
   icons: {
     icon: '/images/logo.png',
     apple: '/images/logo.png',
@@ -27,6 +26,11 @@ export const metadata: Metadata = {
     description: 'Premium fast-casual pasta experience in Jeddah',
     images: ['/images/logo.png'],
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#14110F',
+  colorScheme: 'dark',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
