@@ -54,7 +54,7 @@ export const menuItems: MenuItem[] = [
     descriptionAr: 'انتعاش مثالي مع مجموعة مختارة من المشروبات الغازية الباردة لترافق أطباقنا المميزة.',
     price: 2,
     category: 'drinks',
-    image: '/images/f4n.png',
+    image: '/images/f7.png',
     tags: [],
     available: true,
     featured: false,
@@ -208,7 +208,7 @@ export const galleryImages: GalleryImage[] = [
   { id: '4', url: '/images/f1.png', alt: 'Pastata Ram close-up', altAr: 'باستاتا رام عن قرب', category: 'food', featured: false },
   { id: '5', url: '/images/f3.png', alt: 'Pastata Balls', altAr: 'باستاتا بولز', category: 'food', featured: false },
   { id: '6', url: '/images/f2.png', alt: 'Ramcine', altAr: 'رامسين', category: 'food', featured: false },
-  { id: '7', url: '/images/f4n.png', alt: 'Soft Drinks', altAr: 'مشروبات غازية', category: 'drinks', featured: false },
+  { id: '7', url: '/images/f7.png', alt: 'Soft Drinks', altAr: 'مشروبات غازية', category: 'drinks', featured: false },
   { id: '8', url: '/images/f5.png', alt: 'Water', altAr: 'مياه', category: 'drinks', featured: false },
   { id: '9', url: '/images/f6.png', alt: 'Tea', altAr: 'شاي', category: 'drinks', featured: false },
 ]
