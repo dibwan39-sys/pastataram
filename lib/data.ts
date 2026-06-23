@@ -52,7 +52,7 @@ export const menuItems: MenuItem[] = [
     nameAr: 'مشروبات غازية',
     description: 'Perfectly chilled soft drinks, a refreshing match for our signature dishes.',
     descriptionAr: 'انتعاش مثالي مع مجموعة مختارة من المشروبات الغازية الباردة لترافق أطباقنا المميزة.',
-    price: 2,
+    price: 3,
     category: 'drinks',
     image: '/images/f7.png',
     tags: [],
