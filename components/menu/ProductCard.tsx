@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Plus, Minus, Flame, Star, ShoppingCart } from 'lucide-react'
+import { Plus, Minus, Flame, Star, ShoppingCart, Check } from 'lucide-react'
 import toast from 'react-hot-toast'
-import type { MenuItem } from '@/lib/types'
+import type { Extra, MenuItem } from '@/lib/types'
 import { useCartStore, useUIStore } from '@/lib/store'
 
 interface ProductCardProps {
@@ -14,8 +14,8 @@ interface ProductCardProps {
 
 /**
  * Premium glassmorphism product card with image, name, description, price,
- * a quantity selector, and an add-to-cart button. Used on the menu page and
- * the home menu section.
+ * optional add-ons, a quantity selector, and an add-to-cart button. Used on the
+ * menu page and the home menu section.
  */
 export default function ProductCard({ item, index = 0 }: ProductCardProps) {
   const { language, setCartOpen } = useUIStore()
@@ -23,14 +23,31 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
   const isAr = language === 'ar'
   const [qty, setQty] = useState(1)
 
+  // Cards show the short teaser when the item defines one, otherwise the full description.
+  const cardText = isAr
+    ? item.shortDescriptionAr || item.descriptionAr
+    : item.shortDescription || item.description
+  // Items whose price has not been set yet (price: 0) show a placeholder instead of "0".
+  const priceReady = item.price > 0
+
+  // Add-ons the customer picked for this card, in the order they are declared on the item.
+  const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([])
+  const availableExtras = item.extras ?? []
+  const selectedExtras: Extra[] = availableExtras.filter((e) => selectedExtraIds.includes(e.id))
+
+  const toggleExtra = (id: string) =>
+    setSelectedExtraIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]))
+
   const handleAdd = () => {
-    addItem(item, qty)
+    if (!priceReady) return
+    addItem(item, qty, selectedExtras)
     toast.success(
       isAr ? `تمت إضافة ${qty} × ${item.nameAr} للسلة` : `${qty} × ${item.name} added to cart`,
       { icon: '🛒' }
     )
     setCartOpen(true)
     setQty(1)
+    setSelectedExtraIds([])
   }
 
   return (
@@ -77,12 +94,12 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-5">
-        {(isAr ? item.descriptionAr : item.description) && (
+        {cardText && (
           <p
             className={`text-[13.5px] md:text-sm leading-7 tracking-[0.01em] mb-4 min-h-[3.5rem] ${isAr ? 'text-right' : ''}`}
             style={{ color: 'rgba(201,187,168,0.82)' }}
           >
-            {isAr ? item.descriptionAr : item.description}
+            {cardText}
           </p>
         )}
         {item.calories ? (
@@ -91,18 +108,62 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
           </p>
         ) : <div className="mb-4" />}
 
+        {/* Add-ons — options inside the product, chosen before adding to the cart */}
+        {availableExtras.length > 0 && (
+          <div className="mb-4">
+            <p className="text-[11px] font-bold mb-2" style={{ color: 'rgba(184,115,51,0.95)' }}>
+              {isAr ? 'الإضافات' : 'Add-ons'}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {availableExtras.map((extra) => {
+                const active = selectedExtraIds.includes(extra.id)
+                return (
+                  <button
+                    key={extra.id}
+                    type="button"
+                    onClick={() => toggleExtra(extra.id)}
+                    aria-pressed={active}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-bold transition-colors"
+                    style={{
+                      background: active ? 'linear-gradient(135deg, #7B1E2B, #B87333)' : 'rgba(33,28,25,0.6)',
+                      border: `1px solid ${active ? 'rgba(216,162,74,0.7)' : 'rgba(184,115,51,0.4)'}`,
+                      color: active ? '#FFFFFF' : '#C9BBA8',
+                    }}
+                  >
+                    {active ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                    {isAr ? extra.nameAr : extra.name}
+                    {extra.price > 0 && (
+                      <span className="opacity-80">
+                        +{extra.price} {isAr ? 'ر.س' : 'SAR'}
+                      </span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Price + controls — clearly separated for visual hierarchy */}
         <div className="mt-auto pt-4" style={{ borderTop: '1px solid rgba(184,115,51,0.15)' }}>
           <div className="flex items-baseline gap-1.5">
-            <span
-              className="text-[1.7rem] leading-none font-black"
-              style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-            >
-              {item.price}
-            </span>
-            <span className="text-sm font-bold" style={{ color: 'rgba(184,115,51,0.95)' }}>
-              {isAr ? 'ر.س' : 'SAR'}
-            </span>
+            {priceReady ? (
+              <>
+                <span
+                  className="text-[1.7rem] leading-none font-black"
+                  style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+                >
+                  {item.price}
+                </span>
+                <span className="text-sm font-bold" style={{ color: 'rgba(184,115,51,0.95)' }}>
+                  {isAr ? 'ر.س' : 'SAR'}
+                </span>
+              </>
+            ) : (
+              <span className="text-base leading-none font-black py-2" style={{ color: 'rgba(184,115,51,0.95)' }}>
+                {isAr ? 'السعر قريباً' : 'Price coming soon'}
+              </span>
+            )}
           </div>
 
           {/* Quantity selector + add to cart */}
@@ -133,11 +194,16 @@ export default function ProductCard({ item, index = 0 }: ProductCardProps) {
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={priceReady ? { scale: 1.04 } : undefined}
+              whileTap={priceReady ? { scale: 0.96 } : undefined}
               onClick={handleAdd}
-              className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold text-white"
-              style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', boxShadow: '0 6px 18px rgba(123,30,43,0.35)' }}
+              disabled={!priceReady}
+              className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold text-white disabled:cursor-not-allowed"
+              style={{
+                background: 'linear-gradient(135deg, #7B1E2B, #B87333)',
+                boxShadow: '0 6px 18px rgba(123,30,43,0.35)',
+                opacity: priceReady ? 1 : 0.45,
+              }}
             >
               <ShoppingCart className="w-4 h-4" />
               {isAr ? 'أضف للسلة' : 'Add'}

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ShoppingBag, Check, ArrowRight, ArrowLeft, Loader2, Store, Truck, CalendarClock, MapPin } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
-import { useUIStore, useCartStore, useOrderStore } from '@/lib/store'
+import { cartLineId, useUIStore, useCartStore, useOrderStore } from '@/lib/store'
 import { formatPrice, generateOrderNumber, generateId, getWhatsAppLink } from '@/lib/utils'
 import { Order, OrderType } from '@/lib/types'
 import { branches } from '@/lib/data'
@@ -36,7 +36,12 @@ export default function CheckoutPage() {
 
   const buildInvoice = (order: Order) => {
     const lines = items
-      .map((i) => `• ${isAr ? i.menuItem.nameAr : i.menuItem.name} ×${i.quantity} = ${formatPrice(i.totalPrice, language)}`)
+      .map((i) => {
+        const line = `• ${isAr ? i.menuItem.nameAr : i.menuItem.name} ×${i.quantity} = ${formatPrice(i.totalPrice, language)}`
+        // The kitchen needs the add-ons spelled out, not just folded into the price.
+        const extras = i.extras.map((e) => (isAr ? e.nameAr : e.name)).join('، ')
+        return extras ? `${line}\n   (${extras})` : line
+      })
       .join('\n')
     const branch = branches.find((b) => b.id === branchId)!
     const typeLabel = orderType === 'delivery' ? (isAr ? 'توصيل' : 'Delivery') : (isAr ? 'استلام من الفرع' : 'Pickup')
@@ -408,11 +413,16 @@ export default function CheckoutPage() {
                   </h2>
                   <div className="space-y-3 mb-5">
                     {items.map((item) => (
-                      <div key={item.menuItem.id} className="flex items-start justify-between gap-3 text-sm">
+                      <div key={cartLineId(item)} className="flex items-start justify-between gap-3 text-sm">
                         <div className="flex-1">
                           <p className="font-semibold text-brand-espresso dark:text-brand-ivory">
                             {isAr ? item.menuItem.nameAr : item.menuItem.name}
                           </p>
+                          {item.extras.length > 0 && (
+                            <p className="text-xs text-brand-rose-gold mt-0.5">
+                              + {item.extras.map((e) => (isAr ? e.nameAr : e.name)).join('، ')}
+                            </p>
+                          )}
                           <p className="text-brand-latte">× {item.quantity}</p>
                         </div>
                         <span className="font-bold text-brand-espresso dark:text-brand-ivory flex-shrink-0">

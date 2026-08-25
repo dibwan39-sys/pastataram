@@ -5,8 +5,8 @@ import { CartItem, MenuItem, Extra, Language, Order, OrderStatus } from './types
 interface CartStore {
   items: CartItem[]
   addItem: (item: MenuItem, quantity?: number, extras?: Extra[], notes?: string) => void
-  removeItem: (itemId: string) => void
-  updateQuantity: (itemId: string, quantity: number) => void
+  removeItem: (lineId: string) => void
+  updateQuantity: (lineId: string, quantity: number) => void
   clearCart: () => void
   total: () => number
   itemCount: () => number
@@ -44,6 +44,13 @@ interface AuthStore {
   adminLogout: () => void
 }
 
+/**
+ * Identifies one cart line: the same product with a different set of add-ons is a
+ * separate line, so quantity and removal must key on both.
+ */
+export const cartLineId = (line: CartItem) =>
+  `${line.menuItem.id}::${line.extras.map((e) => e.id).sort().join(',')}`
+
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
@@ -71,12 +78,12 @@ export const useCartStore = create<CartStore>()(
           }
         })
       },
-      removeItem: (itemId) =>
-        set((state) => ({ items: state.items.filter((i) => i.menuItem.id !== itemId) })),
-      updateQuantity: (itemId, quantity) =>
+      removeItem: (lineId) =>
+        set((state) => ({ items: state.items.filter((i) => cartLineId(i) !== lineId) })),
+      updateQuantity: (lineId, quantity) =>
         set((state) => ({
           items: state.items.map((i) =>
-            i.menuItem.id === itemId
+            cartLineId(i) === lineId
               ? { ...i, quantity, totalPrice: (i.menuItem.price + i.extras.reduce((s, e) => s + e.price, 0)) * quantity }
               : i
           ).filter((i) => i.quantity > 0),

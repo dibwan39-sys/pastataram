@@ -1,13 +1,38 @@
-import { MenuItem, Review, Offer, GalleryImage, CMSContent, BusinessHours } from './types'
+import { MenuItem, Extra, Review, Offer, GalleryImage, CMSContent, BusinessHours } from './types'
 
+/**
+ * Shared add-ons attached to menu items via `extras`. They are options inside a
+ * product, never standalone products. `price: 0` means the surcharge has not
+ * been set yet — set it here once and every item that offers it picks it up.
+ */
+export const extraChicken: Extra = {
+  id: 'extra-chicken',
+  name: 'Extra Chicken',
+  nameAr: 'دجاج إضافي',
+  price: 0,
+}
+
+export const extraCheese: Extra = {
+  id: 'extra-cheese',
+  name: 'Extra Cheese',
+  nameAr: 'جبنة إضافية',
+  price: 0,
+}
+
+/**
+ * Menu items, grouped by category in display order: pasta, then sides, then
+ * drinks. Cards render in this order everywhere, so reordering here reorders
+ * the site. Each item is bound to its own image file by exact filename.
+ */
 export const menuItems: MenuItem[] = [
+  // --- الباستا / Pasta ---------------------------------------------------------
   {
     id: '1',
     name: 'Pastata Ram',
     nameAr: 'باستاتا رام',
     description: 'Signature pasta with tender chicken, grilled tomatoes & roasted eggplant, tossed in premium Chinese herbs and a rich, distinctive sauce.',
     descriptionAr: 'باستا مميزة مع قطع الدجاج الطازجة والطماطم المشوية والباذنجان المشوي، ممزوجة بالأعشاب الصينية الفاخرة وصوص غني يمنحها نكهة استثنائية.',
-    price: 27,
+    price: 30,
     category: 'pasta',
     image: '/images/f1.png',
     tags: ['bestseller', 'featured', 'recommended'],
@@ -15,6 +40,7 @@ export const menuItems: MenuItem[] = [
     featured: true,
     bestseller: true,
     calories: 520,
+    extras: [extraChicken, extraCheese],
   },
   {
     id: '2',
@@ -22,7 +48,7 @@ export const menuItems: MenuItem[] = [
     nameAr: 'رام شيني',
     description: 'Creamy fettuccine with tender chicken and fresh mushrooms, finished with rich cream and premium Chinese herbs.',
     descriptionAr: 'فيتوتشيني كريمية مع الدجاج الطري والمشروم الطازج، محضرة بالكريمة الغنية والأعشاب الصينية الفاخرة لتجربة مذاق فريدة.',
-    price: 27,
+    price: 30,
     category: 'pasta',
     image: '/images/f2.png',
     tags: ['featured', 'recommended'],
@@ -30,14 +56,79 @@ export const menuItems: MenuItem[] = [
     featured: true,
     bestseller: false,
     calories: 580,
+    extras: [extraChicken],
   },
+  {
+    id: '12',
+    name: 'Pesto Chicken with Italian Herbs',
+    nameAr: 'بيستو بالدجاج والأعشاب الإيطالية',
+    description:
+      'Creamy pasta rich with fragrant basil sauce, in harmony with chicken pieces and hints of carefully selected Italian herbs — a premium pasta experience bringing together a fresh herbal flavour, a rich creamy texture and an elegant Italian touch.',
+    descriptionAr:
+      'باستا كريمية غنية بصوص الريحان العطِر، تتناغم مع قطع الدجاج ونفحات الأعشاب الإيطالية المختارة بعناية، لتقدم تجربة باستا فاخرة تجمع بين النكهة العشبية المنعشة، والقوام الكريمي الغني، ولمسة إيطالية راقية.',
+    shortDescription:
+      'Fragrant basil sauce, tender chicken and Italian herbs… an Italian flavour with a PASTATA RAM touch.',
+    shortDescriptionAr:
+      'صوص ريحان عطِر، دجاج طري وأعشاب إيطالية… نكهة إيطالية بلمسة PASTATA RAM.',
+    price: 30,
+    category: 'pasta',
+    image: '/images/image12.png',
+    tags: [],
+    available: true,
+    featured: false,
+    bestseller: false,
+    extras: [extraChicken],
+  },
+  {
+    id: '13',
+    name: 'Creamy Chicken Risotto with Chinese Herbs',
+    nameAr: 'ريزيتو بالدجاج والكريمة والأعشاب الصينية',
+    description:
+      'A rich, creamy risotto bringing together soft rice, chicken and cream with a distinctive touch of Chinese herbs — a balanced composition that gives the dish depth of flavour, a luxurious creamy texture and a different experience for lovers of inventive plates.',
+    descriptionAr:
+      'ريزيتو كريمي غني يجمع بين الأرز الناعم، والدجاج، والكريمة، مع لمسة مميزة من الأعشاب الصينية، في تركيبة متوازنة تمنح الطبق عمقًا في النكهة وقوامًا كريميًا فاخرًا وتجربة مختلفة لعشاق الأطباق المبتكرة.',
+    shortDescription:
+      'Rich creaminess, tender chicken and a touch of Chinese herbs… risotto with a different character.',
+    shortDescriptionAr:
+      'كريمية غنية، دجاج طري ولمسة من الأعشاب الصينية… ريزيتو بطابع مختلف.',
+    price: 30,
+    category: 'pasta',
+    image: '/images/image13.png',
+    tags: [],
+    available: true,
+    featured: false,
+    bestseller: false,
+    extras: [extraChicken],
+  },
+  {
+    id: '15',
+    name: 'Pastata Foil',
+    nameAr: 'باستاتا قصدير',
+    description:
+      'Pasta rich with creamy tomato sauce, tender chicken pieces and grated cheese, served inside a foil container that keeps it warm and full of flavour — an appetising experience combining creaminess and richness with the distinctive PASTATA RAM signature.',
+    descriptionAr:
+      'باستا غنية بصوص الطماطم الكريمي، مع قطع الدجاج الطرية والجبنة المبشورة، تُقدّم داخل عبوة القصدير لتحافظ على دفئها ونكهتها، في تجربة شهية تجمع بين الكريمية والثراء بطابع PASTATA RAM المميز.',
+    shortDescription:
+      'Creamy pasta with chicken and cheese, served hot in a foil container for a rich, satisfying experience.',
+    shortDescriptionAr:
+      'باستا كريمية بالدجاج والجبنة، تُقدّم ساخنة في عبوة القصدير لتجربة غنية ومشبعة.',
+    price: 35,
+    category: 'pasta',
+    image: '/images/image15.png',
+    tags: [],
+    available: true,
+    featured: false,
+    bestseller: false,
+    extras: [extraChicken, extraCheese],
+  },
+  // --- المقبلات / Sides --------------------------------------------------------
   {
     id: '3',
     name: 'Pastata Balls',
     nameAr: 'باستاتا بولز',
     description: 'Golden, crispy potato balls filled with melted mozzarella and seasoned with premium Chinese herbs.',
     descriptionAr: 'كرات بطاطس ذهبية مقرمشة محشوة بجبنة الموزاريلا الذائبة ومتبلة بالأعشاب الصينية الفاخرة.',
-    price: 14,
+    price: 12,
     category: 'sides',
     image: '/images/f3.png',
     tags: ['featured', 'snack'],
@@ -47,12 +138,53 @@ export const menuItems: MenuItem[] = [
     calories: 280,
   },
   {
+    id: '11',
+    name: 'Tamarind Potato',
+    nameAr: 'بطاط بالتمر الهندي',
+    description:
+      'Tender golden potatoes served with a rich touch of tamarind sauce — a balanced blend of the warm flavour of potato and the refreshing tang of tamarind, for a distinctive and indulgent experience.',
+    descriptionAr:
+      'بطاطا ذهبية طرية تُقدَّم بلمسة غنية من صوص التمر الهندي، في مزيج متوازن يجمع بين النكهة الدافئة للبطاطا والحموضة المنعشة للتمر الهندي، لتمنحك تجربة مختلفة بطابع مميز وفاخر.',
+    shortDescription:
+      'A warm flavour with a refreshing tamarind touch… a different experience for lovers of bold tastes.',
+    shortDescriptionAr:
+      'نكهة دافئة بلمسة تمر هندي منعشة… تجربة مختلفة لعشاق النكهات الجريئة.',
+    price: 10,
+    category: 'sides',
+    image: '/images/image11.png',
+    tags: [],
+    available: true,
+    featured: false,
+    bestseller: false,
+  },
+  // --- المشروبات / Drinks ------------------------------------------------------
+  {
+    id: '14',
+    name: 'Ice Berry',
+    nameAr: 'Ice Berry',
+    description:
+      'Cold, refreshing hibiscus with rich touches of berries and jujube, bringing freshness and fruity flavour together in a cool, elegant experience for any moment.',
+    descriptionAr:
+      'كركديه بارد ومنعش بلمسات غنية من التوت والعناب، يجمع بين الانتعاش والنكهة الفاكهية في تجربة باردة وأنيقة تناسب كل لحظة.',
+    shortDescription:
+      'Cold refreshment with berry and jujube flavour… Ice Berry with a PASTATA RAM signature.',
+    shortDescriptionAr:
+      'انتعاش بارد بنكهة التوت والعناب… Ice Berry بطابع PASTATA RAM.',
+    price: 5,
+    category: 'drinks',
+    image: '/images/image14.png',
+    tags: [],
+    available: true,
+    featured: false,
+    bestseller: false,
+  },
+  {
     id: '4',
     name: 'Soft Drinks',
     nameAr: 'مشروبات غازية',
     description: 'Perfectly chilled soft drinks, a refreshing match for our signature dishes.',
     descriptionAr: 'انتعاش مثالي مع مجموعة مختارة من المشروبات الغازية الباردة لترافق أطباقنا المميزة.',
-    price: 3,
+    price: 2,
     category: 'drinks',
     image: '/images/f7.png',
     tags: [],
@@ -70,21 +202,6 @@ export const menuItems: MenuItem[] = [
     price: 1,
     category: 'drinks',
     image: '/images/f5.png',
-    tags: [],
-    available: true,
-    featured: false,
-    bestseller: false,
-    calories: 0,
-  },
-  {
-    id: '6',
-    name: 'Charcoal Tea',
-    nameAr: 'شاهي جمر',
-    description: 'An authentic Arabian ritual — premium tea brewed over charcoal embers for a rich aroma and warm, indulgent taste.',
-    descriptionAr: 'تجربة عربية أصيلة، شاي فاخر محضر على الجمر برائحة عطرة ومذاق غني يمنحك لحظات من الدفء والاستمتاع.',
-    price: 3,
-    category: 'drinks',
-    image: '/images/f6.png',
     tags: [],
     available: true,
     featured: false,
@@ -210,7 +327,6 @@ export const galleryImages: GalleryImage[] = [
   { id: '6', url: '/images/f2.png', alt: 'Ramcine', altAr: 'رامسين', category: 'food', featured: false },
   { id: '7', url: '/images/f7.png', alt: 'Soft Drinks', altAr: 'مشروبات غازية', category: 'drinks', featured: false },
   { id: '8', url: '/images/f5.png', alt: 'Water', altAr: 'مياه', category: 'drinks', featured: false },
-  { id: '9', url: '/images/f6.png', alt: 'Tea', altAr: 'شاي', category: 'drinks', featured: false },
 ]
 
 // Working hours — daily 3:00 PM to 3:00 AM

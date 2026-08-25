@@ -1,0 +1,3 @@
+# Local-only dev assets — never needed by the deployed site
+.screenshots/
+dev-server*.log

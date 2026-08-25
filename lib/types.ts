@@ -7,6 +7,9 @@ export interface MenuItem {
   nameAr: string
   description: string
   descriptionAr: string
+  /** Optional short teaser shown on the product card; falls back to description. */
+  shortDescription?: string
+  shortDescriptionAr?: string
   price: number
   category: string
   image: string

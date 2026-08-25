@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Plus, Minus, ShoppingBag, Trash2 } from 'lucide-react'
-import { useCartStore, useUIStore } from '@/lib/store'
+import { cartLineId, useCartStore, useUIStore } from '@/lib/store'
 import { formatPrice, getWhatsAppLink } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -18,7 +18,10 @@ export default function CartDrawer() {
     const lines = items
       .map((it) => {
         const name = isAr ? it.menuItem.nameAr : it.menuItem.name
-        return `• ${name} ×${it.quantity} — ${formatPrice(it.totalPrice, language)}`
+        const extras = it.extras.map((e) => (isAr ? e.nameAr : e.name)).join(', ')
+        const line = `• ${name} ×${it.quantity} — ${formatPrice(it.totalPrice, language)}`
+        return extras ? `${line}
+   (${extras})` : line
       })
       .join('\n')
 
@@ -108,7 +111,7 @@ export default function CartDrawer() {
               ) : (
                 items.map((item) => (
                   <motion.div
-                    key={item.menuItem.id}
+                    key={cartLineId(item)}
                     layout
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -129,13 +132,18 @@ export default function CartDrawer() {
                       <p className="text-brand-rose-gold font-bold text-sm">
                         {formatPrice(item.totalPrice, language)}
                       </p>
+                      {item.extras.length > 0 && (
+                        <p className="text-xs text-brand-latte truncate">
+                          {item.extras.map((e) => (isAr ? e.nameAr : e.name)).join(', ')}
+                        </p>
+                      )}
                       {item.notes && (
                         <p className="text-xs text-brand-latte truncate">{item.notes}</p>
                       )}
                     </div>
                     <div className="flex flex-col items-center gap-1 flex-shrink-0">
                       <button
-                        onClick={() => updateQuantity(item.menuItem.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(cartLineId(item), item.quantity + 1)}
                         className="w-6 h-6 rounded-full bg-brand-blush hover:bg-brand-rose transition-colors flex items-center justify-center"
                       >
                         <Plus className="w-3 h-3 text-brand-espresso" />
@@ -144,7 +152,7 @@ export default function CartDrawer() {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => item.quantity === 1 ? removeItem(item.menuItem.id) : updateQuantity(item.menuItem.id, item.quantity - 1)}
+                        onClick={() => item.quantity === 1 ? removeItem(cartLineId(item)) : updateQuantity(cartLineId(item), item.quantity - 1)}
                         className="w-6 h-6 rounded-full bg-brand-blush hover:bg-brand-rose transition-colors flex items-center justify-center"
                       >
                         {item.quantity === 1 ? (

@@ -3,11 +3,10 @@
 import { motion } from 'framer-motion'
 import { UtensilsCrossed } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
-import ProductCard from '@/components/menu/ProductCard'
+import MenuGrid from '@/components/menu/MenuGrid'
 import MenuImageSection from '@/components/menu/MenuImageSection'
 import SocialQRSection from '@/components/menu/SocialQRSection'
 import { useUIStore } from '@/lib/store'
-import { menuItems } from '@/lib/data'
 
 export default function MenuPage() {
   const { language } = useUIStore()
@@ -46,11 +45,7 @@ export default function MenuPage() {
       {/* 3. Interactive products */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {menuItems.map((item, i) => (
-              <ProductCard key={item.id} item={item} index={i} />
-            ))}
-          </div>
+          <MenuGrid />
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Star, MapPin, Clock, Phone, Zap, Leaf, Award, Heart, Sparkles, QrCode, BookOpen } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
-import ProductCard from '@/components/menu/ProductCard'
+import MenuGrid from '@/components/menu/MenuGrid'
 import QROrderSection from '@/components/menu/QROrderSection'
 import { useUIStore } from '@/lib/store'
 import { menuItems, reviews, branches, workingHours } from '@/lib/data'
@@ -185,11 +185,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Interactive menu — real product cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {menuItems.map((item, i) => (
-              <ProductCard key={item.id} item={item} index={i} />
-            ))}
-          </div>
+          <MenuGrid tone="dark" />
 
           {/* Go to full menu page */}
           <motion.div {...fadeUp} className="text-center mt-10">
