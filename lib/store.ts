@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CartItem, MenuItem, Extra, Language, Order, OrderStatus } from './types'
+import { menuItems } from './data'
 
 interface CartStore {
   items: CartItem[]
@@ -92,7 +93,27 @@ export const useCartStore = create<CartStore>()(
       total: () => get().items.reduce((sum, item) => sum + item.totalPrice, 0),
       itemCount: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
     }),
-    { name: 'pastataram-cart' }
+    {
+      name: 'pastataram-cart',
+      version: 2,
+      /**
+       * A cart saved in the browser keeps a snapshot of the menu item, so after a
+       * price change its lines would still carry the old price into the totals and
+       * the WhatsApp order. Bumping the version re-resolves every line against the
+       * live menu and recomputes its total from lib/data.ts; quantities, notes and
+       * chosen add-ons are kept exactly as the customer left them.
+       */
+      migrate: (persisted) => {
+        const state = (persisted ?? {}) as Partial<CartStore>
+        const items = (state.items ?? []).flatMap((line) => {
+          const current = menuItems.find((m) => m.id === line.menuItem.id)
+          if (!current) return []
+          const extrasTotal = line.extras.reduce((sum, e) => sum + e.price, 0)
+          return [{ ...line, menuItem: current, totalPrice: (current.price + extrasTotal) * line.quantity }]
+        })
+        return { ...state, items } as CartStore
+      },
+    }
   )
 )
 
