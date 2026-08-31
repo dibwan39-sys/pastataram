@@ -7,7 +7,7 @@ import { ZoomIn, ZoomOut, X, Maximize2, RotateCcw, Download, Share2, BookOpen } 
 import toast from 'react-hot-toast'
 import { useUIStore } from '@/lib/store'
 
-const MENU_IMAGE = '/images/menu.png'
+const MENU_IMAGE = '/images/menu-final.png'
 const MIN_ZOOM = 1
 const MAX_ZOOM = 5
 
