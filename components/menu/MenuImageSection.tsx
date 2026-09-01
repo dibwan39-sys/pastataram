@@ -7,7 +7,7 @@ import { ZoomIn, ZoomOut, X, Maximize2, RotateCcw, Download, Share2, BookOpen } 
 import toast from 'react-hot-toast'
 import { useUIStore } from '@/lib/store'
 
-const MENU_IMAGE = '/images/menu-final.png'
+const MENU_IMAGE = '/images/menu-final-v2.webp'
 const MIN_ZOOM = 1
 const MAX_ZOOM = 5
 
@@ -220,7 +220,7 @@ export default function MenuImageSection({ showHeading = true, compact = false }
         >
           <motion.a
             href={MENU_IMAGE}
-            download="PASTATARAM-Menu.png"
+            download="PASTATARAM-Menu.webp"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm"
