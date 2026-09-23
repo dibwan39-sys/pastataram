@@ -47,3 +47,6 @@ dev-server.log
 dev-server2.log
 
 .vercel
+
+# Local review screenshots
+.screenshots/
