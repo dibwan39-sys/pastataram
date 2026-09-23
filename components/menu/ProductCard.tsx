@@ -1,216 +1,197 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Plus, Minus, Flame, Star, ShoppingCart, Check } from 'lucide-react'
-import toast from 'react-hot-toast'
-import type { Extra, MenuItem } from '@/lib/types'
-import { useCartStore, useUIStore } from '@/lib/store'
+import Image from 'next/image'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Flame, Plus, ShoppingCart, Star } from 'lucide-react'
+import type { MenuItem } from '@/lib/types'
+import { useProductOrder } from './useProductOrder'
+import { ExtrasPicker, Price, QuantityStepper } from './OrderControls'
+import ProductSheet from './ProductSheet'
 
 interface ProductCardProps {
   item: MenuItem
   index?: number
+  /**
+   * `standard` — upright card, three to a row.
+   * `wide`     — photograph beside the copy, used to break up long runs of
+   *              upright cards so the menu reads as an editorial page rather
+   *              than a catalogue grid.
+   */
+  variant?: 'standard' | 'wide'
 }
 
 /**
- * Premium glassmorphism product card with image, name, description, price,
- * optional add-ons, a quantity selector, and an add-to-cart button. Used on the
- * menu page and the home menu section.
+ * A premium restaurant menu card.
+ *
+ * The photograph is the subject: it fills the frame, carries only a soft
+ * bottom scrim so the dish name stays legible, and scales gently on hover.
+ * Everything a customer needs to order — price, add-ons, quantity, add —
+ * is on the card; the sheet is for reading the full description.
+ *
+ * Images render through next/image with real `sizes`, so a phone downloads a
+ * ~400px AVIF rather than the 2 MB master the raw <img> used to fetch.
  */
-export default function ProductCard({ item, index = 0 }: ProductCardProps) {
-  const { language, setCartOpen } = useUIStore()
-  const { addItem } = useCartStore()
-  const isAr = language === 'ar'
-  const [qty, setQty] = useState(1)
+export default function ProductCard({ item, index = 0, variant = 'standard' }: ProductCardProps) {
+  const reduce = useReducedMotion()
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const order = useProductOrder(item)
+  const { isAr } = order
 
-  // Cards show the short teaser when the item defines one, otherwise the full description.
   const cardText = isAr
     ? item.shortDescriptionAr || item.descriptionAr
     : item.shortDescription || item.description
-  // Items whose price has not been set yet (price: 0) show a placeholder instead of "0".
-  const priceReady = item.price > 0
 
-  // Add-ons the customer picked for this card, in the order they are declared on the item.
-  const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([])
-  const availableExtras = item.extras ?? []
-  const selectedExtras: Extra[] = availableExtras.filter((e) => selectedExtraIds.includes(e.id))
+  const isWide = variant === 'wide'
 
-  const toggleExtra = (id: string) =>
-    setSelectedExtraIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]))
+  const badges = (
+    <div className="flex flex-wrap gap-2">
+      {item.bestseller && (
+        <span
+          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold text-white"
+          style={{ background: 'linear-gradient(135deg, #C43E57, #FD657D)' }}
+        >
+          <Flame className="h-3 w-3" aria-hidden />
+          {/* Not a sales claim — nothing in the project measures sales. */}
+          {isAr ? 'من مختاراتنا' : 'Our selection'}
+        </span>
+      )}
+      {item.featured && !item.bestseller && (
+        <span
+          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold"
+          style={{ background: 'rgba(11,7,9,0.72)', color: '#F6E0C4' }}
+        >
+          <Star className="h-3 w-3" aria-hidden />
+          {isAr ? 'مميز' : 'Featured'}
+        </span>
+      )}
+    </div>
+  )
 
-  const handleAdd = () => {
-    if (!priceReady) return
-    addItem(item, qty, selectedExtras)
-    toast.success(
-      isAr ? `تمت إضافة ${qty} × ${item.nameAr} للسلة` : `${qty} × ${item.name} added to cart`,
-      { icon: '🛒' }
-    )
-    setCartOpen(true)
-    setQty(1)
-    setSelectedExtraIds([])
-  }
+  const photo = (
+    <div className={`relative overflow-hidden ${isWide ? 'aspect-[4/3] sm:aspect-auto sm:h-full' : 'aspect-[4/3]'}`}>
+      <Image
+        src={item.image}
+        alt={isAr ? item.nameAr : item.name}
+        fill
+        sizes={isWide ? '(max-width: 640px) 100vw, 40vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+        className="object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.07]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(to top, rgba(18,12,16,0.86) 0%, rgba(18,12,16,0.12) 52%, transparent 100%)' }}
+      />
+      <div className="absolute top-3 start-3">{badges}</div>
+      {!isWide && (
+        <h3 className="absolute bottom-3 start-4 end-4 font-display text-lg font-bold text-brand-cream drop-shadow">
+          {isAr ? item.nameAr : item.name}
+        </h3>
+      )}
+    </div>
+  )
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col rounded-3xl overflow-hidden h-full"
-      style={{
-        background: 'linear-gradient(145deg, rgba(33,28,25,0.96) 0%, rgba(33,28,25,0.62) 100%)',
-        border: '1px solid rgba(184,115,51,0.3)',
-        boxShadow: '0 8px 32px rgba(123,30,43,0.12)',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 20px 56px rgba(123,30,43,0.24)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(123,30,43,0.12)'; e.currentTarget.style.transform = 'translateY(0)' }}
-    >
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <img
-          src={item.image}
-          alt={isAr ? item.nameAr : item.name}
-          loading="lazy"
-          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-[600ms]"
-        />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(61,31,43,0.5) 0%, transparent 55%)' }} />
-        <div className="absolute top-3 start-3 flex gap-2">
-          {item.bestseller && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-white text-[11px] font-bold" style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)' }}>
-              <Flame className="w-3 h-3" />
-              {isAr ? 'الأكثر مبيعاً' : 'Bestseller'}
-            </span>
-          )}
-          {item.featured && !item.bestseller && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold" style={{ background: 'rgba(61,31,43,0.8)', color: '#E0B566' }}>
-              <Star className="w-3 h-3" />
-              {isAr ? 'مميز' : 'Featured'}
-            </span>
-          )}
-        </div>
-        <p className="absolute bottom-3 start-4 font-black text-white text-lg drop-shadow">
-          {isAr ? item.nameAr : item.name}
-        </p>
-      </div>
+    <>
+      <motion.article
+        initial={reduce ? undefined : { opacity: 0, y: 26 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.55, delay: Math.min(index, 5) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+        className={`group relative flex h-full overflow-hidden rounded-[1.5rem] transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 ${
+          isWide ? 'flex-col sm:flex-row' : 'flex-col'
+        }`}
+        style={{
+          background: 'linear-gradient(150deg, #1F1419 0%, #181015 100%)',
+          border: '1px solid rgba(231,198,164,0.16)',
+          boxShadow: '0 8px 28px rgba(0,0,0,0.38)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = 'rgba(253,101,125,0.45)'
+          e.currentTarget.style.boxShadow = '0 22px 56px rgba(253,101,125,0.16)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = 'rgba(231,198,164,0.16)'
+          e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,0.38)'
+        }}
+      >
+        <div className={isWide ? 'sm:w-[42%] sm:flex-shrink-0' : ''}>{photo}</div>
 
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-5">
-        {cardText && (
-          <p
-            className={`text-[13.5px] md:text-sm leading-7 tracking-[0.01em] mb-4 min-h-[3.5rem] ${isAr ? 'text-right' : ''}`}
-            style={{ color: 'rgba(201,187,168,0.82)' }}
-          >
-            {cardText}
-          </p>
-        )}
-        {item.calories ? (
-          <p className="text-xs mb-4" style={{ color: 'rgba(184,115,51,0.95)' }}>
-            {item.calories} {isAr ? 'سعرة حرارية' : 'cal'}
-          </p>
-        ) : <div className="mb-4" />}
+        <div className={`flex flex-1 flex-col p-5 ${isWide ? 'sm:p-6' : ''}`}>
+          {isWide && (
+            <h3 className="mb-2 font-display text-xl font-bold text-brand-cream">
+              {isAr ? item.nameAr : item.name}
+            </h3>
+          )}
 
-        {/* Add-ons — options inside the product, chosen before adding to the cart */}
-        {availableExtras.length > 0 && (
-          <div className="mb-4">
-            <p className="text-[11px] font-bold mb-2" style={{ color: 'rgba(184,115,51,0.95)' }}>
-              {isAr ? 'الإضافات' : 'Add-ons'}
+          {cardText && (
+            <p className={`mb-4 text-[13.5px] leading-7 text-brand-cream-dim ${isWide ? '' : 'min-h-[3.5rem]'}`}>
+              {cardText}
             </p>
-            <div className="flex flex-wrap gap-2">
-              {availableExtras.map((extra) => {
-                const active = selectedExtraIds.includes(extra.id)
-                return (
-                  <button
-                    key={extra.id}
-                    type="button"
-                    onClick={() => toggleExtra(extra.id)}
-                    aria-pressed={active}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-bold transition-colors"
-                    style={{
-                      background: active ? 'linear-gradient(135deg, #7B1E2B, #B87333)' : 'rgba(33,28,25,0.6)',
-                      border: `1px solid ${active ? 'rgba(216,162,74,0.7)' : 'rgba(184,115,51,0.4)'}`,
-                      color: active ? '#FFFFFF' : '#C9BBA8',
-                    }}
-                  >
-                    {active ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
-                    {isAr ? extra.nameAr : extra.name}
-                    {extra.price > 0 && (
-                      <span className="opacity-80">
-                        +{extra.price} {isAr ? 'ر.س' : 'SAR'}
-                      </span>
-                    )}
-                  </button>
-                )
-              })}
+          )}
+
+          {item.calories ? (
+            <p className="mb-4 text-xs font-semibold text-brand-champagne">
+              {item.calories} {isAr ? 'سعرة حرارية' : 'cal'}
+            </p>
+          ) : null}
+
+          {order.availableExtras.length > 0 && (
+            <div className="mb-4">
+              <ExtrasPicker
+                extras={order.availableExtras}
+                selectedIds={order.selectedIds}
+                onToggle={order.toggleExtra}
+                isAr={isAr}
+              />
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Price + controls — clearly separated for visual hierarchy */}
-        <div className="mt-auto pt-4" style={{ borderTop: '1px solid rgba(184,115,51,0.15)' }}>
-          <div className="flex items-baseline gap-1.5">
-            {priceReady ? (
-              <>
-                <span
-                  className="text-[1.7rem] leading-none font-black"
-                  style={{ background: 'linear-gradient(135deg, #7B1E2B, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-                >
-                  {item.price}
+          <div className="mt-auto pt-4" style={{ borderTop: '1px solid rgba(231,198,164,0.14)' }}>
+            <div className="mb-4 flex items-center justify-between gap-3">
+              {order.priceReady ? (
+                <Price value={order.lineTotal} isAr={isAr} />
+              ) : (
+                <span className="py-2 text-base font-black text-brand-champagne">
+                  {isAr ? 'السعر قريباً' : 'Price coming soon'}
                 </span>
-                <span className="text-sm font-bold" style={{ color: 'rgba(184,115,51,0.95)' }}>
-                  {isAr ? 'ر.س' : 'SAR'}
-                </span>
-              </>
-            ) : (
-              <span className="text-base leading-none font-black py-2" style={{ color: 'rgba(184,115,51,0.95)' }}>
-                {isAr ? 'السعر قريباً' : 'Price coming soon'}
-              </span>
-            )}
-          </div>
+              )}
 
-          {/* Quantity selector + add to cart */}
-          <div className="flex items-center gap-3 mt-4">
-            <div
-              className="flex items-center gap-1 rounded-full p-1"
-              style={{ background: 'rgba(33,28,25,0.6)', border: '1px solid rgba(184,115,51,0.4)' }}
-            >
               <button
                 type="button"
-                aria-label={isAr ? 'إنقاص' : 'Decrease'}
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="w-8 h-8 rounded-full flex items-center justify-center bg-[#2B2521] hover:bg-[#3A322C] transition-colors"
-                style={{ color: '#C9BBA8' }}
+                onClick={() => setSheetOpen(true)}
+                className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold text-brand-cream-dim transition-colors hover:text-brand-rose"
+                style={{ border: '1px solid rgba(231,198,164,0.26)' }}
               >
-                <Minus className="w-3.5 h-3.5" />
-              </button>
-              <span className="w-7 text-center text-sm font-black tabular-nums" style={{ color: '#F2E8DA' }}>{qty}</span>
-              <button
-                type="button"
-                aria-label={isAr ? 'زيادة' : 'Increase'}
-                onClick={() => setQty((q) => Math.min(99, q + 1))}
-                className="w-8 h-8 rounded-full flex items-center justify-center bg-[#2B2521] hover:bg-[#3A322C] transition-colors"
-                style={{ color: '#C9BBA8' }}
-              >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="h-3 w-3" aria-hidden />
+                {isAr ? 'التفاصيل' : 'Details'}
+                <span className="sr-only">— {isAr ? item.nameAr : item.name}</span>
               </button>
             </div>
 
-            <motion.button
-              whileHover={priceReady ? { scale: 1.04 } : undefined}
-              whileTap={priceReady ? { scale: 0.96 } : undefined}
-              onClick={handleAdd}
-              disabled={!priceReady}
-              className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold text-white disabled:cursor-not-allowed"
-              style={{
-                background: 'linear-gradient(135deg, #7B1E2B, #B87333)',
-                boxShadow: '0 6px 18px rgba(123,30,43,0.35)',
-                opacity: priceReady ? 1 : 0.45,
-              }}
-            >
-              <ShoppingCart className="w-4 h-4" />
-              {isAr ? 'أضف للسلة' : 'Add'}
-            </motion.button>
+            <div className="flex items-center gap-3">
+              <QuantityStepper
+                value={order.quantity}
+                onChange={order.setQuantity}
+                isAr={isAr}
+                label={`${isAr ? 'كمية' : 'Quantity'} — ${isAr ? item.nameAr : item.name}`}
+              />
+              <button
+                type="button"
+                onClick={order.add}
+                disabled={!order.priceReady}
+                className="btn-primary inline-flex flex-1 items-center justify-center gap-2 px-4 py-2.5 text-sm"
+              >
+                <ShoppingCart className="h-4 w-4" aria-hidden />
+                {isAr ? 'أضف' : 'Add'}
+                <span className="sr-only">{isAr ? item.nameAr : item.name}</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.article>
+
+      <ProductSheet item={item} open={sheetOpen} onClose={() => setSheetOpen(false)} />
+    </>
   )
 }

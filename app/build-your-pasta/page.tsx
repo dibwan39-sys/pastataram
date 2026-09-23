@@ -5,50 +5,29 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChefHat, Plus, Minus, ShoppingCart, Sparkles, Check } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
 import { useUIStore, useCartStore } from '@/lib/store'
-import { formatPrice, generateId } from '@/lib/utils'
+import { formatPrice } from '@/lib/utils'
+import Image from 'next/image'
+import {
+  BUILD_BASE_PRICE,
+  BUILD_IMAGE,
+  buildCustomPasta,
+  buildSummary,
+  buildUnitPrice,
+  cheeses,
+  pastaTypes,
+  proteins,
+  sauces,
+  toppings,
+  type BuildSelection,
+} from '@/lib/buildYourPasta'
 import toast from 'react-hot-toast'
 
-const pastaTypes = [
-  { id: 'spaghetti', nameAr: 'سباغيتي', nameEn: 'Spaghetti', emoji: '🍝', price: 0 },
-  { id: 'fettuccine', nameAr: 'فيتوتشيني', nameEn: 'Fettuccine', emoji: '🍜', price: 0 },
-  { id: 'penne', nameAr: 'بيني', nameEn: 'Penne', emoji: '🍝', price: 0 },
-  { id: 'rigatoni', nameAr: 'ريجاتوني', nameEn: 'Rigatoni', emoji: '🍝', price: 2 },
-]
-
-const sauces = [
-  { id: 'tomato', nameAr: 'صوص الطماطم', nameEn: 'Tomato Sauce', emoji: '🍅', price: 0 },
-  { id: 'cream', nameAr: 'صوص الكريمة', nameEn: 'Cream Sauce', emoji: '🥛', price: 0 },
-  { id: 'pesto', nameAr: 'بيستو', nameEn: 'Pesto', emoji: '🌿', price: 3 },
-  { id: 'rosé', nameAr: 'روزيه', nameEn: 'Rosé', emoji: '🌹', price: 3 },
-]
-
-const proteins = [
-  { id: 'chicken', nameAr: 'دجاج مشوي', nameEn: 'Grilled Chicken', emoji: '🍗', price: 0 },
-  { id: 'shrimp', nameAr: 'جمبري', nameEn: 'Shrimp', emoji: '🦐', price: 5 },
-  { id: 'beef', nameAr: 'لحم بقري', nameEn: 'Beef', emoji: '🥩', price: 5 },
-  { id: 'none', nameAr: 'بدون بروتين', nameEn: 'No Protein', emoji: '🥦', price: -3 },
-]
-
-const cheeses = [
-  { id: 'mozzarella', nameAr: 'موزاريلا', nameEn: 'Mozzarella', emoji: '🧀', price: 0 },
-  { id: 'parmesan', nameAr: 'بارميزان', nameEn: 'Parmesan', emoji: '🧀', price: 2 },
-  { id: 'extra', nameAr: 'جبنة مضاعفة', nameEn: 'Double Cheese', emoji: '🧀', price: 4 },
-  { id: 'none', nameAr: 'بدون جبنة', nameEn: 'No Cheese', emoji: '❌', price: -2 },
-]
-
-const toppings = [
-  { id: 'mushroom', nameAr: 'مشروم', nameEn: 'Mushrooms', emoji: '🍄', price: 2 },
-  { id: 'eggplant', nameAr: 'باذنجان', nameEn: 'Eggplant', emoji: '🍆', price: 2 },
-  { id: 'olives', nameAr: 'زيتون', nameEn: 'Olives', emoji: '🫒', price: 2 },
-  { id: 'herbs', nameAr: 'أعشاب طازجة', nameEn: 'Fresh Herbs', emoji: '🌿', price: 1 },
-  { id: 'pepper', nameAr: 'فلفل رومي', nameEn: 'Bell Pepper', emoji: '🫑', price: 2 },
-  { id: 'chili', nameAr: 'فلفل حار', nameEn: 'Chili Flakes', emoji: '🌶️', price: 1 },
-]
-
-const BASE_PRICE = 22
+// Options, surcharges and the cart representation now live in
+// lib/buildYourPasta.ts — business data does not belong in a page component.
+const BASE_PRICE = BUILD_BASE_PRICE
 
 export default function BuildYourPastaPage() {
-  const { language } = useUIStore()
+  const { language, setCartOpen } = useUIStore()
   const { addItem } = useCartStore()
   const isAr = language === 'ar'
 
@@ -62,18 +41,20 @@ export default function BuildYourPastaPage() {
   const [step, setStep] = useState(0)
   const [notes, setNotes] = useState('')
 
-  const totalPrice = useMemo(() => {
-    const extras =
-      selectedPasta.price +
-      selectedSauce.price +
-      selectedProtein.price +
-      selectedCheese.price +
-      selectedToppings.reduce((sum, id) => {
-        const t = toppings.find((t) => t.id === id)
-        return sum + (t?.price || 0)
-      }, 0)
-    return Math.max(BASE_PRICE + extras, 15) * quantity
-  }, [selectedPasta, selectedSauce, selectedProtein, selectedCheese, selectedToppings, quantity])
+  const selection: BuildSelection = useMemo(
+    () => ({
+      pasta: selectedPasta,
+      sauce: selectedSauce,
+      protein: selectedProtein,
+      cheese: selectedCheese,
+      toppingIds: selectedToppings,
+      spiceLevel,
+    }),
+    [selectedPasta, selectedSauce, selectedProtein, selectedCheese, selectedToppings, spiceLevel]
+  )
+
+  const unitPrice = buildUnitPrice(selection)
+  const totalPrice = unitPrice * quantity
 
   const steps = isAr
     ? ['نوع الباستا', 'الصوص', 'البروتين', 'الجبنة', 'الإضافات', 'مستوى الحرارة']
@@ -86,29 +67,22 @@ export default function BuildYourPastaPage() {
   }
 
   const handleAddToCart = () => {
-    const customItem = {
-      id: generateId(),
-      name: `Custom Pasta - ${selectedPasta.nameEn}`,
-      nameAr: `باستا مخصصة - ${selectedPasta.nameAr}`,
-      description: `${selectedSauce.nameEn}, ${selectedProtein.nameEn}, ${selectedCheese.nameEn}`,
-      descriptionAr: `${selectedSauce.nameAr}, ${selectedProtein.nameAr}, ${selectedCheese.nameAr}`,
-      price: totalPrice / quantity,
-      category: 'pasta',
-      image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80',
-      tags: ['custom'],
-      available: true,
-      featured: false,
-      bestseller: false,
-    }
-    addItem(customItem, quantity, [], notes)
-    toast.success(isAr ? 'تمت إضافة باستاتك المخصصة للسلة! 🎉' : 'Custom pasta added to cart! 🎉')
+    // The item carries isCustom and a deterministic id, so the cart keeps it
+    // across a version bump and merges two identical builds onto one line.
+    const customItem = buildCustomPasta(selection, isAr)
+    // The kitchen needs the full build spelled out, so it rides along as the
+    // line note and reaches the WhatsApp invoice with the order.
+    const spec = buildSummary(selection, isAr)
+    addItem(customItem, quantity, [], notes ? `${spec} — ${notes}` : spec)
+    toast.success(isAr ? 'أُضيفت باستاتك المخصصة إلى السلة 🎉' : 'Your custom pasta was added to the cart 🎉')
+    setCartOpen(true)
   }
 
   return (
     <PageWrapper>
       {/* Header */}
       <section className="relative py-20 bg-gradient-to-br from-brand-espresso via-brand-brown to-brand-espresso overflow-hidden">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #B87333 0%, transparent 60%)' }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #E7C6A4 0%, transparent 60%)' }} />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-ivory/10 text-brand-champagne text-sm font-bold mb-6">
@@ -314,10 +288,15 @@ export default function BuildYourPastaPage() {
                     </h3>
                   </div>
                   <div className="relative h-40 rounded-xl overflow-hidden mb-5">
-                    <img
-                      src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80"
-                      alt="Custom Pasta"
-                      className="w-full h-full object-cover"
+                    {/* The same image the composed pasta carries into the cart,
+                        so the preview and the order line agree. Previously a
+                        stock Unsplash photo of unrelated food. */}
+                    <Image
+                      src={BUILD_IMAGE}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1024px) 92vw, 30vw"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-espresso/60 to-transparent" />
                     <p className="absolute bottom-3 start-3 text-white font-bold text-sm">
