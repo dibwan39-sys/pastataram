@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CartItem, MenuItem, Extra, Language, Order, OrderStatus } from './types'
-import { menuItems } from './data'
+import { menuItems, allExtras } from './data'
 
 interface CartStore {
   items: CartItem[]
@@ -58,10 +58,12 @@ export const useCartStore = create<CartStore>()(
       items: [],
       addItem: (item, quantity = 1, extras = [], notes = '') => {
         set((state) => {
-          const existingIndex = state.items.findIndex(
-            (cartItem) => cartItem.menuItem.id === item.id &&
-            JSON.stringify(cartItem.extras) === JSON.stringify(extras)
-          )
+          // Merge on the same key the rest of the store uses to address a line.
+          // Comparing JSON.stringify(extras) instead would treat two identical
+          // selections made in a different order as different lines, while
+          // cartLineId still collapsed them onto one id.
+          const incomingId = cartLineId({ menuItem: item, quantity, extras, totalPrice: 0 })
+          const existingIndex = state.items.findIndex((cartItem) => cartLineId(cartItem) === incomingId)
           const extrasTotal = extras.reduce((sum, e) => sum + e.price, 0)
           const itemTotal = (item.price + extrasTotal) * quantity
 
@@ -95,22 +97,55 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'pastataram-cart',
-      version: 2,
+      version: 3,
       /**
        * A cart saved in the browser keeps a snapshot of the menu item, so after a
        * price change its lines would still carry the old price into the totals and
        * the WhatsApp order. Bumping the version re-resolves every line against the
        * live menu and recomputes its total from lib/data.ts; quantities, notes and
        * chosen add-ons are kept exactly as the customer left them.
+       *
+       * Two kinds of line are handled differently:
+       *
+       *   menu items  — re-resolved against `menuItems`. If the product no longer
+       *                 exists on the menu the line is dropped, because we cannot
+       *                 honour a price for something we no longer sell.
+       *   custom pasta — kept as stored. A composed pasta is never in `menuItems`,
+       *                 so the old code dropped every one of them on each version
+       *                 bump. Its price comes from the builder's own options, and
+       *                 only its add-on prices are refreshed.
+       *
+       * Add-on prices are always re-read from lib/data.ts so a change to
+       * EXTRA_PRICE reaches carts that were saved before it.
        */
       migrate: (persisted) => {
         const state = (persisted ?? {}) as Partial<CartStore>
-        const items = (state.items ?? []).flatMap((line) => {
-          const current = menuItems.find((m) => m.id === line.menuItem.id)
+
+        const currentExtra = (extra: Extra): Extra =>
+          allExtras.find((e) => e.id === extra.id) ?? extra
+
+        const items = (state.items ?? []).flatMap<CartItem>((line) => {
+          const extras = (line.extras ?? []).map(currentExtra)
+          const extrasTotal = extras.reduce((sum, e) => sum + e.price, 0)
+
+          if (line.menuItem?.isCustom) {
+            return [{
+              ...line,
+              extras,
+              totalPrice: (line.menuItem.price + extrasTotal) * line.quantity,
+            }]
+          }
+
+          const current = menuItems.find((m) => m.id === line.menuItem?.id)
           if (!current) return []
-          const extrasTotal = line.extras.reduce((sum, e) => sum + e.price, 0)
-          return [{ ...line, menuItem: current, totalPrice: (current.price + extrasTotal) * line.quantity }]
+          return [{
+            ...line,
+            menuItem: current,
+            extras,
+            totalPrice: (current.price + extrasTotal) * line.quantity,
+          }]
         })
+
         return { ...state, items } as CartStore
       },
     }

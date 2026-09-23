@@ -19,6 +19,13 @@ export interface MenuItem {
   bestseller: boolean
   calories?: number
   extras?: Extra[]
+  /**
+   * True for a pasta the customer composed in /build-your-pasta. Such an item
+   * exists only inside that customer's cart — it is never in `menuItems` — so
+   * the cart's migration must keep it on its own stored price instead of
+   * trying to re-resolve it against the menu and dropping it.
+   */
+  isCustom?: boolean
 }
 
 export interface Extra {
@@ -59,6 +66,14 @@ export interface Order {
 
 export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'completed' | 'cancelled'
 
+/** The four aspects a customer can score separately, each 1–5. */
+export interface ReviewAspects {
+  food: number
+  service: number
+  cleanliness: number
+  atmosphere: number
+}
+
 export interface Review {
   id: string
   customerName: string
@@ -69,6 +84,13 @@ export interface Review {
   featured: boolean
   image?: string
   approved: boolean
+  /**
+   * Added for the review experience. Both are optional so the existing seed
+   * reviews — which predate them and carry no branch or per-aspect scores —
+   * stay valid, and so the admin moderation screen keeps working unchanged.
+   */
+  branchId?: number
+  aspects?: ReviewAspects
 }
 
 export interface Offer {
@@ -103,6 +125,14 @@ export interface GalleryImage {
   altAr: string
   category: string
   featured: boolean
+  /**
+   * Intrinsic pixel dimensions of the file, measured from the asset itself.
+   * The masonry gallery needs them so next/image can reserve the right space
+   * before the photograph arrives, instead of reflowing the column as each one
+   * loads.
+   */
+  width: number
+  height: number
 }
 
 export interface Notification {

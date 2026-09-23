@@ -2,22 +2,31 @@ import { MenuItem, Extra, Review, Offer, GalleryImage, CMSContent, BusinessHours
 
 /**
  * Shared add-ons attached to menu items via `extras`. They are options inside a
- * product, never standalone products. `price: 0` means the surcharge has not
- * been set yet — set it here once and every item that offers it picks it up.
+ * product, never standalone products.
+ *
+ * This is the ONLY place an add-on price is defined. Every surface that shows
+ * or charges for an add-on — product card, product sheet, cart line, cart
+ * total, checkout summary, WhatsApp invoice — reads it from here. Never repeat
+ * these numbers in a component.
  */
+export const EXTRA_PRICE = 5
+
 export const extraChicken: Extra = {
   id: 'extra-chicken',
   name: 'Extra Chicken',
   nameAr: 'دجاج إضافي',
-  price: 0,
+  price: EXTRA_PRICE,
 }
 
 export const extraCheese: Extra = {
   id: 'extra-cheese',
-  name: 'Extra Cheese',
-  nameAr: 'جبنة إضافية',
-  price: 0,
+  name: 'Extra Mozzarella',
+  nameAr: 'موزاريلا إضافية',
+  price: EXTRA_PRICE,
 }
+
+/** Every add-on the menu offers. The cart re-reads prices from here on load. */
+export const allExtras: Extra[] = [extraChicken, extraCheese]
 
 /**
  * Menu items, grouped by category in display order: pasta, then sides, then
@@ -318,15 +327,39 @@ export const offers: Offer[] = [
   },
 ]
 
+/**
+ * An offer counts as live only when it is BOTH flagged active AND still inside
+ * its validity window. The `active` flag alone used to decide this, so the
+ * three promotions above — which expired in early 2025 — kept rendering as
+ * current long afterwards.
+ *
+ * Their discount codes are equally unbacked: no checkout logic has ever read
+ * `offer.code`, so nothing would have applied them. Until a real promotion and
+ * real coupon rules exist, the customer-facing offers route stays hidden and
+ * no code is advertised anywhere.
+ */
+export const isOfferLive = (offer: Offer, now: Date = new Date()) =>
+  offer.active && new Date(offer.validUntil).getTime() > now.getTime()
+
+export const liveOffers = (now: Date = new Date()) => offers.filter((o) => isOfferLive(o, now))
+
+/**
+ * Gallery — one entry per real photograph. The previous list repeated f1, f2
+ * and f3 twice each under different ids, so the grid showed the same three
+ * dishes six times. Every image below is a distinct file that exists in
+ * public/images and is used by a real product.
+ */
 export const galleryImages: GalleryImage[] = [
-  { id: '1', url: '/images/f1.png', alt: 'Pastata Ram', altAr: 'باستاتا رام', category: 'food', featured: true },
-  { id: '2', url: '/images/f2.png', alt: 'Ramcine Pasta', altAr: 'رامسين باستا', category: 'food', featured: true },
-  { id: '3', url: '/images/f3.png', alt: 'Pastata Balls', altAr: 'باستاتا بولز', category: 'food', featured: true },
-  { id: '4', url: '/images/f1.png', alt: 'Pastata Ram close-up', altAr: 'باستاتا رام عن قرب', category: 'food', featured: false },
-  { id: '5', url: '/images/f3.png', alt: 'Pastata Balls', altAr: 'باستاتا بولز', category: 'food', featured: false },
-  { id: '6', url: '/images/f2.png', alt: 'Ramcine', altAr: 'رامسين', category: 'food', featured: false },
-  { id: '7', url: '/images/f7.png', alt: 'Soft Drinks', altAr: 'مشروبات غازية', category: 'drinks', featured: false },
-  { id: '8', url: '/images/f5.png', alt: 'Water', altAr: 'مياه', category: 'drinks', featured: false },
+  { id: '1', url: '/images/f1.png', alt: 'Pastata Ram', altAr: 'باستاتا رام', category: 'food', featured: true, width: 1448, height: 1086 },
+  { id: '2', url: '/images/f2.png', alt: 'Ramcine Pasta', altAr: 'رام شيني', category: 'food', featured: true, width: 1448, height: 1086 },
+  { id: '3', url: '/images/f3.png', alt: 'Pastata Balls', altAr: 'باستاتا بولز', category: 'food', featured: true, width: 1448, height: 1086 },
+  { id: '4', url: '/images/image12.png', alt: 'Pesto Chicken with Italian Herbs', altAr: 'بيستو بالدجاج والأعشاب الإيطالية', category: 'food', featured: true, width: 1254, height: 1254 },
+  { id: '5', url: '/images/image13.png', alt: 'Creamy Chicken Risotto', altAr: 'ريزيتو بالدجاج والكريمة', category: 'food', featured: false, width: 1254, height: 1254 },
+  { id: '6', url: '/images/image15.png', alt: 'Pastata Foil', altAr: 'باستاتا قصدير', category: 'food', featured: false, width: 1536, height: 1152 },
+  { id: '7', url: '/images/image11.png', alt: 'Tamarind Potato', altAr: 'بطاط بالتمر الهندي', category: 'food', featured: false, width: 1254, height: 1254 },
+  { id: '8', url: '/images/image14.png', alt: 'Ice Berry', altAr: 'Ice Berry', category: 'drinks', featured: false, width: 1254, height: 1254 },
+  { id: '9', url: '/images/f7.png', alt: 'Soft Drinks', altAr: 'مشروبات غازية', category: 'drinks', featured: false, width: 1536, height: 1024 },
+  { id: '10', url: '/images/f5.png', alt: 'Mineral Water', altAr: 'مياه معدنية', category: 'drinks', featured: false, width: 1448, height: 1086 },
 ]
 
 // Working hours — daily 3:00 PM to 3:00 AM
@@ -345,13 +378,27 @@ export const businessHours: BusinessHours[] = [
   { day: 'Saturday', dayAr: 'السبت', open: '3:00 PM', close: '3:00 AM', closed: false },
 ]
 
-// PASTATARAM branches
+/**
+ * PASTATARAM branches — the single source of truth.
+ *
+ * Only the two operating branches appear here, and every branch selector,
+ * footer list, contact card and checkout dropdown maps over this array. Adding
+ * or retiring a branch is a one-line change in this file; never hardcode a
+ * branch name in a component.
+ *
+ * `mapsQuery` builds a Google Maps *search* link from the branch's own name.
+ * It deliberately carries no place ID and no coordinates, because none are
+ * verified for these locations — a search by name is honest, a fabricated pin
+ * would not be.
+ */
 export interface Branch {
   id: number
   nameAr: string
   nameEn: string
   detailAr: string
   detailEn: string
+  /** Google Maps search query built from the verified branch name. */
+  mapsQuery: string
 }
 
 export const branches: Branch[] = [
@@ -361,6 +408,7 @@ export const branches: Branch[] = [
     nameEn: 'Jeddah - Al Qurainiyah',
     detailAr: 'بجوار الهيئة الاقتصادية',
     detailEn: 'Next to the Economic Authority',
+    mapsQuery: 'PASTATARAM Al Qurainiyah Jeddah',
   },
   {
     id: 2,
@@ -368,15 +416,13 @@ export const branches: Branch[] = [
     nameEn: 'Al Sanabel District',
     detailAr: 'خلف ماكدونالدز',
     detailEn: 'Behind McDonald’s',
-  },
-  {
-    id: 3,
-    nameAr: 'حي الواحة',
-    nameEn: 'Al Waha District',
-    detailAr: 'بجوار المساحة الجيولوجية · مقابل الممشى',
-    detailEn: 'Next to the Geological Survey · Opposite the walkway',
+    mapsQuery: 'PASTATARAM Al Sanabel Jeddah',
   },
 ]
+
+/** Google Maps search URL for a branch. No invented coordinates or place IDs. */
+export const branchMapsUrl = (branch: Branch) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.mapsQuery)}`
 
 export const cmsContent: CMSContent = {
   heroTitle: 'A Modern Pasta Experience Combining Elegance & Exceptional Taste',
