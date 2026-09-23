@@ -21,12 +21,23 @@ export const extraChicken: Extra = {
 export const extraCheese: Extra = {
   id: 'extra-cheese',
   name: 'Extra Mozzarella',
-  nameAr: 'موزاريلا إضافية',
+  nameAr: 'موزريلا إضافية',
   price: EXTRA_PRICE,
 }
 
 /** Every add-on the menu offers. The cart re-reads prices from here on load. */
 export const allExtras: Extra[] = [extraChicken, extraCheese]
+
+/**
+ * Which dish may carry which add-on is decided by the official menu artwork
+ * (public/images/menu-final-v2.webp), not by convenience:
+ *
+ *   إضافة دجاج   → باستاتا رام · رام شيني · بيستو رام · ريزيتو رام
+ *   إضافة موزريلا → باستاتا رام فقط
+ *
+ * Any dish not named there carries no `extras` at all. Offering one anyway
+ * would charge the customer for something the kitchen does not serve with it.
+ */
 
 /**
  * Menu items, grouped by category in display order: pasta, then sides, then
@@ -48,7 +59,7 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: true,
     bestseller: true,
-    calories: 520,
+    calories: 749,
     extras: [extraChicken, extraCheese],
   },
   {
@@ -64,13 +75,13 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: true,
     bestseller: false,
-    calories: 580,
+    calories: 879,
     extras: [extraChicken],
   },
   {
     id: '12',
     name: 'Pesto Chicken with Italian Herbs',
-    nameAr: 'بيستو بالدجاج والأعشاب الإيطالية',
+    nameAr: 'بيستو رام',
     description:
       'Creamy pasta rich with fragrant basil sauce, in harmony with chicken pieces and hints of carefully selected Italian herbs — a premium pasta experience bringing together a fresh herbal flavour, a rich creamy texture and an elegant Italian touch.',
     descriptionAr:
@@ -86,12 +97,13 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: false,
     bestseller: false,
+    calories: 749,
     extras: [extraChicken],
   },
   {
     id: '13',
     name: 'Creamy Chicken Risotto with Chinese Herbs',
-    nameAr: 'ريزيتو بالدجاج والكريمة والأعشاب الصينية',
+    nameAr: 'ريزيتو رام',
     description:
       'A rich, creamy risotto bringing together soft rice, chicken and cream with a distinctive touch of Chinese herbs — a balanced composition that gives the dish depth of flavour, a luxurious creamy texture and a different experience for lovers of inventive plates.',
     descriptionAr:
@@ -107,6 +119,7 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: false,
     bestseller: false,
+    calories: 640,
     extras: [extraChicken],
   },
   {
@@ -128,7 +141,8 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: false,
     bestseller: false,
-    extras: [extraChicken, extraCheese],
+    calories: 800,
+    // No `extras`: the official menu does not list قصدير under either add-on.
   },
   // --- المقبلات / Sides --------------------------------------------------------
   {
@@ -144,12 +158,12 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: true,
     bestseller: true,
-    calories: 280,
+    calories: 400,
   },
   {
     id: '11',
     name: 'Tamarind Potato',
-    nameAr: 'بطاط بالتمر الهندي',
+    nameAr: 'بطاطا بالتمر الهندي',
     description:
       'Tender golden potatoes served with a rich touch of tamarind sauce — a balanced blend of the warm flavour of potato and the refreshing tang of tamarind, for a distinctive and indulgent experience.',
     descriptionAr:
@@ -165,12 +179,13 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: false,
     bestseller: false,
+    calories: 340,
   },
   // --- المشروبات / Drinks ------------------------------------------------------
   {
     id: '14',
     name: 'Ice Berry',
-    nameAr: 'Ice Berry',
+    nameAr: 'آيس بيري',
     description:
       'Cold, refreshing hibiscus with rich touches of berries and jujube, bringing freshness and fruity flavour together in a cool, elegant experience for any moment.',
     descriptionAr:
@@ -186,6 +201,7 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: false,
     bestseller: false,
+    calories: 90,
   },
   {
     id: '4',
