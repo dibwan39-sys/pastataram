@@ -34,7 +34,7 @@ export default function MenuPreview() {
     >
       <div className="relative mx-auto max-w-6xl px-6">
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -73,7 +73,7 @@ export default function MenuPreview() {
         <MenuImageSection showHeading={false} compact />
 
         <motion.div
-          initial={reduce ? undefined : { opacity: 0 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0 }}
           whileInView={reduce ? undefined : { opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}

@@ -42,7 +42,7 @@ export default function SelectionSection() {
     >
       <div className="mx-auto max-w-7xl px-6">
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -64,7 +64,7 @@ export default function SelectionSection() {
           {selection.map((item, i) => (
             <motion.li
               key={item.id}
-              initial={reduce ? undefined : { opacity: 0, y: 28 }}
+              initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 28 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
@@ -116,7 +116,7 @@ export default function SelectionSection() {
         </ul>
 
         <motion.div
-          initial={reduce ? undefined : { opacity: 0 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0 }}
           whileInView={reduce ? undefined : { opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}

@@ -59,7 +59,7 @@ export default function ReviewsSection({ limit = 6, showHeading = true }: Review
       <div className="relative mx-auto max-w-7xl px-6">
         {showHeading && (
           <motion.div
-            initial={reduce ? undefined : { opacity: 0, y: 24 }}
+            initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 24 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -109,7 +109,7 @@ export default function ReviewsSection({ limit = 6, showHeading = true }: Review
             return (
               <motion.li
                 key={review.id}
-                initial={reduce ? undefined : { opacity: 0, y: 26 }}
+                initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 26 }}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.55, delay: Math.min(i, 5) * 0.07, ease: [0.16, 1, 0.3, 1] }}
@@ -171,7 +171,7 @@ export default function ReviewsSection({ limit = 6, showHeading = true }: Review
         </ul>
 
         <motion.div
-          initial={reduce ? undefined : { opacity: 0 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0 }}
           whileInView={reduce ? undefined : { opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}

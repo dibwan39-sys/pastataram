@@ -8,6 +8,7 @@ import type { MenuItem } from '@/lib/types'
 import { useProductOrder } from './useProductOrder'
 import { ExtrasPicker, Price, QuantityStepper } from './OrderControls'
 import ProductSheet from './ProductSheet'
+import DepthCard from '@/components/motion/DepthCard'
 
 interface ProductCardProps {
   item: MenuItem
@@ -69,7 +70,13 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
   )
 
   const photo = (
-    <div className={`relative overflow-hidden ${isWide ? 'aspect-[4/3] sm:aspect-auto sm:h-full' : 'aspect-[4/3]'}`}>
+    <div
+      className={`relative overflow-hidden ${isWide ? 'aspect-[4/3] sm:aspect-auto sm:h-full' : 'aspect-[4/3]'}`}
+      /* Pushed toward the viewer so the tilt reads as a photograph sitting on
+         a card, not a flat picture printed on one. 18px is under the threshold
+         where the offset becomes visible as a gap. */
+      style={{ transform: 'translateZ(18px)' }}
+    >
       <Image
         src={item.image}
         alt={isAr ? item.nameAr : item.name}
@@ -93,8 +100,9 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
 
   return (
     <>
+      <DepthCard className="h-full">
       <motion.article
-        initial={reduce ? undefined : { opacity: 0, y: 26 }}
+        initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 26 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.55, delay: Math.min(index, 5) * 0.06, ease: [0.16, 1, 0.3, 1] }}
@@ -102,6 +110,7 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
           isWide ? 'flex-col sm:flex-row' : 'flex-col'
         }`}
         style={{
+          transformStyle: 'preserve-3d',
           background: 'linear-gradient(150deg, var(--brand-surface) 0%, var(--brand-noir-2) 100%)',
           border: '1px solid rgba(231,198,164,0.16)',
           boxShadow: '0 8px 28px rgba(0,0,0,0.38)',
@@ -190,6 +199,7 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
           </div>
         </div>
       </motion.article>
+      </DepthCard>
 
       <ProductSheet item={item} open={sheetOpen} onClose={() => setSheetOpen(false)} />
     </>

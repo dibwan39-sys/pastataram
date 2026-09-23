@@ -7,6 +7,7 @@ import { MapPin, Clock, Navigation, ShoppingBag } from 'lucide-react'
 import { branches, branchMapsUrl, workingHours } from '@/lib/data'
 import { getOpenStatus, type OpenStatus } from '@/lib/utils'
 import { useUIStore } from '@/lib/store'
+import DepthCard from '@/components/motion/DepthCard'
 
 /**
  * The one place branch cards are rendered. Home and /contact both use it, so a
@@ -36,9 +37,12 @@ export default function BranchCards({ className = '' }: { className?: string }) 
   return (
     <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${className}`}>
       {branches.map((branch, i) => (
+        /* Two locations of the same restaurant, so they share one treatment.
+           The tilt gives each card a surface the pointer can feel; it is off
+           on touch, where there is no pointer to feel it with. */
+        <DepthCard key={branch.id} className="h-full" maxTilt={2.5} lift={18}>
         <motion.article
-          key={branch.id}
-          initial={reduce ? undefined : { opacity: 0, y: 28 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 28 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
@@ -123,6 +127,7 @@ export default function BranchCards({ className = '' }: { className?: string }) 
             </div>
           </div>
         </motion.article>
+        </DepthCard>
       ))}
     </div>
   )

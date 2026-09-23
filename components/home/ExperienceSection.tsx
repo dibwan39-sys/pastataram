@@ -2,7 +2,9 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion, useTransform } from 'framer-motion'
+import { useScrollScene } from '@/components/motion/primitives'
+import AmbientGlow from '@/components/motion/AmbientGlow'
 import { Award, Heart, Leaf, Zap } from 'lucide-react'
 import { cmsContent, menuItems } from '@/lib/data'
 import { useUIStore } from '@/lib/store'
@@ -21,8 +23,22 @@ export default function ExperienceSection() {
   const reduce = useReducedMotion()
   const ref = useRef<HTMLElement | null>(null)
 
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const imageY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
+  /**
+   * Three planes at three speeds, which is the whole of the camera effect
+   * here: the backdrop photograph barely moves, the scrim over it moves more,
+   * and the claims sitting on top barely move at all. The eye reads the slow
+   * plane as far away and the fast one as near, and the section gains a depth
+   * it does not have in the markup.
+   *
+   * The photograph also loses contrast as the section leaves, so the text on
+   * top never has to fight it on the way out.
+   */
+  const { progress } = useScrollScene(ref)
+  const imageY = useTransform(progress, [0, 1], ['-11%', '11%'])
+  const imageScale = useTransform(progress, [0, 0.5, 1], [1.08, 1, 1.08])
+  const scrimY = useTransform(progress, [0, 1], ['-4%', '6%'])
+  const scrimOpacity = useTransform(progress, [0, 0.5, 1], [0.95, 0.72, 0.95])
+  const copyY = useTransform(progress, [0, 1], ['6%', '-6%'])
 
   // A plated dish that is not the signature, so the page does not repeat itself.
   const backdrop = menuItems.find((m) => m.id === '15') ?? menuItems[0]
@@ -48,7 +64,10 @@ export default function ExperienceSection() {
       aria-labelledby="experience-heading"
     >
       {/* Full-bleed photograph with a slow parallax drift */}
-      <motion.div className="absolute inset-0" style={reduce ? undefined : { y: imageY }}>
+      <motion.div
+        className="absolute inset-[-8%]"
+        style={reduce ? undefined : { y: imageY, scale: imageScale }}
+      >
         <Image
           src={backdrop.image}
           alt=""
@@ -58,15 +77,31 @@ export default function ExperienceSection() {
           className="object-cover"
         />
       </motion.div>
-      <div
+      <motion.div
         aria-hidden
-        className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, rgba(30, 7, 19,0.9) 22%, rgba(30, 7, 19,0.88) 78%, var(--brand-noir) 100%)' }}
+        className="absolute inset-[-6%]"
+        style={{
+          y: reduce ? undefined : scrimY,
+          opacity: reduce ? undefined : scrimOpacity,
+          background:
+            'linear-gradient(180deg, var(--brand-noir) 0%, rgba(30, 7, 19,0.9) 22%, rgba(30, 7, 19,0.88) 78%, var(--brand-noir) 100%)',
+        }}
       />
 
-      <div className="section relative mx-auto max-w-6xl px-6">
+      {/* Rose light rising and falling with the scene, not a static wash. */}
+      <AmbientGlow
+        className="left-[8%] top-[18%] h-[52vh] w-[52vh] rounded-full blur-[120px]"
+        progress={progress}
+        intensity={0.34}
+        breath={17}
+      />
+
+      <motion.div
+        className="section relative mx-auto max-w-6xl px-6"
+        style={reduce ? undefined : { y: copyY }}
+      >
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -87,7 +122,7 @@ export default function ExperienceSection() {
             return (
               <motion.li
                 key={p.title}
-                initial={reduce ? undefined : { opacity: 0, y: 26 }}
+                initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 26 }}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
@@ -110,7 +145,7 @@ export default function ExperienceSection() {
             )
           })}
         </ul>
-      </div>
+      </motion.div>
     </section>
   )
 }

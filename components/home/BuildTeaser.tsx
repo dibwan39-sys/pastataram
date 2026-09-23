@@ -29,7 +29,7 @@ export default function BuildTeaser() {
     >
       <div className="relative mx-auto max-w-6xl px-6">
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 28 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 28 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-70px' }}
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}

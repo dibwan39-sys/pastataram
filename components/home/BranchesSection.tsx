@@ -24,7 +24,7 @@ export default function BranchesSection() {
     >
       <div className="relative mx-auto max-w-5xl px-6">
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}

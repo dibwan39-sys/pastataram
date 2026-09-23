@@ -188,7 +188,7 @@ export default function ReviewModal({ open, onClose }: { open: boolean; onClose:
                 /* ── Confirmation — states only what actually happened ── */
                 <div className="py-8 text-center">
                   <motion.span
-                    initial={reduce ? undefined : { scale: 0 }}
+                    initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { scale: 0 }}
                     animate={reduce ? undefined : { scale: 1 }}
                     transition={{ type: 'spring', damping: 18, delay: 0.1 }}
                     className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full"

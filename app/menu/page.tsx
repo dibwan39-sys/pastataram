@@ -46,7 +46,7 @@ export default function MenuPage() {
         />
 
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 26 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 26 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative mx-auto max-w-3xl px-6 text-center"
@@ -109,7 +109,7 @@ export default function MenuPage() {
       >
         <div className="mx-auto max-w-6xl px-6">
           <motion.div
-            initial={reduce ? undefined : { opacity: 0, y: 22 }}
+            initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 22 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -140,7 +140,7 @@ export default function MenuPage() {
         style={{ background: 'linear-gradient(180deg, var(--brand-noir-2) 0%, var(--brand-noir) 100%)' }}
       >
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 20 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 20 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}

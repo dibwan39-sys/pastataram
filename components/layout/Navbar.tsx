@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        initial={reduce ? undefined : { y: -80 }}
+        initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { y: -80 }}
         animate={reduce ? undefined : { y: 0 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,backdrop-filter] duration-300"
@@ -156,7 +156,7 @@ export default function Navbar() {
               <ShoppingCart className="h-4 w-4" aria-hidden />
               {count > 0 && (
                 <motion.span
-                  initial={reduce ? undefined : { scale: 0 }}
+                  initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { scale: 0 }}
                   animate={reduce ? undefined : { scale: 1 }}
                   aria-hidden
                   className="absolute -end-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold text-brand-cream"

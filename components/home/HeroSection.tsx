@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion, useTransform } from 'framer-motion'
+import { usePinnedScene } from '@/components/motion/primitives'
 import { ArrowLeft, ArrowRight, MapPin, ChevronDown } from 'lucide-react'
 import AmbientParticles from '@/components/ambient/AmbientParticles'
 import { useUIStore } from '@/lib/store'
@@ -30,15 +31,31 @@ export default function HeroSection() {
 
   const signature = menuItems.find((m) => m.id === '1') ?? menuItems[0]
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  })
-  // The photograph drifts slower than the copy, so the frame gains depth.
-  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '16%'])
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.06, 1.18])
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '38%'])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.62], [1, 0])
+  /**
+   * The opening shot, in four planes moving at four rates.
+   *
+   * Progress is spring-smoothed rather than read straight off the scrollbar.
+   * Raw `scrollYProgress` tracks the wheel exactly, which is why linear
+   * parallax reads mechanical — the image starts and stops with the finger.
+   * The spring keeps moving for a beat after the input stops, so the frame
+   * behaves like something with mass, which is what a camera move is.
+   *
+   * The rates are what create the depth, and they are ordered deliberately:
+   *
+   *   photograph   16%  — furthest away, so it moves least
+   *   scrim        26%  — the air between the dish and the words
+   *   content      38%  — nearest the viewer, so it leaves first
+   *
+   * The push (1.06 → 1.18) is the camera closing on the plate while the copy
+   * withdraws, which hands the page to the next scene without a cut.
+   */
+  const { progress } = usePinnedScene(sectionRef)
+  const imageY = useTransform(progress, [0, 1], ['0%', '16%'])
+  const imageScale = useTransform(progress, [0, 1], [1.06, 1.18])
+  const scrimY = useTransform(progress, [0, 1], ['0%', '26%'])
+  const contentY = useTransform(progress, [0, 1], ['0%', '38%'])
+  const contentOpacity = useTransform(progress, [0, 0.62], [1, 0])
+  const glowScale = useTransform(progress, [0, 1], [1, 1.45])
 
   // Time-dependent, so it can only be computed after mount.
   const [status, setStatus] = useState<OpenStatus | null>(null)
@@ -88,10 +105,11 @@ export default function HeroSection() {
         bottom carries the weight, because that is where the page continues.
         Type legibility is bought locally, behind the words, not globally.
       */}
-      <div
+      <motion.div
         aria-hidden
-        className="absolute inset-0"
+        className="absolute inset-[-10%]"
         style={{
+          y: reduce ? undefined : scrimY,
           background:
             'linear-gradient(180deg, rgba(30, 7, 19,0.58) 0%, rgba(30, 7, 19,0.10) 30%, rgba(30, 7, 19,0.22) 58%, rgba(30, 7, 19,0.90) 100%)',
         }}
@@ -105,10 +123,13 @@ export default function HeroSection() {
         }}
       />
       {/* A single rose bloom — the brand colour entering the frame */}
-      <div
+      <motion.div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-[38%] h-[46vh] w-[46vh] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px]"
-        style={{ background: 'radial-gradient(circle, rgba(253,101,125,0.22) 0%, transparent 68%)' }}
+        style={{
+          scale: reduce ? undefined : glowScale,
+          background: 'radial-gradient(circle, rgba(253,101,125,0.30) 0%, transparent 68%)',
+        }}
       />
 
       {/* ── Layer 3 · ambient motes ──────────────────────────── */}
@@ -133,7 +154,7 @@ export default function HeroSection() {
           }}
         />
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, scale: 0.92, y: 18 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, scale: 0.92, y: 18 }}
           animate={reduce ? undefined : { opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="relative mx-auto mb-5 h-28 w-28 md:h-36 md:w-36"
@@ -149,7 +170,7 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.h1
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 24 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
           className="logo-text display-xl font-black text-brand-cream"
@@ -158,7 +179,7 @@ export default function HeroSection() {
         </motion.h1>
 
         <motion.p
-          initial={reduce ? undefined : { opacity: 0, y: 20 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 20 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mt-4 max-w-xl text-balance text-base leading-8 text-brand-cream-soft md:text-lg"
@@ -168,7 +189,7 @@ export default function HeroSection() {
 
         {/* Gold hairline */}
         <motion.div
-          initial={reduce ? undefined : { scaleX: 0 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { scaleX: 0 }}
           animate={reduce ? undefined : { scaleX: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto my-7 h-px w-28"
@@ -178,7 +199,7 @@ export default function HeroSection() {
 
         {/* Featured dish — name and live price, never hardcoded */}
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 18 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 18 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mb-8 inline-flex items-center gap-3 rounded-full py-2 ps-2 pe-5"
@@ -208,7 +229,7 @@ export default function HeroSection() {
 
         {/* CTAs */}
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 18 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 18 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col items-center justify-center gap-3 sm:flex-row"
@@ -230,7 +251,7 @@ export default function HeroSection() {
 
         {/* Location + hours + live open state */}
         <motion.div
-          initial={reduce ? undefined : { opacity: 0 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0 }}
           animate={reduce ? undefined : { opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
           className="mt-9 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-brand-cream-dim"
@@ -266,7 +287,7 @@ export default function HeroSection() {
       <motion.a
         href="#signature"
         aria-label={isAr ? 'تابع إلى طبق التوقيع' : 'Continue to the signature dish'}
-        initial={reduce ? undefined : { opacity: 0 }}
+        initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0 }}
         animate={reduce ? undefined : { opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
         className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 rounded-full p-2 text-brand-cream-dim transition-colors hover:text-brand-rose"

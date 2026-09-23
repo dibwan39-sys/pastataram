@@ -57,7 +57,7 @@ export default function MenuGrid({ showAllCategories = false, className = '' }: 
       <AnimatePresence mode="wait">
         <motion.div
           key={showAllCategories ? 'all' : activeCategory}
-          initial={reduce ? undefined : { opacity: 0, y: 12 }}
+          initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 12 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           exit={reduce ? undefined : { opacity: 0, y: -8 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}

@@ -2,7 +2,8 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion, useTransform } from 'framer-motion'
+import { useScrollScene } from '@/components/motion/primitives'
 import { ShoppingCart, Sparkles } from 'lucide-react'
 import { menuItems } from '@/lib/data'
 import { useUIStore } from '@/lib/store'
@@ -29,12 +30,25 @@ export default function SignatureSection() {
   const item = menuItems.find((m) => m.id === '1') ?? menuItems[0]
   const order = useProductOrder(item)
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  })
-  const imageY = useTransform(scrollYProgress, [0, 1], ['-7%', '7%'])
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.25, 0.6, 0.25])
+  /**
+   * The food advertisement, choreographed in three rates.
+   *
+   * The plate drifts and closes (a slow push, 1 → 1.07). The copy beside it
+   * drifts the other way and further, so the two never move as one block —
+   * that opposition is the whole trick: a photograph and its caption sliding
+   * together read as a flat card, sliding apart they read as a set.
+   *
+   * The frame itself opens with a clip reveal on arrival, which is what makes
+   * the plate feel uncovered rather than faded in.
+   */
+  const { progress } = useScrollScene(sectionRef)
+  const imageY = useTransform(progress, [0, 1], ['-9%', '9%'])
+  const imageScale = useTransform(progress, [0, 0.5, 1], [1, 1.07, 1])
+  const copyY = useTransform(progress, [0, 1], ['14%', '-14%'])
+  const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.18, 0.72, 0.18])
+  const glowX = useTransform(progress, [0, 1], ['-8%', '12%'])
+  const frameClip = useTransform(progress, [0, 0.28], [18, 0], { clamp: true })
+  const framePath = useTransform(frameClip, (v) => `inset(${v}% 0% 0% 0% round 2rem)`)
 
   return (
     <section
@@ -48,8 +62,9 @@ export default function SignatureSection() {
         aria-hidden
         className="pointer-events-none absolute -top-20 start-[-10%] h-[60vh] w-[60vh] rounded-full blur-[110px]"
         style={{
-          background: 'radial-gradient(circle, rgba(253,101,125,0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(253,101,125,0.42) 0%, transparent 70%)',
           opacity: reduce ? 0.35 : glowOpacity,
+          x: reduce ? undefined : glowX,
         }}
       />
 
@@ -57,17 +72,24 @@ export default function SignatureSection() {
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* ── Photograph ─────────────────────────────── */}
           <motion.div
-            initial={reduce ? undefined : { opacity: 0, scale: 0.96 }}
+            initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, scale: 0.96 }}
             whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-1 lg:order-none"
           >
-            <div
+            <motion.div
               className="relative aspect-[4/5] overflow-hidden rounded-[2rem] sm:aspect-[4/3] lg:aspect-[4/5]"
-              style={{ border: '1px solid rgba(231,198,164,0.2)', boxShadow: '0 30px 80px rgba(0,0,0,0.55)' }}
+              style={{
+                border: '1px solid rgba(253,101,125,0.28)',
+                boxShadow: '0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(253,101,125,0.10)',
+                clipPath: reduce ? undefined : framePath,
+              }}
             >
-              <motion.div className="absolute inset-[-7%]" style={reduce ? undefined : { y: imageY }}>
+              <motion.div
+                className="absolute inset-[-9%]"
+                style={reduce ? undefined : { y: imageY, scale: imageScale }}
+              >
                 <Image
                   src={item.image}
                   alt={isAr ? item.nameAr : item.name}
@@ -82,11 +104,11 @@ export default function SignatureSection() {
                 className="absolute inset-0"
                 style={{ background: 'linear-gradient(to top, rgba(30, 7, 19,0.6) 0%, transparent 45%)' }}
               />
-            </div>
+            </motion.div>
 
             {/* Floating price medallion */}
             <motion.div
-              initial={reduce ? undefined : { opacity: 0, y: 16, scale: 0.9 }}
+              initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 16, scale: 0.9 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -106,8 +128,13 @@ export default function SignatureSection() {
           </motion.div>
 
           {/* ── Copy + ordering ────────────────────────── */}
+          {/* Outer layer carries the scroll drift; the inner one owns the
+              arrival. They are separate elements because a single element
+              cannot hold a scroll-linked `y` and a `whileInView` `y` at once —
+              the second would overwrite the first every frame. */}
+          <motion.div style={reduce ? undefined : { y: copyY }}>
           <motion.div
-            initial={reduce ? undefined : { opacity: 0, y: 30 }}
+            initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 30 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -180,6 +207,7 @@ export default function SignatureSection() {
                 {isAr ? 'التفاصيل' : 'Details'}
               </button>
             </div>
+          </motion.div>
           </motion.div>
         </div>
       </div>

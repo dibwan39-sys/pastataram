@@ -2,7 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useTransform } from 'framer-motion'
+import { useScrollScene } from '@/components/motion/primitives'
 import { ArrowLeft, ArrowRight, MessageCircle, Phone } from 'lucide-react'
 import { cmsContent, menuItems, workingHours } from '@/lib/data'
 import { getWhatsAppLink } from '@/lib/utils'
@@ -17,7 +19,22 @@ export default function FinalCTA() {
   const language = useUIStore((s) => s.language)
   const isAr = language === 'ar'
   const reduce = useReducedMotion()
+  const ref = useRef<HTMLElement | null>(null)
   const Arrow = isAr ? ArrowLeft : ArrowRight
+
+  /**
+   * The last shot of the commercial: the room comes up as you walk into it.
+   *
+   * Nothing follows this section, so unlike every other scene it does not
+   * recede — it settles. The light rises to full as the section centres and
+   * stays there, and the backdrop drifts just enough that the frame is never
+   * completely still while the customer decides.
+   */
+  const { progress } = useScrollScene(ref)
+  const glowOpacity = useTransform(progress, [0, 0.45, 1], [0.25, 1, 0.9])
+  const glowScale = useTransform(progress, [0, 0.45, 1], [0.82, 1.06, 1.02])
+  const backdropY = useTransform(progress, [0, 1], ['-7%', '7%'])
+  const backdropScale = useTransform(progress, [0, 1], [1.12, 1.02])
 
   const backdrop = menuItems.find((m) => m.id === '2') ?? menuItems[0]
   const waLink = getWhatsAppLink(
@@ -27,26 +44,34 @@ export default function FinalCTA() {
 
   return (
     <section
+      ref={ref}
       className="relative overflow-hidden"
       aria-labelledby="final-cta-heading"
       style={{ background: 'var(--brand-ink)' }}
     >
-      <div className="absolute inset-0">
+      <motion.div
+        className="absolute inset-[-8%]"
+        style={reduce ? undefined : { y: backdropY, scale: backdropScale }}
+      >
         <Image src={backdrop.image} alt="" fill sizes="100vw" quality={75} className="object-cover" />
-      </div>
+      </motion.div>
       <div
         aria-hidden
         className="absolute inset-0"
         style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, rgba(30, 7, 19,0.82) 35%, rgba(30, 7, 19,0.94) 100%)' }}
       />
-      <div
+      <motion.div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[40vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px]"
-        style={{ background: 'radial-gradient(ellipse, rgba(253,101,125,0.2) 0%, transparent 70%)' }}
+        style={{
+          opacity: reduce ? 0.6 : glowOpacity,
+          scale: reduce ? undefined : glowScale,
+          background: 'radial-gradient(ellipse, rgba(253,101,125,0.34) 0%, transparent 70%)',
+        }}
       />
 
       <motion.div
-        initial={reduce ? undefined : { opacity: 0, y: 28 }}
+        initial={reduce ? { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 } : { opacity: 0, y: 28 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
