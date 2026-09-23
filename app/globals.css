@@ -2,35 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts are loaded via next/font in app/layout.tsx — never re-import them here.
+   A CSS @import would add a second, render-blocking request for the same files. */
 
 /* ════════════════════════════════════════════
-   PASTATARAM — premium identity
-   Dark charcoal · wine · copper · cream
-   Locked identical on every device
+   PASTATARAM — LUXURY PINK
+   Cinematic near-black base · rose signature ·
+   champagne secondary · cream typography.
+   Values sampled from public/images/logo.png.
    ════════════════════════════════════════════ */
 :root {
   color-scheme: dark;
 
-  --brand-ink:         #0F0D0B;
-  --brand-charcoal:    #14110F;
-  --brand-charcoal-2:  #1A1614;
-  --brand-surface:     #211C19;
-  --brand-surface-2:   #2B2521;
-  --brand-line:        #3A322C;
+  /* Base — warm near-black with a rose undertone */
+  --brand-ink:        #0B0709;
+  --brand-noir:       #120C10;
+  --brand-noir-2:     #181015;
+  --brand-surface:    #1F1419;
+  --brand-surface-2:  #2A1B22;
+  --brand-surface-3:  #35222B;
+  --brand-line:       #3A2730;
 
-  --brand-wine:        #7B1E2B;
-  --brand-wine-deep:   #5E1521;
-  --brand-wine-soft:   #8C2D3D;
+  /* Signature rose */
+  --brand-rose:       #FD657D;
+  --brand-rose-deep:  #C43E57;
+  --brand-rose-dark:  #8E2A3D;
+  --brand-rose-soft:  #FF8B9D;
+  --brand-rose-mist:  #FFB3BF;
 
-  --brand-copper:      #B87333;
-  --brand-copper-light:#D8A24A;
-  --brand-gold:        #E0B566;
+  /* Blush / nude */
+  --brand-blush:      #F8C8C8;
+  --brand-nude:       #F8D0C8;
 
-  --brand-cream:       #F2E8DA;
-  --brand-cream-soft:  #E8DCC8;
-  --brand-cream-dim:   #C9BBA8;
-  --brand-muted:       #9A8B7C;
+  /* Champagne */
+  --brand-champagne:       #E7C6A4;
+  --brand-champagne-light: #F0D3B0;
+  --brand-gold:            #F6E0C4;
+
+  /* Cream typography */
+  --brand-cream:      #FFF3EE;
+  --brand-cream-soft: #F3E2DC;
+  --brand-cream-dim:  #D8C2BD;
+  --brand-muted:      #A88E8E;
+
+  /* Rose channels for rgba() composition */
+  --rose-rgb:      253, 101, 125;
+  --champagne-rgb: 231, 198, 164;
+  --cream-rgb:     255, 243, 238;
+  --ink-rgb:       11, 7, 9;
+
+  /* Fixed chrome heights, shared by layout and scroll-margin */
+  --nav-h: 4.5rem;
+  --mobile-nav-h: 4.5rem;
 }
 
 *,
@@ -39,8 +62,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  /* Prevent Windows/Android high-contrast from overriding palette */
-  forced-color-adjust: none;
 }
 
 html {
@@ -48,144 +69,266 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Lock background even before body paint */
-  background-color: #14110F;
+  /* Lock the background even before body paints */
+  background-color: var(--brand-noir);
+  /* Anchors and scroll-into-view clear the fixed navbar */
+  scroll-padding-top: calc(var(--nav-h) + 1rem);
 }
 
 body {
-  font-family: 'Inter', 'Cairo', sans-serif;
-  background-color: #14110F;
-  color: #F2E8DA;
-  /* Use `clip` (not `hidden`) so the body does NOT become a scroll container —
-     `overflow-x: hidden` forces overflow-y to `auto`, which breaks every
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  background-color: var(--brand-noir);
+  color: var(--brand-cream);
+  /* `clip`, not `hidden` — `overflow-x: hidden` forces overflow-y to `auto`,
+     which turns body into a scroll container and silently breaks every
      `position: sticky` descendant (e.g. the menu category bar). */
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Color lock ─────────────────────────────────
-   Keep the charcoal identity regardless of OS theme,
-   any injected .dark class, or next-themes persistence. */
+/* ── Colour lock ─────────────────────────────
+   Hold the identity regardless of OS theme or any injected class. */
 @media (prefers-color-scheme: light) {
-  html {
-    background-color: #14110F;
-    color: #F2E8DA;
-  }
+  html,
   body {
-    background-color: #14110F !important;
-    color: #F2E8DA !important;
+    background-color: var(--brand-noir);
+    color: var(--brand-cream);
   }
 }
 
 html.dark,
 html.dark body {
-  background-color: #14110F !important;
-  color: #F2E8DA !important;
+  background-color: var(--brand-noir);
+  color: var(--brand-cream);
 }
 
-/* RTL */
-[dir="rtl"] {
-  font-family: 'Cairo', 'Inter', sans-serif;
+/* RTL — Arabic is the primary customer language */
+[dir='rtl'],
+[dir='rtl'] body {
+  font-family: var(--font-cairo), 'Cairo', sans-serif;
 }
 
 /* ════════════════════════════════════════════
-   SCROLLBAR
+   ACCESSIBILITY
    ════════════════════════════════════════════ */
-::-webkit-scrollbar        { width: 7px; }
-::-webkit-scrollbar-track  { background: #14110F; }
-::-webkit-scrollbar-thumb  { background: #5E1521; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #B87333; }
 
-::selection { background: rgba(184,115,51,0.35); color: #F2E8DA; }
+/* Visible keyboard focus everywhere. Mouse users never see it. */
+:focus-visible {
+  outline: 2px solid var(--brand-rose);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Skip link — first tab stop on every page */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -100px;
+  z-index: 300;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  background: var(--brand-rose);
+  color: var(--brand-ink);
+  font-weight: 700;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/**
+ * Honour the OS "reduce motion" setting. Framer Motion is told separately
+ * via useReducedMotion(); this covers CSS transitions, the ambient particle
+ * layer and any animation the components do not drive themselves.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ambient-layer {
+    display: none !important;
+  }
+}
 
 /* ════════════════════════════════════════════
-   SURFACES — solid editorial panels (no glassmorphism)
-   Class names retained for backward compatibility.
+   SCROLLBAR + SELECTION
+   ════════════════════════════════════════════ */
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: var(--brand-noir); }
+::-webkit-scrollbar-thumb  { background: var(--brand-rose-dark); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-rose); }
+
+::selection {
+  background: rgba(var(--rose-rgb), 0.35);
+  color: var(--brand-cream);
+}
+
+/* ════════════════════════════════════════════
+   SURFACES
+   Glass is an ACCENT, not the whole site — reserved for floating
+   chrome (navbar, drawers, modals). Content panels stay solid so
+   the food photography keeps its contrast.
    ════════════════════════════════════════════ */
 .glass {
-  background: #1A1614;
-  border: 1px solid rgba(58,50,44,0.9);
+  background: rgba(24, 16, 21, 0.72);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(var(--champagne-rgb), 0.14);
 }
 
 .glass-card {
-  background: #211C19;
-  border: 1px solid rgba(58,50,44,0.9);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  background: rgba(31, 20, 25, 0.88);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(var(--champagne-rgb), 0.16);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
 }
 
+/* Solid editorial panel — the default for content */
 .premium-card {
-  background: linear-gradient(145deg, #211C19 0%, #1A1614 100%);
-  border: 1px solid rgba(58,50,44,0.9);
-  border-radius: 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  background: linear-gradient(145deg, #1F1419 0%, #181015 100%);
+  border: 1px solid rgba(var(--champagne-rgb), 0.14);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
 }
 
 .premium-card:hover {
-  border-color: rgba(184,115,51,0.55);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  border-color: rgba(var(--rose-rgb), 0.42);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* A hairline rose edge for featured surfaces */
+.rose-edge {
+  border: 1px solid rgba(var(--rose-rgb), 0.28);
+  box-shadow: inset 0 1px 0 rgba(var(--cream-rgb), 0.05);
 }
 
 /* ════════════════════════════════════════════
    TYPOGRAPHY
    ════════════════════════════════════════════ */
 .gradient-text {
-  background: linear-gradient(135deg, #B87333, #D8A24A, #E0B566);
+  background: linear-gradient(135deg, #FD657D 0%, #FF8B9D 45%, #E7C6A4 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .logo-text {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
 
-.font-display { font-family: 'Playfair Display', serif; }
+.font-display {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+/* Small caps eyebrow above section headings */
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brand-rose);
+}
+
+/* Fluid editorial heading — scales without breakpoints */
+.display-xl {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.display-lg {
+  font-size: clamp(1.875rem, 4.2vw, 3rem);
+  line-height: 1.12;
+}
+
+/* Hairline rule that fades outward, direction-aware */
+.rule-fade {
+  height: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(var(--rose-rgb), 0) 0%, var(--brand-rose) 18%, rgba(var(--champagne-rgb), 0.25) 100%);
+}
+
+[dir='rtl'] .rule-fade {
+  background: linear-gradient(270deg, rgba(var(--rose-rgb), 0) 0%, var(--brand-rose) 18%, rgba(var(--champagne-rgb), 0.25) 100%);
+}
 
 /* ════════════════════════════════════════════
    BUTTONS
    ════════════════════════════════════════════ */
 .btn-primary {
-  background: linear-gradient(135deg, #5E1521 0%, #7B1E2B 55%, #8C2D3D 100%);
-  color: #F2E8DA;
-  border: 1px solid rgba(184,115,51,0.35);
-  border-radius: 50px;
+  background: linear-gradient(135deg, #C43E57 0%, #FD657D 58%, #FF8B9D 100%);
+  color: #2A0A12;
+  border: 1px solid rgba(var(--cream-rgb), 0.18);
+  border-radius: 9999px;
   padding: 12px 32px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(123,30,43,0.45);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 10px 30px rgba(var(--rose-rgb), 0.32);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 14px 40px rgba(123,30,43,0.6);
-  border-color: rgba(216,162,74,0.6);
+  box-shadow: 0 16px 42px rgba(var(--rose-rgb), 0.45);
+  border-color: rgba(var(--cream-rgb), 0.35);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .btn-secondary {
   background: transparent;
-  color: #F2E8DA;
-  border: 1.5px solid #B87333;
-  border-radius: 50px;
+  color: var(--brand-cream);
+  border: 1.5px solid rgba(var(--champagne-rgb), 0.55);
+  border-radius: 9999px;
   padding: 10px 30px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background: #B87333;
-  color: #14110F;
+  background: var(--brand-champagne);
+  color: var(--brand-ink);
+  border-color: var(--brand-champagne);
 }
 
 /* ════════════════════════════════════════════
    LAYOUT
    ════════════════════════════════════════════ */
 .section {
-  padding: 80px 0;
+  padding: 88px 0;
 }
 
 @media (max-width: 768px) {
@@ -194,16 +337,24 @@ html.dark body {
   }
 }
 
+.bg-brand-gradient {
+  background: linear-gradient(160deg, #120C10 0%, #181015 55%, #1F1419 100%);
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #120C10 0%, #1F1419 100%);
+}
+
 /* ════════════════════════════════════════════
    COMPONENTS
    ════════════════════════════════════════════ */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
 .mobile-nav {
@@ -212,27 +363,22 @@ html.dark body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(20,17,15,0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(58,50,44,0.9);
-  box-shadow: 0 -6px 24px rgba(0,0,0,0.5);
+  background: rgba(18, 12, 16, 0.94);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-top: 1px solid rgba(var(--champagne-rgb), 0.14);
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.5);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* iOS Safari drops frames compositing a blurred fixed bar over scrolling
+   content — go solid on small screens. */
 @media (max-width: 767px) {
   .mobile-nav {
-    background: #14110F;
+    background: #120C10;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
-}
-
-.bg-brand-gradient {
-  background: linear-gradient(160deg, #14110F 0%, #1A1614 55%, #211C19 100%);
-}
-
-.admin-sidebar {
-  background: linear-gradient(180deg, #14110F 0%, #211C19 100%);
 }
 
 /* Editorial image treatment — keeps food the focus */
@@ -245,11 +391,11 @@ html.dark body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(15,13,11,0.85) 0%, rgba(15,13,11,0.1) 55%, transparent 100%);
+  background: linear-gradient(to top, rgba(var(--ink-rgb), 0.85) 0%, rgba(var(--ink-rgb), 0.1) 55%, transparent 100%);
 }
 
 .nav-active {
-  color: #D8A24A;
+  color: var(--brand-rose);
   position: relative;
 }
 
@@ -260,24 +406,32 @@ html.dark body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(135deg, #B87333, #E0B566);
+  background: linear-gradient(135deg, #FD657D, #E7C6A4);
   border-radius: 2px;
 }
 
-.star-filled { color: #D8A24A; fill: #D8A24A; }
-.star-empty  { color: #4A3F36; }
+.star-filled { color: #F0D3B0; fill: #F0D3B0; }
+.star-empty  { color: #4A3038; }
 
 .status-badge {
   padding: 4px 12px;
-  border-radius: 50px;
+  border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #1A1614 25%, #2B2521 50%, #1A1614 75%);
+  background: linear-gradient(90deg, #181015 25%, #2A1B22 50%, #181015 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+}
+
+/* The ambient particle canvas — purely decorative, never interactive */
+.ambient-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ════════════════════════════════════════════
@@ -296,4 +450,15 @@ html.dark body {
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
+}
+
+/* Slow cinematic drift for hero backdrops */
+@keyframes kenburns {
+  0%   { transform: scale(1.04) translate3d(0, 0, 0); }
+  100% { transform: scale(1.16) translate3d(0, -1.5%, 0); }
+}
+
+/* Printing the QR table card — hide everything but the card */
+@media print {
+  .print\:hidden { display: none !important; }
 }

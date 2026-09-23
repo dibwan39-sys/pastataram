@@ -1,5 +1,27 @@
 import type { Config } from 'tailwindcss'
 
+/**
+ * ════════════════════════════════════════════════════════════════
+ *  PASTATARAM — LUXURY PINK DESIGN SYSTEM
+ * ════════════════════════════════════════════════════════════════
+ *
+ *  Single source of truth for brand colour. Every value below is
+ *  sampled from the official logo (public/images/logo.png) rather
+ *  than invented:
+ *
+ *    wordmark / heart ... #FD657D   hsl(351, 97%, 69%)
+ *    pasta + halo ....... #F8C8C8   hsl(0, 77%, 88%)
+ *    warm nude .......... #F8D0C8   hsl(10, 77%, 88%)
+ *    fork + ring ........ #EFBF9B   hsl(26, 72%, 77%)
+ *    cream highlight .... #F8E8E0   hsl(20, 63%, 93%)
+ *
+ *  The identity is LUXURY PINK on a DARK CINEMATIC base: a warm
+ *  near-black carrying a rose undertone (never neutral grey, never
+ *  blue), rose as the signature accent, champagne as the secondary,
+ *  and cream for type. Food photography is the hero; these colours
+ *  frame it and never compete with it.
+ * ════════════════════════════════════════════════════════════════
+ */
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,76 +32,92 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ════════════════════════════════════════════
-        //  PASTATARAM premium identity
-        //  Dark charcoal base · wine accents · copper highlights · cream type
-        //
-        //  NOTE: the original (pink) token NAMES are preserved and simply
-        //  re-valued to the new palette, so every existing `*-brand-*` class
-        //  across the app recolors automatically with no markup changes.
-        //  Semantic roles after the flip:
-        //    surfaces → charcoal · accents → wine/copper · text → cream
-        // ════════════════════════════════════════════
         brand: {
-          // — New, explicit palette names (for new markup) —
-          ink: '#0F0D0B',
-          charcoal: '#14110F',
-          'charcoal-2': '#1A1614',
-          surface: '#211C19',
-          'surface-2': '#2B2521',
-          line: '#3A322C',
-          wine: '#7B1E2B',
-          'wine-deep': '#5E1521',
-          'wine-soft': '#8C2D3D',
-          copper: '#B87333',
-          'copper-bright': '#CD8A3E',
-          'copper-light': '#D8A24A',
-          gold: '#E0B566',
-          'cream-soft': '#E8DCC8',
-          'cream-dim': '#C9BBA8',
-          muted: '#9A8B7C',
+          // ── Cinematic base — warm near-black with a rose undertone ──
+          ink: '#0B0709',
+          noir: '#120C10',
+          'noir-2': '#181015',
+          surface: '#1F1419',
+          'surface-2': '#2A1B22',
+          'surface-3': '#35222B',
+          line: '#3A2730',
 
-          // — Legacy token names, re-valued (DO NOT remove: ~1000 usages) —
-          espresso: '#F2E8DA', // was darkest text → now cream text
-          brown: '#E8DCC8',    // secondary text → soft cream
-          ivory: '#F2E8DA',    // light text on dark areas → cream
-          mocha: '#C9BBA8',    // muted text → dim cream
-          latte: '#9A8B7C',    // muted text / placeholder
-          cream: '#14110F',    // light surface → charcoal base
-          pearl: '#14110F',    // lightest surface → charcoal base
-          blush: '#211C19',    // light surface → raised charcoal
-          nude: '#211C19',     // light surface → raised charcoal
-          'cream-beige': '#2B2521',
-          rose: '#8C2D3D',         // pink accent → wine
-          'rose-gold': '#B87333',  // primary accent → copper
-          champagne: '#D8A24A',    // highlight → copper-light
+          // ── Signature rose (the logo wordmark) ──
+          rose: '#FD657D',
+          'rose-deep': '#C43E57',
+          'rose-dark': '#8E2A3D',
+          'rose-soft': '#FF8B9D',
+          'rose-mist': '#FFB3BF',
+
+          // ── Blush / nude (the logo's dominant family) ──
+          blush: '#F8C8C8',
+          'blush-soft': '#F8D8D8',
+          nude: '#F8D0C8',
+          'nude-warm': '#F8E0D8',
+
+          // ── Champagne (the logo's fork + ring) ──
+          champagne: '#E7C6A4',
+          'champagne-light': '#F0D3B0',
+          gold: '#F6E0C4',
+
+          // ── Cream typography ──
+          cream: '#FFF3EE',
+          'cream-soft': '#F3E2DC',
+          'cream-dim': '#D8C2BD',
+          muted: '#A88E8E',
+
+          /**
+           * ── COMPATIBILITY ALIASES ──────────────────────────────
+           * These names predate this system and are still referenced
+           * by pages not yet migrated (admin, account, about …).
+           * They are mapped by ROLE, not by literal name, so the UI
+           * stays correct while the migration finishes.
+           *
+           * Do not use these in new markup. Use the tokens above.
+           * Remove an alias only once its usages reach zero.
+           * ──────────────────────────────────────────────────────
+           */
+          espresso: '#FFF3EE',      // primary type on dark  → cream
+          ivory: '#FFF3EE',         // primary type on dark  → cream
+          brown: '#F3E2DC',         // secondary type        → cream-soft
+          mocha: '#D8C2BD',         // muted type            → cream-dim
+          latte: '#A88E8E',         // placeholder type      → muted
+          pearl: '#120C10',         // page background       → noir
+          'cream-beige': '#2A1B22', // raised surface        → surface-2
+          'rose-gold': '#FD657D',   // primary accent        → rose
+          wine: '#C43E57',          // deep accent           → rose-deep
+          copper: '#E7C6A4',        // secondary accent      → champagne
         },
       },
       fontFamily: {
-        arabic: ['Cairo', 'Noto Kufi Arabic', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-        body: ['Inter', 'sans-serif'],
+        // Bound to the next/font CSS variables declared in app/layout.tsx
+        arabic: ['var(--font-cairo)', 'Cairo', 'Noto Kufi Arabic', 'sans-serif'],
+        display: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+        body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'brand-gradient': 'linear-gradient(160deg, #14110F 0%, #1A1614 55%, #211C19 100%)',
-        'hero-gradient': 'linear-gradient(180deg, rgba(15,13,11,0) 0%, rgba(15,13,11,0.55) 60%, #14110F 100%)',
-        'card-gradient': 'linear-gradient(145deg, #211C19 0%, #1A1614 100%)',
-        'wine-gradient': 'linear-gradient(135deg, #5E1521 0%, #7B1E2B 55%, #8C2D3D 100%)',
-        'copper-gradient': 'linear-gradient(135deg, #B87333 0%, #D8A24A 50%, #E0B566 100%)',
-        'dark-gradient': 'linear-gradient(135deg, #0F0D0B 0%, #14110F 40%, #211C19 100%)',
+        'brand-gradient': 'linear-gradient(160deg, #120C10 0%, #181015 55%, #1F1419 100%)',
+        'hero-gradient': 'linear-gradient(180deg, rgba(11,7,9,0) 0%, rgba(11,7,9,0.55) 58%, #120C10 100%)',
+        'card-gradient': 'linear-gradient(145deg, #1F1419 0%, #181015 100%)',
+        'rose-gradient': 'linear-gradient(135deg, #C43E57 0%, #FD657D 55%, #FF8B9D 100%)',
+        'champagne-gradient': 'linear-gradient(135deg, #E7C6A4 0%, #F0D3B0 50%, #F6E0C4 100%)',
+        'dark-gradient': 'linear-gradient(135deg, #0B0709 0%, #120C10 40%, #1F1419 100%)',
       },
       boxShadow: {
-        'brand': '0 12px 40px rgba(0,0,0,0.45)',
+        brand: '0 12px 40px rgba(0,0,0,0.45)',
         'brand-lg': '0 24px 70px rgba(0,0,0,0.55)',
-        'card': '0 8px 30px rgba(0,0,0,0.4)',
+        card: '0 8px 30px rgba(0,0,0,0.40)',
         'card-hover': '0 20px 60px rgba(0,0,0,0.55)',
-        'wine': '0 10px 30px rgba(123,30,43,0.45)',
-        'copper': '0 10px 30px rgba(184,115,51,0.35)',
+        rose: '0 10px 30px rgba(253,101,125,0.32)',
+        'rose-lg': '0 18px 48px rgba(253,101,125,0.38)',
+        champagne: '0 10px 30px rgba(231,198,164,0.26)',
+        // Referenced by Navbar's hover state, previously undefined (a no-op).
+        glow: '0 0 0 1px rgba(253,101,125,0.35), 0 12px 34px rgba(253,101,125,0.34)',
       },
       animation: {
         'slide-up': 'slideUp 0.6s ease-out',
         'fade-in': 'fadeIn 0.8s ease-out',
-        'shimmer': 'shimmer 2s linear infinite',
+        shimmer: 'shimmer 2s linear infinite',
       },
       keyframes: {
         slideUp: {

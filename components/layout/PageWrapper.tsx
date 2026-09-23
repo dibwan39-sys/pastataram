@@ -5,11 +5,22 @@ import Footer from './Footer'
 import WhatsAppButton from './WhatsAppButton'
 import MobileBottomNav from './MobileBottomNav'
 
-export default function PageWrapper({ children }: { children: React.ReactNode }) {
+interface PageWrapperProps {
+  children: React.ReactNode
+  /**
+   * Set on pages whose first section is a full-bleed hero that must sit under
+   * the transparent navbar. Ordinary pages keep the top padding so their
+   * content clears the fixed bar.
+   */
+  fullBleed?: boolean
+}
+
+export default function PageWrapper({ children, fullBleed = false }: PageWrapperProps) {
   return (
-    <div className="min-h-screen flex flex-col bg-brand-cream dark:bg-[#14110F]">
+    <div className="flex min-h-screen flex-col bg-brand-noir">
       <Navbar />
-      <main className="flex-1 pt-20 pb-20 lg:pb-0">
+      {/* `id="main"` is the skip link's target — the first tab stop on the page. */}
+      <main id="main" className={`flex-1 pb-20 lg:pb-0 ${fullBleed ? '' : 'pt-20'}`}>
         {children}
       </main>
       <Footer />
