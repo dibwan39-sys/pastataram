@@ -63,13 +63,13 @@ export const metadata: Metadata = {
     locale: 'ar_SA',
     alternateLocale: 'en_US',
     url: SITE_URL,
-    images: [{ url: '/images/f1.png', width: 1200, height: 900, alt: 'PASTATARAM — باستاتا رام' }],
+    images: [{ url: '/images/f1.webp', width: 1200, height: 900, alt: 'PASTATARAM — باستاتا رام' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'PASTATARAM — باستاتا رام',
     description: 'تجربة باستا إيطالية فاخرة في جدة',
-    images: ['/images/f1.png'],
+    images: ['/images/f1.webp'],
   },
   robots: {
     index: true,

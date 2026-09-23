@@ -44,7 +44,7 @@ export default function BrandLoader() {
           className="relative w-32 h-32 mx-auto mb-5 drop-shadow-2xl"
         >
           <Image
-            src="/images/logo.png"
+            src="/images/logo.webp"
             alt="PASTATARAM"
             fill
             className="object-contain"

@@ -134,7 +134,7 @@ export default function AboutPage() {
                   host, on the page that tells the brand's story. */}
               <div className="relative rounded-4xl overflow-hidden h-96 shadow-brand-lg">
                 <Image
-                  src="/images/f1.png"
+                  src="/images/f1.webp"
                   alt={isAr ? 'باستاتا رام' : 'Pastata Ram'}
                   fill
                   sizes="(max-width: 1024px) 92vw, 46vw"

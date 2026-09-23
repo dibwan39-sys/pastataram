@@ -39,7 +39,7 @@ export default function MobileBottomNav() {
                   {/* Logo as cart button centerpiece */}
                   <div className="w-14 h-14 rounded-full shadow-lg overflow-hidden border-2 border-[var(--brand-surface)]" style={{ background: 'var(--brand-surface)' }}>
                     <Image
-                      src="/images/logo.png"
+                      src="/images/logo.webp"
                       alt="PASTATARAM"
                       width={56}
                       height={56}

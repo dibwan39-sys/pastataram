@@ -69,7 +69,7 @@ export const BUILD_MIN_PRICE = 15
  * WhatsApp order illustrated by someone else's food, served from a third-party
  * host, and dependent on that host staying up.
  */
-export const BUILD_IMAGE = '/images/f2.png'
+export const BUILD_IMAGE = '/images/f2.webp'
 
 export interface BuildSelection {
   pasta: BuildOption

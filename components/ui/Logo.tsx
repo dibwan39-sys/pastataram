@@ -35,7 +35,7 @@ export default function Logo({
         style={{ width: img, height: img }}
       >
         <Image
-          src="/images/logo.png"
+          src="/images/logo.webp"
           alt="PASTATARAM Logo"
           fill
           className="object-contain"

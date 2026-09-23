@@ -55,7 +55,7 @@ export default function AdminMenuPage() {
         name: form.name, nameAr: form.nameAr,
         description: form.description, descriptionAr: form.descriptionAr,
         price: Number(form.price), category: form.category,
-        image: form.image || '/images/f2.png',
+        image: form.image || '/images/f2.webp',
         tags: [], available: form.available, featured: form.featured, bestseller: form.bestseller,
       }
       setItems([...items, newItem])

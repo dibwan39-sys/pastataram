@@ -36,7 +36,7 @@ export default function QRPage() {
       >
         {/* Brand */}
         <div className="relative w-20 h-20 mx-auto mb-3">
-          <Image src="/images/logo.png" alt="PASTATARAM" fill className="object-contain" unoptimized priority />
+          <Image src="/images/logo.webp" alt="PASTATARAM" fill className="object-contain" unoptimized priority />
         </div>
         <p className="logo-text font-black text-2xl tracking-wide gradient-text mb-1">PASTATARAM</p>
         <p className="text-xs font-bold uppercase tracking-[0.3em] mb-6" style={{ color: '#FD657D' }}>
