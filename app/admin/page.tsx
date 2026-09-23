@@ -19,10 +19,10 @@ const salesData = [
 ]
 
 const topItems = [
-  { name: 'Pastata Ram', orders: 185, color: '#B87333' },
-  { name: 'Ramcine', orders: 142, color: '#D8A24A' },
-  { name: 'Pastata Balls', orders: 98, color: '#B87333' },
-  { name: 'Drinks', orders: 76, color: '#E0B566' },
+  { name: 'Pastata Ram', orders: 185, color: '#E7C6A4' },
+  { name: 'Ramcine', orders: 142, color: '#F0D3B0' },
+  { name: 'Pastata Balls', orders: 98, color: '#E7C6A4' },
+  { name: 'Drinks', orders: 76, color: '#F6E0C4' },
 ]
 
 export default function AdminDashboard() {
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card"
+              className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-5 shadow-card"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
@@ -115,25 +115,25 @@ export default function AdminDashboard() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Revenue Chart */}
-        <div className="lg:col-span-2 bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card">
+        <div className="lg:col-span-2 bg-[#181015] dark:bg-[#181015] rounded-2xl p-5 shadow-card">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-bold text-brand-espresso dark:text-brand-ivory">Weekly Revenue</h3>
             <span className="text-xs text-brand-latte bg-brand-blush/50 px-3 py-1 rounded-full">This Week</span>
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={salesData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#211C19" />
-              <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#9A8B7C' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 12, fill: '#9A8B7C' }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#1F1419" />
+              <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#A88E8E' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 12, fill: '#A88E8E' }} axisLine={false} tickLine={false} />
               <Tooltip
-                contentStyle={{ background: '#14110F', border: '1px solid #E0B566', borderRadius: 12 }}
-                cursor={{ fill: '#211C1930' }}
+                contentStyle={{ background: '#120C10', border: '1px solid #F6E0C4', borderRadius: 12 }}
+                cursor={{ fill: '#1F141930' }}
               />
               <Bar dataKey="revenue" fill="url(#barGradient)" radius={[6, 6, 0, 0]} />
               <defs>
                 <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#B87333" />
-                  <stop offset="100%" stopColor="#D8A24A" />
+                  <stop offset="0%" stopColor="#E7C6A4" />
+                  <stop offset="100%" stopColor="#F0D3B0" />
                 </linearGradient>
               </defs>
             </BarChart>
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Top Items */}
-        <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card">
+        <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-5 shadow-card">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Top Items</h3>
           <ResponsiveContainer width="100%" height={160}>
             <PieChart>
@@ -159,7 +159,7 @@ export default function AdminDashboard() {
                 ))}
               </Pie>
               <Tooltip
-                contentStyle={{ background: '#14110F', border: '1px solid #E0B566', borderRadius: 12 }}
+                contentStyle={{ background: '#120C10', border: '1px solid #F6E0C4', borderRadius: 12 }}
               />
             </PieChart>
           </ResponsiveContainer>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden">
         <div className="flex items-center justify-between p-5 border-b border-brand-rose/20">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory">Recent Orders</h3>
           <Link href="/admin/orders" className="text-xs text-brand-rose-gold font-semibold hover:underline">
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
             <Link
               key={action.href}
               href={action.href}
-              className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-4 shadow-card hover:shadow-card-hover transition-all duration-300 flex items-center gap-3 group"
+              className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-4 shadow-card hover:shadow-card-hover transition-all duration-300 flex items-center gap-3 group"
             >
               <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
                 <Icon className="w-4 h-4 text-white" />

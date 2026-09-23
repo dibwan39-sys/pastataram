@@ -32,11 +32,27 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
 
-  // Auto-login for demo
+  /**
+   * ⚠️  THIS IS NOT AUTHENTICATION.
+   *
+   * It is a client-side gate: it stops someone who simply types /admin from
+   * landing inside the dashboard, and nothing more. Anyone willing to edit
+   * localStorage or read the bundle gets straight past it, so it must never be
+   * described as securing anything.
+   *
+   * What it replaces was worse. This effect used to run
+   *   adminLogin({ role: 'super_admin' })
+   * unconditionally on mount, so every visitor arrived already signed in as a
+   * super admin — and the site footer linked here from every public page.
+   *
+   * Real protection needs a server: a session the browser cannot forge, and
+   * authorisation enforced on the API that reads and writes restaurant data.
+   * No such API exists in this project yet. Until it does, treat the admin
+   * screens as an internal preview, not as a control panel for live data.
+   */
   useEffect(() => {
-    if (!isAdminLoggedIn) {
-      adminLogin({ id: '1', name: 'Super Admin', email: 'admin@pastataram.com', role: 'super_admin' })
-    }
+    if (typeof window === 'undefined') return
+    // Nothing to do — access is decided by the gate rendered below.
   }, [])
 
   const handleLogout = () => {
@@ -54,8 +70,46 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname.startsWith(href)
 
+  // The gate. See the note above: a deterrent, not a security boundary.
+  if (!isAdminLoggedIn) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-6" style={{ background: '#120C10' }}>
+        <div
+          className="w-full max-w-sm rounded-[1.75rem] p-8 text-center"
+          style={{ background: 'linear-gradient(150deg, #1F1419, #181015)', border: '1px solid rgba(231,198,164,0.18)' }}
+        >
+          <Logo size="md" href="/" className="mx-auto mb-5 justify-center" />
+          <h1 className="font-display text-xl font-bold text-brand-cream">لوحة إدارة باستاتا رام</h1>
+          <p className="mx-auto mt-3 text-sm leading-7 text-brand-cream-dim">
+            هذه المنطقة مخصّصة لفريق العمل.
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              adminLogin({ id: '1', name: 'Super Admin', email: 'admin@pastataram.com', role: 'super_admin' })
+            }
+            className="btn-primary mt-7 w-full py-3 text-sm"
+          >
+            الدخول إلى اللوحة
+          </button>
+
+          {/* Stated plainly so nobody mistakes this screen for protection. */}
+          <p className="mt-5 text-[11px] leading-6 text-brand-muted">
+            تنبيه: لا توجد مصادقة حقيقية بعد — هذه الشاشة لا تحمي البيانات.
+            تتطلب الحماية الفعلية ربط اللوحة بخادم يتحقق من الهوية.
+          </p>
+
+          <Link href="/" className="mt-5 inline-block text-xs font-semibold text-brand-rose hover:underline">
+            ← العودة إلى الموقع
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="min-h-screen flex bg-[#1A1614] dark:bg-[#14110F]">
+    <div className="min-h-screen flex bg-[#181015] dark:bg-[#120C10]">
       {/* Sidebar */}
       <AnimatePresence>
         {(sidebarOpen || true) && (
@@ -137,7 +191,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#1A1614]/80 backdrop-blur-lg border-b border-brand-rose/20 px-4 py-3 flex items-center justify-between gap-4">
+        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#181015]/80 backdrop-blur-lg border-b border-brand-rose/20 px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -176,7 +230,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute end-0 top-12 w-72 bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-brand-lg border border-brand-rose/20 overflow-hidden"
+                    className="absolute end-0 top-12 w-72 bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-brand-lg border border-brand-rose/20 overflow-hidden"
                   >
                     <div className="p-3 border-b border-brand-rose/20">
                       <p className="font-bold text-brand-espresso dark:text-brand-ivory text-sm">Notifications</p>

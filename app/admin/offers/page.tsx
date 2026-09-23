@@ -35,7 +35,7 @@ export default function AdminOffersPage() {
         {offers.map((offer) => (
           <div
             key={offer.id}
-            className={`bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden ${!offer.active ? 'opacity-60' : ''}`}
+            className={`bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden ${!offer.active ? 'opacity-60' : ''}`}
           >
             <div className="relative h-36">
               <img src={offer.image} alt={offer.title} className="w-full h-full object-cover" />

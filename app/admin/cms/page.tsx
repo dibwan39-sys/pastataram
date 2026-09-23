@@ -58,7 +58,7 @@ export default function AdminCMSPage() {
       {sections.map((section) => {
         const Icon = section.icon
         return (
-          <div key={section.id} className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
+          <div key={section.id} className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-8 h-8 rounded-lg bg-brand-blush flex items-center justify-center">
                 <Icon className="w-4 h-4 text-brand-rose-gold" />
@@ -96,7 +96,7 @@ export default function AdminCMSPage() {
       })}
 
       {/* Preview */}
-      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-6 shadow-card">
+      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-4">Hero Preview</h3>
         <div className="relative rounded-xl overflow-hidden h-40">
           <img src={content.heroImage} alt="Hero" className="w-full h-full object-cover" />

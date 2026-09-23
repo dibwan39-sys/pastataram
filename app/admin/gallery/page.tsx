@@ -18,6 +18,10 @@ export default function AdminGalleryPage() {
     const img: GalleryImage = {
       id: generateId(), url: newUrl, alt: newAlt || 'Gallery image',
       altAr: newAlt || 'صورة معرض', category: newCategory, featured: false,
+      // A placeholder 4:3 box. The real dimensions of a pasted URL cannot be
+      // known here without loading it; the public gallery carries measured
+      // values for every image it actually ships.
+      width: 1448, height: 1086,
     }
     setImages([...images, img])
     setNewUrl(''); setNewAlt('')
@@ -43,7 +47,7 @@ export default function AdminGalleryPage() {
       </div>
 
       {/* Add Image */}
-      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-5 shadow-card">
+      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-5 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-4 flex items-center gap-2">
           <Upload className="w-4 h-4 text-brand-rose-gold" />
           Add New Image

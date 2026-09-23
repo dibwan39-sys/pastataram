@@ -18,9 +18,9 @@ const statusOptions: { value: string; label: string }[] = [
 ]
 
 const mockOrders = [
-  { id: 'o1', orderNumber: 'PT-001240', customerName: 'محمد العمري', customerPhone: '0501234567', status: 'pending' as OrderStatus, total: 54, items: [{ menuItem: { name: 'Pastata Ram', nameAr: 'باستاتا رام', image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=60&q=80' }, quantity: 2, extras: [], totalPrice: 54 }], createdAt: new Date(), updatedAt: new Date() },
-  { id: 'o2', orderNumber: 'PT-001239', customerName: 'Sarah Al-Rashid', customerPhone: '0507654321', status: 'preparing' as OrderStatus, total: 41, items: [{ menuItem: { name: 'Ramcine', nameAr: 'رامسين', image: 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=60&q=80' }, quantity: 1, extras: [], totalPrice: 27 }, { menuItem: { name: 'Pastata Balls', nameAr: 'باستاتا بولز', image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?w=60&q=80' }, quantity: 1, extras: [], totalPrice: 14 }], createdAt: new Date(Date.now() - 600000), updatedAt: new Date() },
-  { id: 'o3', orderNumber: 'PT-001238', customerName: 'فيصل القحطاني', customerPhone: '0509876543', status: 'ready' as OrderStatus, total: 27, items: [{ menuItem: { name: 'Pastata Ram', nameAr: 'باستاتا رام', image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=60&q=80' }, quantity: 1, extras: [], totalPrice: 27 }], createdAt: new Date(Date.now() - 1200000), updatedAt: new Date() },
+  { id: 'o1', orderNumber: 'PT-001240', customerName: 'محمد العمري', customerPhone: '0501234567', status: 'pending' as OrderStatus, total: 54, items: [{ menuItem: { name: 'Pastata Ram', nameAr: 'باستاتا رام', image: '/images/f1.png' }, quantity: 2, extras: [], totalPrice: 54 }], createdAt: new Date(), updatedAt: new Date() },
+  { id: 'o2', orderNumber: 'PT-001239', customerName: 'Sarah Al-Rashid', customerPhone: '0507654321', status: 'preparing' as OrderStatus, total: 41, items: [{ menuItem: { name: 'Ramcine', nameAr: 'رامسين', image: '/images/f2.png' }, quantity: 1, extras: [], totalPrice: 27 }, { menuItem: { name: 'Pastata Balls', nameAr: 'باستاتا بولز', image: '/images/f3.png' }, quantity: 1, extras: [], totalPrice: 14 }], createdAt: new Date(Date.now() - 600000), updatedAt: new Date() },
+  { id: 'o3', orderNumber: 'PT-001238', customerName: 'فيصل القحطاني', customerPhone: '0509876543', status: 'ready' as OrderStatus, total: 27, items: [{ menuItem: { name: 'Pastata Ram', nameAr: 'باستاتا رام', image: '/images/f1.png' }, quantity: 1, extras: [], totalPrice: 27 }], createdAt: new Date(Date.now() - 1200000), updatedAt: new Date() },
   { id: 'o4', orderNumber: 'PT-001237', customerName: 'نورة الزهراني', customerPhone: '0502345678', status: 'completed' as OrderStatus, total: 68, items: [], createdAt: new Date(Date.now() - 3600000), updatedAt: new Date() },
 ]
 
@@ -62,7 +62,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
+      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-latte" />
           <input
@@ -90,7 +90,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-brand-pearl dark:bg-brand-surface/20 text-xs text-brand-latte">
@@ -125,11 +125,11 @@ export default function AdminOrdersPage() {
                           key={j}
                           src={item.menuItem.image}
                           alt=""
-                          className="w-8 h-8 rounded-full object-cover border-2 border-white dark:border-[#1A1614]"
+                          className="w-8 h-8 rounded-full object-cover border-2 border-white dark:border-[#181015]"
                         />
                       ))}
                       {order.items.length > 3 && (
-                        <div className="w-8 h-8 rounded-full bg-brand-blush border-2 border-white dark:border-[#1A1614] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-brand-blush border-2 border-white dark:border-[#181015] flex items-center justify-center">
                           <span className="text-xs font-bold text-brand-espresso">+{order.items.length - 3}</span>
                         </div>
                       )}

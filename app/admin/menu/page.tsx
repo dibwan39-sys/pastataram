@@ -55,7 +55,7 @@ export default function AdminMenuPage() {
         name: form.name, nameAr: form.nameAr,
         description: form.description, descriptionAr: form.descriptionAr,
         price: Number(form.price), category: form.category,
-        image: form.image || 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80',
+        image: form.image || '/images/f2.png',
         tags: [], available: form.available, featured: form.featured, bestseller: form.bestseller,
       }
       setItems([...items, newItem])
@@ -96,7 +96,7 @@ export default function AdminMenuPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search menu items..."
-          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-[#1A1614] dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-[#181015] dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
         />
       </div>
 
@@ -108,7 +108,7 @@ export default function AdminMenuPage() {
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={`bg-[#1A1614] dark:bg-[#1A1614] rounded-2xl shadow-card overflow-hidden ${!item.available ? 'opacity-60' : ''}`}
+            className={`bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden ${!item.available ? 'opacity-60' : ''}`}
           >
             <div className="relative h-40">
               <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -177,7 +177,7 @@ export default function AdminMenuPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-[60] bg-[#1A1614] dark:bg-[#1A1614] rounded-3xl shadow-brand-lg overflow-y-auto max-h-[90vh]"
+              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-[60] bg-[#181015] dark:bg-[#181015] rounded-3xl shadow-brand-lg overflow-y-auto max-h-[90vh]"
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-5">
