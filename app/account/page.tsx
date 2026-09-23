@@ -38,7 +38,7 @@ export default function AccountPage() {
   if (!isLoggedIn) {
     return (
       <PageWrapper>
-        <section className="min-h-[80vh] flex items-center justify-center py-20 bg-gradient-to-br from-brand-cream via-brand-blush/20 to-brand-pearl dark:from-[#14110F] dark:to-[#1A1614]">
+        <section className="min-h-[80vh] flex items-center justify-center py-20 bg-gradient-to-br from-brand-cream via-brand-blush/20 to-brand-pearl dark:from-[#120C10] dark:to-[#181015]">
           <div className="w-full max-w-md mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}

@@ -40,7 +40,11 @@ export default function CheckoutPage() {
         const line = `• ${isAr ? i.menuItem.nameAr : i.menuItem.name} ×${i.quantity} = ${formatPrice(i.totalPrice, language)}`
         // The kitchen needs the add-ons spelled out, not just folded into the price.
         const extras = i.extras.map((e) => (isAr ? e.nameAr : e.name)).join('، ')
-        return extras ? `${line}\n   (${extras})` : line
+        // And it needs the line note: a composed pasta carries its whole build
+        // (pasta, sauce, protein, cheese, toppings, spice) in there, so an
+        // invoice without notes told the kitchen nothing about what to cook.
+        const detail = [extras, i.notes].filter(Boolean).join(' — ')
+        return detail ? `${line}\n   (${detail})` : line
       })
       .join('\n')
     const branch = branches.find((b) => b.id === branchId)!
@@ -259,10 +263,10 @@ export default function CheckoutPage() {
                             className={`flex items-center gap-3 p-4 rounded-2xl border-2 transition-all ${
                               active ? 'border-brand-rose-gold' : 'border-brand-rose/20 hover:border-brand-rose/40'
                             }`}
-                            style={active ? { background: 'linear-gradient(135deg, rgba(242,196,216,0.5), rgba(230,160,186,0.3))' } : undefined}
+                            style={active ? { background: 'linear-gradient(135deg, rgba(253,101,125,0.5), rgba(255,139,157,0.3))' } : undefined}
                           >
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #211C19, #D8A24A)' }}>
-                              <Icon className="w-5 h-5" style={{ color: '#C9BBA8' }} />
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #1F1419, #F0D3B0)' }}>
+                              <Icon className="w-5 h-5" style={{ color: '#D8C2BD' }} />
                             </div>
                             <span className="font-bold text-sm text-brand-espresso dark:text-brand-ivory">{opt.label}</span>
                           </button>

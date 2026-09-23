@@ -5,6 +5,7 @@ import { X, Plus, Minus, ShoppingBag, Trash2 } from 'lucide-react'
 import { cartLineId, useCartStore, useUIStore } from '@/lib/store'
 import { formatPrice, getWhatsAppLink } from '@/lib/utils'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // PASTATARAM ordering line (Saudi number; getWhatsAppLink converts the leading 0 → 966)
 const WHATSAPP_PHONE = '0501938696'
@@ -18,10 +19,13 @@ export default function CartDrawer() {
     const lines = items
       .map((it) => {
         const name = isAr ? it.menuItem.nameAr : it.menuItem.name
-        const extras = it.extras.map((e) => (isAr ? e.nameAr : e.name)).join(', ')
+        const extras = it.extras.map((e) => (isAr ? e.nameAr : e.name)).join('، ')
         const line = `• ${name} ×${it.quantity} — ${formatPrice(it.totalPrice, language)}`
-        return extras ? `${line}
-   (${extras})` : line
+        // Include the line note as well as the add-ons: a composed pasta keeps
+        // its full build there, and without it the message names a "Custom
+        // Spaghetti" with no indication of what goes in it.
+        const detail = [extras, it.notes].filter(Boolean).join(' — ')
+        return detail ? `${line}\n   (${detail})` : line
       })
       .join('\n')
 
@@ -118,11 +122,15 @@ export default function CartDrawer() {
                     exit={{ opacity: 0, x: isAr ? -100 : 100 }}
                     className="premium-card p-4 flex gap-3"
                   >
-                    <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                      <img
+                    {/* 64px on screen — served as a 64px derivative rather than
+                        the multi-megabyte master the raw <img> was fetching. */}
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                      <Image
                         src={item.menuItem.image}
                         alt={isAr ? item.menuItem.nameAr : item.menuItem.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="64px"
+                        className="object-cover"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -211,7 +219,7 @@ export default function CartDrawer() {
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
                   className="w-full block text-center py-3 rounded-full font-bold text-sm"
-                  style={{ background: 'rgba(33,28,25,0.7)', border: '1.5px solid rgba(184,115,51,0.5)', color: '#C9BBA8' }}
+                  style={{ background: 'rgba(31,20,25,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
                 >
                   {isAr ? 'توصيل · طلب مسبق · فاتورة' : 'Delivery · Pre-order · Invoice'}
                 </Link>

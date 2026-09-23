@@ -8,6 +8,7 @@ import { useUIStore, useOrderStore } from '@/lib/store'
 import { getStatusLabel, formatDate, formatPrice } from '@/lib/utils'
 import { Order, OrderStatus } from '@/lib/types'
 import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 
 const statusSteps: OrderStatus[] = ['pending', 'preparing', 'ready', 'completed']
 
@@ -158,11 +159,9 @@ function TrackOrderContent() {
                   {foundOrder.items.map((item, i) => (
                     <div key={i} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
-                        <img
-                          src={item.menuItem.image}
-                          alt=""
-                          className="w-10 h-10 rounded-lg object-cover"
-                        />
+                        <span className="relative block h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg">
+                          <Image src={item.menuItem.image} alt="" fill sizes="40px" className="object-cover" />
+                        </span>
                         <div>
                           <p className="font-semibold text-brand-espresso dark:text-brand-ivory">
                             {isAr ? item.menuItem.nameAr : item.menuItem.name}
@@ -199,7 +198,7 @@ export default function TrackOrderPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#14110F] dark:via-[#1A1614] dark:to-[#14110F]">
+      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#120C10] dark:via-[#181015] dark:to-[#120C10]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">
