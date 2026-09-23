@@ -110,7 +110,13 @@ export default function QROrderSection() {
               }}
             >
               <div className="rounded-2xl bg-[var(--brand-noir-2)] p-4 mb-4" style={{ border: '2px solid rgba(231,198,164,0.35)', boxShadow: '0 6px 22px rgba(253,101,125,0.16)' }}>
-                <img src={ORDER_QR} alt={isAr ? 'باركود الطلب' : 'Order QR code'} className="w-full h-auto" />
+                <img
+                  src={ORDER_QR}
+                  alt={isAr ? 'باركود الطلب' : 'Order QR code'}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto"
+                />
               </div>
               <p className="font-black text-base mb-1" style={{ color: '#FFF3EE' }}>PASTATARAM</p>
               <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(216,194,189,0.55)' }}>

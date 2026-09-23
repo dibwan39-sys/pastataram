@@ -43,8 +43,8 @@ export default function MobileBottomNav() {
                       alt="PASTATARAM"
                       width={56}
                       height={56}
+                      sizes="56px"
                       className="object-cover w-full h-full"
-                      unoptimized
                     />
                   </div>
                   {itemCount() > 0 && (

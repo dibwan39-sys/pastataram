@@ -200,9 +200,25 @@ export default function MenuImageSection({ showHeading = true, compact = false }
             style={{ border: '1px solid rgba(231,198,164,0.25)', boxShadow: '0 8px 30px rgba(253,101,125,0.14)' }}
             aria-label={isAr ? 'تكبير المنيو' : 'Zoom menu'}
           >
+            {/*
+              Deliberately a plain <img> and deliberately lazy.
+
+              Plain, because this is the official artwork and the zoom view
+              needs it at full resolution — routing it through next/image would
+              hand the customer a resized copy of the one asset that has to
+              stay exact.
+
+              Lazy, because measured on a cold load it was fetched eagerly:
+              1137 KB for an element sitting 3028px below the fold, downloading
+              in front of the hero photograph. Nothing about it is hidden or
+              degraded; it simply waits until the customer is on their way to
+              it, which is what `loading="lazy"` is for.
+            */}
             <img
               src={MENU_IMAGE}
               alt={isAr ? 'منيو باستاتا رام الكامل' : 'PASTATARAM full menu'}
+              loading="lazy"
+              decoding="async"
               className="w-full h-auto object-contain bg-[var(--brand-noir-2)] transition-transform duration-500 group-hover:scale-[1.015]"
             />
             <span

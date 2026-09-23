@@ -34,13 +34,24 @@ export default function Logo({
         className="relative flex-shrink-0 drop-shadow-lg"
         style={{ width: img, height: img }}
       >
+        {/*
+          Neither `unoptimized` nor `priority` belongs on a 36–96px mark.
+
+          `unoptimized` served the 1536px, 264 KB master for a logo drawn at
+          36px in the navbar — measured on a cold load, that was the single
+          largest eagerly fetched asset on the page after the menu artwork.
+          `priority` then put it in front of the hero photograph in the fetch
+          queue and added an encode job competing with it.
+
+          `sizes` is what lets the browser pick the right variant; without it
+          next/image has to assume the full viewport width.
+        */}
         <Image
           src="/images/logo.webp"
           alt="PASTATARAM Logo"
           fill
+          sizes={`${img}px`}
           className="object-contain"
-          priority
-          unoptimized
         />
       </div>
       {showText && (
