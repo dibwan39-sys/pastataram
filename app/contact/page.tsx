@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import { MapPin, Phone, Clock, Instagram, Send, ExternalLink } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
 import { useUIStore } from '@/lib/store'
-import { cmsContent, branches, workingHours } from '@/lib/data'
+import { cmsContent, branches, branchMapsUrl, workingHours } from '@/lib/data'
+import BranchCards from '@/components/branches/BranchCards'
 import { getWhatsAppLink, getOpenStatus, type OpenStatus } from '@/lib/utils'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
@@ -63,7 +64,7 @@ export default function ContactPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#14110F] dark:via-[#1A1614] dark:to-[#14110F]">
+      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#120C10] dark:via-[#181015] dark:to-[#120C10]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">
@@ -115,15 +116,23 @@ export default function ContactPage() {
                     </div>
                   ))}
                 </div>
-                <a
-                  href="https://maps.google.com/?q=Al+Qurainiyah+Jeddah"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-brand-rose-gold font-semibold text-sm hover:underline"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  {isAr ? 'افتح في الخريطة' : 'Open in Maps'}
-                </a>
+                {/* One link per branch. A single hardcoded Al Qurainiyah link
+                    used to sit here, so customers heading to السنابل were sent
+                    to the wrong side of the city. */}
+                <div className="flex flex-wrap gap-x-5 gap-y-2">
+                  {branches.map((b) => (
+                    <a
+                      key={b.id}
+                      href={branchMapsUrl(b)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-brand-rose-gold font-semibold text-sm hover:underline"
+                    >
+                      <ExternalLink className="w-4 h-4" aria-hidden />
+                      {isAr ? `خريطة ${b.nameAr.replace('جدة - ', '')}` : `${b.nameEn.replace('Jeddah - ', '')} map`}
+                    </a>
+                  ))}
+                </div>
               </motion.div>
 
               {/* Phone */}
@@ -172,7 +181,7 @@ export default function ContactPage() {
                   <span
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
                     style={{
-                      background: status.open ? 'rgba(34,77,46,0.4)' : 'rgba(94,21,33,0.4)',
+                      background: status.open ? 'rgba(34,77,46,0.4)' : 'rgba(196,62,87,0.4)',
                       color: status.open ? '#7FD89A' : '#E0A0A8',
                     }}
                   >
@@ -219,25 +228,15 @@ export default function ContactPage() {
 
             {/* Map + Form */}
             <div className="lg:col-span-3 space-y-6">
-              {/* Map placeholder */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="relative h-72 rounded-3xl overflow-hidden shadow-brand"
-              >
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3712.8!2d39.14!3d21.58!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDM0JzQ4LjAiTiAzOcKwMDgnMjQuMCJF!5e0!3m2!1sar!2ssa!4v1234567890"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="grayscale-[30%]"
-                />
-                <div className="absolute inset-0 pointer-events-none border-4 border-brand-rose/20 rounded-3xl" />
-              </motion.div>
+              {/**
+               * Premium branch cards replace what used to be a Google Maps
+               * iframe built from a placeholder embed string: place ID
+               * `0x0:0x0`, coordinates 21.58/39.14 and the stock timestamp
+               * `4v1234567890`. It rendered a map of neither branch. Verified
+               * coordinates do not exist in this project, so the cards link to
+               * a Maps search by branch name instead of publishing a made-up pin.
+               */}
+              <BranchCards />
 
               {/* Contact Form */}
               <motion.div

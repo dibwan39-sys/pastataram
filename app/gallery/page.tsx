@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Camera, Instagram, Grid, LayoutGrid } from 'lucide-react'
 import PageWrapper from '@/components/layout/PageWrapper'
@@ -30,7 +31,7 @@ export default function GalleryPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#14110F] dark:via-[#1A1614] dark:to-[#14110F]">
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#120C10] dark:via-[#181015] dark:to-[#120C10]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">
@@ -57,7 +58,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[#14110F]/90 border-b border-brand-rose/20 py-4">
+      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[#120C10]/90 border-b border-brand-rose/20 py-4">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto">
             {galleryCategories.map((cat) => (
@@ -118,11 +119,17 @@ export default function GalleryPage() {
                     layout === 'masonry' ? 'mb-4 break-inside-avoid' : ''
                   } ${layout === 'grid' ? 'aspect-square' : ''}`}
                 >
-                  <img
+                  {/* Intrinsic width/height come from lib/data.ts, so the
+                      masonry column reserves the right space instead of
+                      reflowing as each photograph arrives. */}
+                  <Image
                     src={img.url}
                     alt={isAr ? img.altAr : img.alt}
-                    className={`w-full object-cover group-hover:scale-110 transition-transform duration-500 ${
-                      layout === 'grid' ? 'h-full' : ''
+                    width={img.width}
+                    height={img.height}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+                      layout === 'grid' ? 'h-full' : 'h-auto'
                     }`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-espresso/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -164,10 +171,14 @@ export default function GalleryPage() {
                 <X className="w-5 h-5 text-white" />
               </button>
               <div className="rounded-3xl overflow-hidden">
-                <img
+                <Image
                   src={selectedImage.url}
                   alt={isAr ? selectedImage.altAr : selectedImage.alt}
-                  className="w-full max-h-[80vh] object-contain"
+                  width={selectedImage.width}
+                  height={selectedImage.height}
+                  sizes="(max-width: 1024px) 100vw, 900px"
+                  quality={88}
+                  className="h-auto w-full max-h-[80vh] object-contain"
                 />
               </div>
               <p className="text-white/70 text-center mt-4 text-sm">
@@ -179,7 +190,7 @@ export default function GalleryPage() {
       </AnimatePresence>
 
       {/* Instagram CTA */}
-      <section className="section bg-brand-pearl dark:bg-[#1A1614]">
+      <section className="section bg-brand-pearl dark:bg-[#181015]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
