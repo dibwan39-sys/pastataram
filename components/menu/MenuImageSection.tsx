@@ -146,7 +146,12 @@ export default function MenuImageSection({ showHeading = true, compact = false }
 
   return (
     <section
-      className={compact ? 'pt-6 pb-12' : 'section'}
+      // `relative` is required, not cosmetic: this was the one section on the
+      // page left at `position: static`, and Framer Motion measures a scroll
+      // target against its nearest positioned ancestor. A static one made every
+      // scroll offset inside it resolve against the document instead, which is
+      // what produced the "container has a non-static position" warning.
+      className={compact ? 'relative pt-6 pb-12' : 'section relative'}
       style={{ background: 'linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-noir) 100%)' }}
     >
       <div className={`${compact ? 'max-w-3xl' : 'max-w-4xl'} mx-auto px-4 sm:px-6`}>

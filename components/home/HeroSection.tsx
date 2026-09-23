@@ -75,16 +75,34 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      {/* ── Layer 2 · scrims that keep type legible without hiding the dish ── */}
+      {/*
+        ── Layer 2 · light the dish, don't bury it ──────────────────────────
+        Two full-frame scrims used to stack here — a 0.72→0.45→0.86 vertical
+        wash plus a 0.55 radial — and together they took most of the light out
+        of the photograph. The pasta read brown and flat, which is the one
+        thing a restaurant hero cannot afford.
+
+        The frame is now lit the way a plate is lit for a menu shoot: the
+        centre, where the food is, stays open; the edges fall off into the
+        brand's rose-black so the dish is framed rather than covered; and the
+        bottom carries the weight, because that is where the page continues.
+        Type legibility is bought locally, behind the words, not globally.
+      */}
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, rgba(22, 7, 13,0.72) 0%, rgba(22, 7, 13,0.45) 38%, rgba(22, 7, 13,0.86) 100%)' }}
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(22,7,13,0.58) 0%, rgba(22,7,13,0.10) 30%, rgba(22,7,13,0.22) 58%, rgba(22,7,13,0.90) 100%)',
+        }}
       />
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 70% 55% at 50% 45%, transparent 0%, rgba(22, 7, 13,0.55) 100%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse 78% 62% at 50% 46%, transparent 0%, transparent 42%, rgba(22,7,13,0.42) 100%)',
+        }}
       />
       {/* A single rose bloom — the brand colour entering the frame */}
       <div
@@ -101,6 +119,19 @@ export default function HeroSection() {
         className="relative z-10 mx-auto w-full max-w-4xl px-6 text-center"
         style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
       >
+        {/*
+          The only place the photograph is darkened on purpose: a soft pool of
+          shade sitting under the words, wide and blurred enough that it reads
+          as light falling off rather than a panel behind the type.
+        */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[128%] w-[132%] -translate-x-1/2 -translate-y-1/2 blur-2xl"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(22,7,13,0.66) 0%, rgba(22,7,13,0.34) 52%, transparent 76%)',
+          }}
+        />
         <motion.div
           initial={reduce ? undefined : { opacity: 0, scale: 0.92, y: 18 }}
           animate={reduce ? undefined : { opacity: 1, scale: 1, y: 0 }}
