@@ -76,6 +76,25 @@ export function useScrollScene(ref: React.RefObject<HTMLElement | null>) {
 }
 
 /**
+ * The arrival window alone: `0` when the scene's leading edge touches the
+ * bottom of the viewport, `1` when that same edge reaches the top.
+ *
+ * This exists because the obvious thing is wrong. Mapping an entry animation
+ * onto the first fifth of `useScrollScene` puts it between "the section is
+ * one viewport below the fold" and "the section is four fifths of a viewport
+ * below the fold" — the whole reveal plays off-screen and the customer sees a
+ * section that is simply already there. Measured on the built site, the clip
+ * reveal and the 1.04 settle never once left their resting values.
+ *
+ * Tied to the leading edge instead, the reveal runs exactly while the scene is
+ * crossing into view, which is the only span where it can be seen.
+ */
+export function useEntryScene(ref: React.RefObject<HTMLElement | null>) {
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start start'] })
+  return useSpring(scrollYProgress, SCENE_SPRING)
+}
+
+/**
  * The variant a full-height opening shot needs: progress runs from the moment
  * the section is flush with the top of the viewport until it has left it, so
  * `0` is "you have arrived" rather than "it is about to appear".

@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useTransform } from 'framer-motion'
-import { useCinematicMotion, useCoarsePointer, useScrollScene } from './primitives'
+import { useCinematicMotion, useCoarsePointer, useEntryScene, useScrollScene } from './primitives'
 
 interface CinematicSceneProps {
   children: React.ReactNode
@@ -26,18 +26,22 @@ interface CinematicSceneProps {
  * Two things happen here, and only two, because a transition that animates
  * everything at once reads as a slideshow effect rather than a camera:
  *
- *   entering — the scene opens from its leading edge via `clip-path`, and
- *              settles from 1.04 to 1. The clip is what makes it feel like a
- *              new shot arriving rather than a block fading in.
- *   leaving  — the scene recedes: it drops a little scale and light as it
- *              goes, so the section above it reads as further away rather
- *              than simply scrolled past.
+ *   arriving — the scene opens from its leading edge via `clip-path`, which
+ *              is what makes it read as a new shot arriving rather than a
+ *              block fading in.
+ *   leaving  — the scene recedes into shadow, so the section above reads as
+ *              further away rather than simply scrolled past.
  *
- * `clip-path` and `transform` are both composited, so this costs the GPU a
- * layer and the main thread nothing. On phones the reveal is dropped and only
- * the recede survives at half strength: a clip animation on a full-height
- * section is the single most expensive thing on this page, and on a short
- * viewport the effect is mostly off-screen anyway.
+ * Neither touches the layout box. That is the whole discipline of this file:
+ * a scale would have been the obvious way to express both, and it is wrong in
+ * both directions — shrinking on exit opens a seam between two scenes, and
+ * growing on entry overflows the page. Arrive by clip, depart by light.
+ *
+ * `clip-path` and `opacity` are both composited, so this costs the GPU a layer
+ * and the main thread nothing. On phones the clip is dropped and only the
+ * recede survives at half strength: a clip animation on a full-height section
+ * is the most expensive thing on this page, and on a short viewport the effect
+ * is mostly off-screen anyway.
  */
 export default function CinematicScene({
   children,
@@ -54,32 +58,67 @@ export default function CinematicScene({
 
   const strength = recede * (coarse ? 0.5 : 1)
 
-  // Entry occupies the first fifth of the scene, exit the last quarter.
-  const scale = useTransform(progress, [0, 0.2, 0.75, 1], [1.04, 1, 1, 1 - 0.035 * strength])
+  /**
+   * Two clocks, because arrival and departure happen in different places.
+   *
+   * `entry` runs while the scene's leading edge crosses the viewport, which is
+   * the only span where a reveal can be seen at all. Mapping it onto the first
+   * fifth of `progress` put the whole reveal one viewport BELOW the fold:
+   * measured on the built site, the clip and the settle never once left their
+   * resting values. `progress` spans the entire crossing and carries the exit.
+   *
+   * The exit deliberately does NOT scale, and that is a correctness decision
+   * rather than a taste one. A transform does not change layout, so shrinking
+   * a section lifts its bottom edge while the next section stays where it was
+   * — measured in a real browser, that opened a 47px band of bare background
+   * between consecutive scenes at 1440x900 and 22px at 390x844. A visible seam
+   * between two shots is the opposite of continuity.
+   *
+   * Nor does the entry scale any more. Settling a full-width scene from 1.045
+   * put every one of them wider than the viewport on the way in, and measured
+   * at all five breakpoints that showed up as real horizontal overflow. The
+   * clip is what reads as a new shot arriving; the scale was adding a few
+   * percent of motion and a page-wide defect.
+   *
+   * So the grammar is: arrive by clip, depart by light. Neither touches the
+   * box, so no seam can open between two scenes and nothing can overflow.
+   */
+  const entry = useEntryScene(ref)
   const opacity = useTransform(progress, [0, 0.12, 0.78, 1], [0.35, 1, 1, 1 - 0.45 * strength])
-  const clip = useTransform(progress, [0, 0.22], [14, 0], { clamp: true })
+  const clip = useTransform(entry, [0.3, 0.92], [15, 0], { clamp: true })
   const clipPath = useTransform(clip, (v) => `inset(${v}% 0% 0% 0%)`)
 
-  if (!cinematic) {
-    return (
-      <div id={id} ref={ref} className={className} style={style}>
-        {children}
-      </div>
-    )
-  }
-
+  /**
+   * One element, always.
+   *
+   * This used to return a plain <div> before hydration and a <motion.div>
+   * after, which looked harmless and was not: Framer measures a scroll target
+   * once, against the tree that existed when the hook first ran. Swapping the
+   * element underneath it left every scene reporting a progress of exactly
+   * 1.000 at every scroll position — geometry moving from top:1806 to
+   * top:-1194 while the reveal and the settle never left their resting values.
+   *
+   * The element is now stable from the first render and only the styles are
+   * conditional, so the measurement stays valid.
+   */
   return (
     <motion.div
       id={id}
       ref={ref}
       className={className}
-      style={{
-        ...style,
-        scale,
-        opacity,
-        clipPath: reveal && !coarse ? clipPath : undefined,
-        transformOrigin: 'center top',
-      }}
+      style={
+        cinematic
+          ? {
+              // `position: relative` is load-bearing: Framer resolves a scroll
+              // target against its nearest positioned ancestor.
+              position: 'relative',
+              ...style,
+              opacity,
+              clipPath: reveal && !coarse ? clipPath : undefined,
+              transformOrigin: 'center top',
+            }
+          : { position: 'relative', ...style }
+      }
     >
       {children}
     </motion.div>
