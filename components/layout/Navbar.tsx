@@ -76,7 +76,7 @@ export default function Navbar() {
         style={
           scrolled
             ? {
-                background: 'rgba(36, 16, 25,0.82)',
+                background: 'rgba(51, 12, 30,0.82)',
                 backdropFilter: 'blur(22px) saturate(140%)',
                 WebkitBackdropFilter: 'blur(22px) saturate(140%)',
                 borderBottom: '1px solid rgba(231,198,164,0.14)',
@@ -196,7 +196,7 @@ export default function Navbar() {
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden lg:hidden"
               style={{
-                background: 'rgba(36, 16, 25,0.97)',
+                background: 'rgba(51, 12, 30,0.97)',
                 backdropFilter: 'blur(22px)',
                 borderTop: '1px solid rgba(231,198,164,0.14)',
               }}

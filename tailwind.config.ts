@@ -38,13 +38,13 @@ const config: Config = {
           // Tailwind cannot read those directly without giving up the `/opacity`
           // modifier, which 176 class names rely on, so the two lists are kept
           // in sync by hand. Change a value here and there, never only one.
-          ink: '#16070D',
-          noir: '#241019',
-          'noir-2': '#2E1521',
-          surface: '#3A1B2A',
-          'surface-2': '#472233',
-          'surface-3': '#54293D',
-          line: '#6B3550',
+          ink: '#1E0713',
+          noir: '#330C1E',
+          'noir-2': '#421126',
+          surface: '#52162F',
+          'surface-2': '#631B39',
+          'surface-3': '#742043',
+          line: '#94305A',
 
           // ── Signature rose (the logo wordmark) ──
           rose: '#FD657D',
@@ -86,8 +86,8 @@ const config: Config = {
           brown: '#F3E2DC',         // secondary type        → cream-soft
           mocha: '#D8C2BD',         // muted type            → cream-dim
           latte: '#A88E8E',         // placeholder type      → muted
-          pearl: '#241019',         // page background       → noir
-          'cream-beige': '#472233', // raised surface        → surface-2
+          pearl: '#330C1E',         // page background       → noir
+          'cream-beige': '#631B39', // raised surface        → surface-2
           'rose-gold': '#FD657D',   // primary accent        → rose
           wine: '#C43E57',          // deep accent           → rose-deep
           copper: '#E7C6A4',        // secondary accent      → champagne
@@ -100,12 +100,12 @@ const config: Config = {
         body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'brand-gradient': 'linear-gradient(160deg, #241019 0%, #2E1521 55%, #3A1B2A 100%)',
-        'hero-gradient': 'linear-gradient(180deg, rgba(22,7,13,0) 0%, rgba(36,16,25,0.55) 58%, #241019 100%)',
-        'card-gradient': 'linear-gradient(145deg, #3A1B2A 0%, #2E1521 100%)',
+        'brand-gradient': 'linear-gradient(160deg, #330C1E 0%, #421126 55%, #52162F 100%)',
+        'hero-gradient': 'linear-gradient(180deg, rgba(30, 7, 19,0) 0%, rgba(51,12,30,0.55) 58%, #330C1E 100%)',
+        'card-gradient': 'linear-gradient(145deg, #52162F 0%, #421126 100%)',
         'rose-gradient': 'linear-gradient(135deg, #C43E57 0%, #FD657D 55%, #FF8B9D 100%)',
         'champagne-gradient': 'linear-gradient(135deg, #E7C6A4 0%, #F0D3B0 50%, #F6E0C4 100%)',
-        'dark-gradient': 'linear-gradient(135deg, #16070D 0%, #241019 40%, #3A1B2A 100%)',
+        'dark-gradient': 'linear-gradient(135deg, #1E0713 0%, #330C1E 40%, #52162F 100%)',
       },
       boxShadow: {
         brand: '0 12px 40px rgba(0,0,0,0.45)',

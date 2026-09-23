@@ -118,7 +118,7 @@ export default function ProductSheet({
             transition={{ duration: 0.25 }}
             onClick={close}
             className="fixed inset-0 z-[90]"
-            style={{ background: 'rgba(22, 7, 13,0.78)', backdropFilter: 'blur(6px)' }}
+            style={{ background: 'rgba(30, 7, 19,0.78)', backdropFilter: 'blur(6px)' }}
             aria-hidden
           />
 
@@ -148,7 +148,7 @@ export default function ProductSheet({
                 onClick={close}
                 aria-label={isAr ? 'إغلاق' : 'Close'}
                 className="absolute end-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full text-brand-cream transition-colors hover:bg-white/10"
-                style={{ background: 'rgba(22, 7, 13,0.55)', backdropFilter: 'blur(8px)' }}
+                style={{ background: 'rgba(30, 7, 19,0.55)', backdropFilter: 'blur(8px)' }}
               >
                 <X className="h-4.5 w-4.5" aria-hidden />
               </button>
@@ -165,7 +165,7 @@ export default function ProductSheet({
                 <div
                   aria-hidden
                   className="absolute inset-0"
-                  style={{ background: 'linear-gradient(to top, rgba(36, 16, 25,0.92) 0%, transparent 55%)' }}
+                  style={{ background: 'linear-gradient(to top, rgba(51, 12, 30,0.92) 0%, transparent 55%)' }}
                 />
 
                 <div className="absolute bottom-4 start-5 end-5">
@@ -182,7 +182,7 @@ export default function ProductSheet({
                     {fallback.featured && !fallback.bestseller && (
                       <span
                         className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold"
-                        style={{ background: 'rgba(22, 7, 13,0.7)', color: '#F6E0C4' }}
+                        style={{ background: 'rgba(30, 7, 19,0.7)', color: '#F6E0C4' }}
                       >
                         <Star className="h-3 w-3" aria-hidden />
                         {isAr ? 'مميز' : 'Featured'}

@@ -29,7 +29,7 @@ export default function QRPage() {
       <div
         className="w-full max-w-md rounded-[2rem] px-7 py-9 text-center"
         style={{
-          background: 'linear-gradient(145deg, rgba(58, 27, 42,0.96) 0%, rgba(58, 27, 42,0.85) 100%)',
+          background: 'linear-gradient(145deg, rgba(82, 22, 47,0.96) 0%, rgba(82, 22, 47,0.85) 100%)',
           border: '1px solid rgba(231,198,164,0.32)',
           boxShadow: '0 24px 70px rgba(253,101,125,0.22)',
         }}
@@ -86,7 +86,7 @@ export default function QRPage() {
         <Link
           href="/menu"
           className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-bold text-sm"
-          style={{ background: 'rgba(58, 27, 42,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
+          style={{ background: 'rgba(82, 22, 47,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
         >
           {isAr ? 'افتح المنيو' : 'Open the menu'}
           {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}

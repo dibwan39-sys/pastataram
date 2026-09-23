@@ -89,7 +89,7 @@ export default function MenuPage() {
         */}
         <div
           className="sticky top-[var(--nav-h)] z-30 border-b py-4 backdrop-blur-xl"
-          style={{ background: 'rgba(36, 16, 25,0.9)', borderColor: 'rgba(231,198,164,0.14)' }}
+          style={{ background: 'rgba(51, 12, 30,0.9)', borderColor: 'rgba(231,198,164,0.14)' }}
         >
           <div className="mx-auto max-w-7xl px-6">
             <CategoryNav />

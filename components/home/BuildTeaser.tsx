@@ -35,7 +35,7 @@ export default function BuildTeaser() {
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="grid items-center gap-8 overflow-hidden rounded-[2rem] md:grid-cols-2"
           style={{
-            background: 'linear-gradient(150deg, rgba(58, 27, 42,0.95) 0%, rgba(46, 21, 33,0.95) 100%)',
+            background: 'linear-gradient(150deg, rgba(82, 22, 47,0.95) 0%, rgba(66, 17, 38,0.95) 100%)',
             border: '1px solid rgba(253,101,125,0.24)',
           }}
         >
@@ -78,7 +78,7 @@ export default function BuildTeaser() {
             <div
               aria-hidden
               className="absolute inset-0"
-              style={{ background: 'linear-gradient(to top, rgba(46, 21, 33,0.7) 0%, transparent 60%)' }}
+              style={{ background: 'linear-gradient(to top, rgba(66, 17, 38,0.7) 0%, transparent 60%)' }}
             />
           </div>
         </motion.div>

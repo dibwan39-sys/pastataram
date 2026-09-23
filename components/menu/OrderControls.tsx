@@ -45,7 +45,7 @@ export function QuantityStepper({
       role="group"
       aria-label={label}
       className="inline-flex items-center gap-1 rounded-full p-1"
-      style={{ background: 'rgba(58, 27, 42,0.7)', border: '1px solid rgba(231,198,164,0.32)' }}
+      style={{ background: 'rgba(82, 22, 47,0.7)', border: '1px solid rgba(231,198,164,0.32)' }}
     >
       <button
         type="button"
@@ -103,7 +103,7 @@ export function ExtrasPicker({
               aria-pressed={active}
               className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12.5px] font-bold transition-colors"
               style={{
-                background: active ? 'linear-gradient(135deg, #C43E57, #FD657D)' : 'rgba(58, 27, 42,0.7)',
+                background: active ? 'linear-gradient(135deg, #C43E57, #FD657D)' : 'rgba(82, 22, 47,0.7)',
                 border: `1px solid ${active ? 'rgba(255,179,191,0.7)' : 'rgba(231,198,164,0.32)'}`,
                 color: active ? '#FFF3EE' : '#D8C2BD',
               }}

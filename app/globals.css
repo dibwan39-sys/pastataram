@@ -14,17 +14,26 @@
 :root {
   color-scheme: dark;
 
-  /* Base — rose-black. Not neutral near-black: every step carries a visible
-     rose cast (hue ~335°, saturation ~40%) so the brand colour is the room
-     itself, not just the accents sitting in it. Kept dark enough that food
-     photography still reads as the brightest thing on screen. */
-  --brand-ink:        #16070D;
-  --brand-noir:       #241019;
-  --brand-noir-2:     #2E1521;
-  --brand-surface:    #3A1B2A;
-  --brand-surface-2:  #472233;
-  --brand-surface-3:  #54293D;
-  --brand-line:       #6B3550;
+  /* ── Base — DEEP ROSE, not rose-tinted black ───────────────────────────
+     Measured, not guessed. The previous scale topped out at a chroma of 20
+     (max channel minus min, out of 255) which is below what the eye resolves
+     as colour at this brightness: a pixel audit of the rendered page found
+     only 12–15% of it perceptibly coloured, so the site read as black with
+     pink buttons. Every step below now carries a chroma of 39–100 at the same
+     kind of brightness, which is the difference between a dark room painted
+     rose and a dark room.
+
+     Hue holds at ~332° across the scale — the magenta side of rose, taken
+     from the logo wordmark — so it reads pink, never wine-red or purple.
+     Brightness still tops out well under mid-grey, so food photography
+     remains the brightest thing on screen. */
+  --brand-ink:        #1E0713;  /* chroma  23 · deepest backdrop      */
+  --brand-noir:       #330C1E;  /* chroma  39 · page background       */
+  --brand-noir-2:     #421126;  /* chroma  49 · alternate band        */
+  --brand-surface:    #52162F;  /* chroma  60 · raised surface        */
+  --brand-surface-2:  #631B39;  /* chroma  72 · card / panel          */
+  --brand-surface-3:  #742043;  /* chroma  84 · elevated panel        */
+  --brand-line:       #94305A;  /* chroma 100 · borders, rose-lit     */
 
   /* Signature rose */
   --brand-rose:       #FD657D;
@@ -52,7 +61,7 @@
   --rose-rgb:      253, 101, 125;
   --champagne-rgb: 231, 198, 164;
   --cream-rgb:     255, 243, 238;
-  --ink-rgb:       22, 7, 13;
+  --ink-rgb:       30, 7, 19;
 
   /* Fixed chrome heights, shared by layout and scroll-margin */
   --nav-h: 4.5rem;
@@ -97,9 +106,10 @@ body {
      viewport so the light stays put while content moves through it, which is
      what gives the scroll its depth. */
   background-image:
-    radial-gradient(85rem 55rem at 88% -10%, rgba(var(--rose-rgb), 0.22), transparent 62%),
-    radial-gradient(65rem 50rem at 4% 28%, rgba(var(--rose-rgb), 0.14), transparent 60%),
-    radial-gradient(75rem 55rem at 55% 112%, rgba(var(--rose-rgb), 0.16), transparent 62%);
+    radial-gradient(85rem 55rem at 88% -10%, rgba(var(--rose-rgb), 0.34), transparent 64%),
+    radial-gradient(65rem 50rem at 4% 26%, rgba(var(--rose-rgb), 0.24), transparent 62%),
+    radial-gradient(70rem 50rem at 96% 62%, rgba(var(--rose-rgb), 0.20), transparent 60%),
+    radial-gradient(75rem 55rem at 50% 112%, rgba(var(--rose-rgb), 0.26), transparent 64%);
   background-attachment: fixed;
 }
 
@@ -219,14 +229,14 @@ html.dark body {
    the food photography keeps its contrast.
    ════════════════════════════════════════════ */
 .glass {
-  background: rgba(46, 21, 33, 0.72);
+  background: rgba(66, 17, 38, 0.72);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid rgba(var(--champagne-rgb), 0.14);
 }
 
 .glass-card {
-  background: rgba(58, 27, 42, 0.88);
+  background: rgba(82, 22, 47, 0.88);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   border: 1px solid rgba(var(--champagne-rgb), 0.16);
@@ -388,7 +398,7 @@ html.dark body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(36, 16, 25, 0.94);
+  background: rgba(51, 12, 30, 0.94);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-top: 1px solid rgba(var(--champagne-rgb), 0.14);

@@ -144,7 +144,7 @@ export default function ReviewModal({ open, onClose }: { open: boolean; onClose:
 
   const inputCls =
     'w-full rounded-xl px-4 py-3 text-brand-cream placeholder-brand-muted transition-colors focus:outline-none focus:border-brand-rose'
-  const inputStyle = { background: 'rgba(58, 27, 42,0.7)', border: '1px solid rgba(231,198,164,0.26)' }
+  const inputStyle = { background: 'rgba(82, 22, 47,0.7)', border: '1px solid rgba(231,198,164,0.26)' }
 
   return createPortal(
     <AnimatePresence>
@@ -155,7 +155,7 @@ export default function ReviewModal({ open, onClose }: { open: boolean; onClose:
             transition={{ duration: 0.25 }}
             onClick={close}
             className="fixed inset-0 z-[90]"
-            style={{ background: 'rgba(22, 7, 13,0.8)', backdropFilter: 'blur(6px)' }}
+            style={{ background: 'rgba(30, 7, 19,0.8)', backdropFilter: 'blur(6px)' }}
             aria-hidden
           />
 

@@ -93,7 +93,7 @@ export default function HeroSection() {
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(180deg, rgba(22,7,13,0.58) 0%, rgba(22,7,13,0.10) 30%, rgba(22,7,13,0.22) 58%, rgba(22,7,13,0.90) 100%)',
+            'linear-gradient(180deg, rgba(30, 7, 19,0.58) 0%, rgba(30, 7, 19,0.10) 30%, rgba(30, 7, 19,0.22) 58%, rgba(30, 7, 19,0.90) 100%)',
         }}
       />
       <div
@@ -101,7 +101,7 @@ export default function HeroSection() {
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 78% 62% at 50% 46%, transparent 0%, transparent 42%, rgba(22,7,13,0.42) 100%)',
+            'radial-gradient(ellipse 78% 62% at 50% 46%, transparent 0%, transparent 42%, rgba(30, 7, 19,0.42) 100%)',
         }}
       />
       {/* A single rose bloom — the brand colour entering the frame */}
@@ -129,7 +129,7 @@ export default function HeroSection() {
           className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[128%] w-[132%] -translate-x-1/2 -translate-y-1/2 blur-2xl"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(22,7,13,0.66) 0%, rgba(22,7,13,0.34) 52%, transparent 76%)',
+              'radial-gradient(ellipse at center, rgba(30, 7, 19,0.66) 0%, rgba(30, 7, 19,0.34) 52%, transparent 76%)',
           }}
         />
         <motion.div
@@ -182,7 +182,7 @@ export default function HeroSection() {
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mb-8 inline-flex items-center gap-3 rounded-full py-2 ps-2 pe-5"
-          style={{ background: 'rgba(58, 27, 42,0.72)', border: '1px solid rgba(253,101,125,0.32)', backdropFilter: 'blur(14px)' }}
+          style={{ background: 'rgba(82, 22, 47,0.72)', border: '1px solid rgba(253,101,125,0.32)', backdropFilter: 'blur(14px)' }}
         >
           <span className="relative h-10 w-10 overflow-hidden rounded-full">
             <Image

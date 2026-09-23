@@ -104,7 +104,7 @@ export default function QROrderSection() {
             <div
               className="rounded-3xl p-6 sm:p-8 text-center max-w-xs w-full"
               style={{
-                background: 'linear-gradient(145deg, rgba(58, 27, 42,0.96) 0%, rgba(58, 27, 42,0.7) 100%)',
+                background: 'linear-gradient(145deg, rgba(82, 22, 47,0.96) 0%, rgba(82, 22, 47,0.7) 100%)',
                 border: '1px solid rgba(231,198,164,0.3)',
                 boxShadow: '0 18px 60px rgba(253,101,125,0.2)',
               }}

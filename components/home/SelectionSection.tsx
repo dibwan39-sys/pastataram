@@ -89,7 +89,7 @@ export default function SelectionSection() {
                   <div
                     aria-hidden
                     className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to top, rgba(22, 7, 13,0.9) 0%, rgba(22, 7, 13,0.15) 55%, transparent 100%)' }}
+                    style={{ background: 'linear-gradient(to top, rgba(30, 7, 19,0.9) 0%, rgba(30, 7, 19,0.15) 55%, transparent 100%)' }}
                   />
 
                   {/* Hover affordance */}

@@ -37,7 +37,7 @@ export default function FinalCTA() {
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, rgba(22, 7, 13,0.82) 35%, rgba(22, 7, 13,0.94) 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, rgba(30, 7, 19,0.82) 35%, rgba(30, 7, 19,0.94) 100%)' }}
       />
       <div
         aria-hidden
