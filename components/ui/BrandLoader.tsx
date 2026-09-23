@@ -19,7 +19,7 @@ import Image from 'next/image'
  */
 export default function BrandLoader() {
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #120C10 0%, #1F1419 50%, #120C10 100%)' }}>
+    <div className="fixed inset-0 z-[200] flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--brand-noir) 0%, var(--brand-surface) 50%, var(--brand-noir) 100%)' }}>
       {/* Ambient glow */}
       <div className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: 'rgba(253,101,125,0.3)' }} />
 

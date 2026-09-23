@@ -29,7 +29,7 @@ export default function FinalCTA() {
     <section
       className="relative overflow-hidden"
       aria-labelledby="final-cta-heading"
-      style={{ background: '#0B0709' }}
+      style={{ background: 'var(--brand-ink)' }}
     >
       <div className="absolute inset-0">
         <Image src={backdrop.image} alt="" fill sizes="100vw" quality={75} className="object-cover" />
@@ -37,7 +37,7 @@ export default function FinalCTA() {
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, #120C10 0%, rgba(11,7,9,0.82) 35%, rgba(11,7,9,0.94) 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, rgba(22, 7, 13,0.82) 35%, rgba(22, 7, 13,0.94) 100%)' }}
       />
       <div
         aria-hidden

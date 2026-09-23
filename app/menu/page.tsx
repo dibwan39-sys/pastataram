@@ -35,7 +35,7 @@ export default function MenuPage() {
       {/* ── 1 · Intro ─────────────────────────────────────── */}
       <section
         className="relative overflow-hidden py-20 md:py-28"
-        style={{ background: 'linear-gradient(180deg, #0B0709 0%, #120C10 60%, #181015 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-ink) 0%, var(--brand-noir) 60%, var(--brand-noir-2) 100%)' }}
         aria-labelledby="menu-heading"
       >
         <AmbientParticles density={22} />
@@ -80,7 +80,7 @@ export default function MenuPage() {
       <SignatureSection />
 
       {/* ── 3 · Category navigation + 4 · product collections ── */}
-      <section className="relative" style={{ background: 'linear-gradient(180deg, #1F1419 0%, #120C10 18%, #120C10 100%)' }}>
+      <section className="relative" style={{ background: 'linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-noir) 18%, var(--brand-noir) 100%)' }}>
         {/*
           Sticky category bar. It works because globals.css keeps `body` on
           `overflow-x: clip` rather than `hidden` — `hidden` would force
@@ -89,7 +89,7 @@ export default function MenuPage() {
         */}
         <div
           className="sticky top-[var(--nav-h)] z-30 border-b py-4 backdrop-blur-xl"
-          style={{ background: 'rgba(18,12,16,0.9)', borderColor: 'rgba(231,198,164,0.14)' }}
+          style={{ background: 'rgba(36, 16, 25,0.9)', borderColor: 'rgba(231,198,164,0.14)' }}
         >
           <div className="mx-auto max-w-7xl px-6">
             <CategoryNav />
@@ -104,7 +104,7 @@ export default function MenuPage() {
       {/* ── 5 · The official full menu ────────────────────── */}
       <section
         className="section relative"
-        style={{ background: 'linear-gradient(180deg, #120C10 0%, #181015 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-noir-2) 100%)' }}
         aria-labelledby="official-menu-heading"
       >
         <div className="mx-auto max-w-6xl px-6">
@@ -137,7 +137,7 @@ export default function MenuPage() {
       {/* ── 6 · Order CTA ─────────────────────────────────── */}
       <section
         className="relative py-16"
-        style={{ background: 'linear-gradient(180deg, #181015 0%, #120C10 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-noir-2) 0%, var(--brand-noir) 100%)' }}
       >
         <motion.div
           initial={reduce ? undefined : { opacity: 0, y: 20 }}

@@ -44,7 +44,7 @@ export default function BranchCards({ className = '' }: { className?: string }) 
           transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="group relative overflow-hidden rounded-[1.75rem] p-7 md:p-8"
           style={{
-            background: 'linear-gradient(150deg, #1F1419 0%, #181015 100%)',
+            background: 'linear-gradient(150deg, var(--brand-surface) 0%, var(--brand-noir-2) 100%)',
             border: '1px solid rgba(231,198,164,0.16)',
           }}
         >

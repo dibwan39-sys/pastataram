@@ -47,7 +47,7 @@ export default function AdminGalleryPage() {
       </div>
 
       {/* Add Image */}
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-5 shadow-card">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-5 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-4 flex items-center gap-2">
           <Upload className="w-4 h-4 text-brand-rose-gold" />
           Add New Image

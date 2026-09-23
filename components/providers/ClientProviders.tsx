@@ -46,7 +46,7 @@ export default function ClientProviders({ children }: { children: React.ReactNod
         toastOptions={{
           duration: 3000,
           style: {
-            background: '#1F1419',
+            background: 'var(--brand-surface)',
             color: '#FFF3EE',
             border: '1px solid rgba(253,101,125,0.35)',
             borderRadius: '16px',

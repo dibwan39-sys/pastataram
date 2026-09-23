@@ -65,7 +65,7 @@ export default function SocialQRSection() {
   const isAr = language === 'ar'
 
   return (
-    <section className="section" style={{ background: 'linear-gradient(180deg, #120C10 0%, #181015 50%, #1F1419 100%)' }}>
+    <section className="section" style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-noir-2) 50%, var(--brand-surface) 100%)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -99,7 +99,7 @@ export default function SocialQRSection() {
               transition={{ duration: 0.65, delay: i * 0.12 }}
               className="group flex flex-col items-center rounded-3xl overflow-hidden transition-all duration-300"
               style={{
-                background: 'rgba(31,20,25,0.96)',
+                background: 'rgba(58, 27, 42,0.96)',
                 border: '1px solid rgba(231,198,164,0.22)',
                 boxShadow: '0 4px 24px rgba(253,101,125,0.1)',
               }}
@@ -108,10 +108,10 @@ export default function SocialQRSection() {
             >
               <div
                 className="w-full flex items-center justify-between px-6 py-4"
-                style={{ background: `linear-gradient(135deg, ${s.accentLight}, rgba(18,12,16,0.6))`, borderBottom: '1px solid rgba(231,198,164,0.15)' }}
+                style={{ background: `linear-gradient(135deg, ${s.accentLight}, rgba(36, 16, 25,0.6))`, borderBottom: '1px solid rgba(231,198,164,0.15)' }}
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(31,20,25,0.96)', boxShadow: `0 2px 12px ${s.accentLight}`, border: `1px solid ${s.accentBorder}` }}>
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(58, 27, 42,0.96)', boxShadow: `0 2px 12px ${s.accentLight}`, border: `1px solid ${s.accentBorder}` }}>
                     {s.icon}
                   </div>
                   <div className="text-start">

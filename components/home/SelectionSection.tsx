@@ -37,7 +37,7 @@ export default function SelectionSection() {
   return (
     <section
       className="section relative overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #1F1419 0%, #120C10 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-noir) 100%)' }}
       aria-labelledby="selection-heading"
     >
       <div className="mx-auto max-w-7xl px-6">
@@ -89,7 +89,7 @@ export default function SelectionSection() {
                   <div
                     aria-hidden
                     className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to top, rgba(11,7,9,0.9) 0%, rgba(11,7,9,0.15) 55%, transparent 100%)' }}
+                    style={{ background: 'linear-gradient(to top, rgba(22, 7, 13,0.9) 0%, rgba(22, 7, 13,0.15) 55%, transparent 100%)' }}
                   />
 
                   {/* Hover affordance */}

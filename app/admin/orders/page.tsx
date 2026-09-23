@@ -62,7 +62,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-latte" />
           <input
@@ -90,7 +90,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-brand-pearl dark:bg-brand-surface/20 text-xs text-brand-latte">
@@ -125,11 +125,11 @@ export default function AdminOrdersPage() {
                           key={j}
                           src={item.menuItem.image}
                           alt=""
-                          className="w-8 h-8 rounded-full object-cover border-2 border-white dark:border-[#181015]"
+                          className="w-8 h-8 rounded-full object-cover border-2 border-white dark:border-[var(--brand-noir-2)]"
                         />
                       ))}
                       {order.items.length > 3 && (
-                        <div className="w-8 h-8 rounded-full bg-brand-blush border-2 border-white dark:border-[#181015] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-brand-blush border-2 border-white dark:border-[var(--brand-noir-2)] flex items-center justify-center">
                           <span className="text-xs font-bold text-brand-espresso">+{order.items.length - 3}</span>
                         </div>
                       )}

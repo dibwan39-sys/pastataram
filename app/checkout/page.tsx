@@ -265,7 +265,7 @@ export default function CheckoutPage() {
                             }`}
                             style={active ? { background: 'linear-gradient(135deg, rgba(253,101,125,0.5), rgba(255,139,157,0.3))' } : undefined}
                           >
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #1F1419, #F0D3B0)' }}>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, var(--brand-surface), #F0D3B0)' }}>
                               <Icon className="w-5 h-5" style={{ color: '#D8C2BD' }} />
                             </div>
                             <span className="font-bold text-sm text-brand-espresso dark:text-brand-ivory">{opt.label}</span>

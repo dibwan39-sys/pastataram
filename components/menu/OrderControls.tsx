@@ -45,14 +45,14 @@ export function QuantityStepper({
       role="group"
       aria-label={label}
       className="inline-flex items-center gap-1 rounded-full p-1"
-      style={{ background: 'rgba(31,20,25,0.7)', border: '1px solid rgba(231,198,164,0.32)' }}
+      style={{ background: 'rgba(58, 27, 42,0.7)', border: '1px solid rgba(231,198,164,0.32)' }}
     >
       <button
         type="button"
         aria-label={isAr ? 'إنقاص الكمية' : 'Decrease quantity'}
         onClick={() => onChange(value - 1)}
         disabled={value <= 1}
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2A1B22] text-brand-cream-dim transition-colors hover:bg-[#35222B] disabled:opacity-40"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand-surface-2)] text-brand-cream-dim transition-colors hover:bg-[var(--brand-surface-3)] disabled:opacity-40"
       >
         <Minus className="h-3.5 w-3.5" aria-hidden />
       </button>
@@ -64,7 +64,7 @@ export function QuantityStepper({
         aria-label={isAr ? 'زيادة الكمية' : 'Increase quantity'}
         onClick={() => onChange(value + 1)}
         disabled={value >= 99}
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2A1B22] text-brand-cream-dim transition-colors hover:bg-[#35222B] disabled:opacity-40"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand-surface-2)] text-brand-cream-dim transition-colors hover:bg-[var(--brand-surface-3)] disabled:opacity-40"
       >
         <Plus className="h-3.5 w-3.5" aria-hidden />
       </button>
@@ -103,7 +103,7 @@ export function ExtrasPicker({
               aria-pressed={active}
               className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12.5px] font-bold transition-colors"
               style={{
-                background: active ? 'linear-gradient(135deg, #C43E57, #FD657D)' : 'rgba(31,20,25,0.7)',
+                background: active ? 'linear-gradient(135deg, #C43E57, #FD657D)' : 'rgba(58, 27, 42,0.7)',
                 border: `1px solid ${active ? 'rgba(255,179,191,0.7)' : 'rgba(231,198,164,0.32)'}`,
                 color: active ? '#FFF3EE' : '#D8C2BD',
               }}

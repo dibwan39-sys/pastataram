@@ -41,7 +41,7 @@ export default function SignatureSection() {
       id="signature"
       ref={sectionRef}
       className="section relative overflow-hidden scroll-mt-24"
-      style={{ background: 'linear-gradient(180deg, #120C10 0%, #1F1419 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-surface) 100%)' }}
       aria-labelledby="signature-heading"
     >
       <motion.div
@@ -80,7 +80,7 @@ export default function SignatureSection() {
               <div
                 aria-hidden
                 className="absolute inset-0"
-                style={{ background: 'linear-gradient(to top, rgba(11,7,9,0.6) 0%, transparent 45%)' }}
+                style={{ background: 'linear-gradient(to top, rgba(22, 7, 13,0.6) 0%, transparent 45%)' }}
               />
             </div>
 
@@ -92,7 +92,7 @@ export default function SignatureSection() {
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="absolute -bottom-5 end-5 rounded-2xl px-5 py-3 text-center"
               style={{
-                background: 'rgba(18,12,16,0.88)',
+                background: 'rgba(36, 16, 25,0.88)',
                 border: '1px solid rgba(253,101,125,0.4)',
                 backdropFilter: 'blur(16px)',
                 boxShadow: '0 16px 44px rgba(253,101,125,0.22)',

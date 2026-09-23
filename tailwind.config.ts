@@ -33,14 +33,18 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          // ── Cinematic base — warm near-black with a rose undertone ──
-          ink: '#0B0709',
-          noir: '#120C10',
-          'noir-2': '#181015',
-          surface: '#1F1419',
-          'surface-2': '#2A1B22',
-          'surface-3': '#35222B',
-          line: '#3A2730',
+          // ── Cinematic base — rose-black ──
+          // Mirrors the --brand-* custom properties in app/globals.css.
+          // Tailwind cannot read those directly without giving up the `/opacity`
+          // modifier, which 176 class names rely on, so the two lists are kept
+          // in sync by hand. Change a value here and there, never only one.
+          ink: '#16070D',
+          noir: '#241019',
+          'noir-2': '#2E1521',
+          surface: '#3A1B2A',
+          'surface-2': '#472233',
+          'surface-3': '#54293D',
+          line: '#6B3550',
 
           // ── Signature rose (the logo wordmark) ──
           rose: '#FD657D',
@@ -82,8 +86,8 @@ const config: Config = {
           brown: '#F3E2DC',         // secondary type        → cream-soft
           mocha: '#D8C2BD',         // muted type            → cream-dim
           latte: '#A88E8E',         // placeholder type      → muted
-          pearl: '#120C10',         // page background       → noir
-          'cream-beige': '#2A1B22', // raised surface        → surface-2
+          pearl: '#241019',         // page background       → noir
+          'cream-beige': '#472233', // raised surface        → surface-2
           'rose-gold': '#FD657D',   // primary accent        → rose
           wine: '#C43E57',          // deep accent           → rose-deep
           copper: '#E7C6A4',        // secondary accent      → champagne
@@ -96,12 +100,12 @@ const config: Config = {
         body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'brand-gradient': 'linear-gradient(160deg, #120C10 0%, #181015 55%, #1F1419 100%)',
-        'hero-gradient': 'linear-gradient(180deg, rgba(11,7,9,0) 0%, rgba(11,7,9,0.55) 58%, #120C10 100%)',
-        'card-gradient': 'linear-gradient(145deg, #1F1419 0%, #181015 100%)',
+        'brand-gradient': 'linear-gradient(160deg, #241019 0%, #2E1521 55%, #3A1B2A 100%)',
+        'hero-gradient': 'linear-gradient(180deg, rgba(22,7,13,0) 0%, rgba(36,16,25,0.55) 58%, #241019 100%)',
+        'card-gradient': 'linear-gradient(145deg, #3A1B2A 0%, #2E1521 100%)',
         'rose-gradient': 'linear-gradient(135deg, #C43E57 0%, #FD657D 55%, #FF8B9D 100%)',
         'champagne-gradient': 'linear-gradient(135deg, #E7C6A4 0%, #F0D3B0 50%, #F6E0C4 100%)',
-        'dark-gradient': 'linear-gradient(135deg, #0B0709 0%, #120C10 40%, #1F1419 100%)',
+        'dark-gradient': 'linear-gradient(135deg, #16070D 0%, #241019 40%, #3A1B2A 100%)',
       },
       boxShadow: {
         brand: '0 12px 40px rgba(0,0,0,0.45)',

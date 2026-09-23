@@ -64,7 +64,7 @@ export default function ContactPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#120C10] dark:via-[#181015] dark:to-[#120C10]">
+      <section className="relative py-24 bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[var(--brand-noir)] dark:via-[var(--brand-noir-2)] dark:to-[var(--brand-noir)]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">

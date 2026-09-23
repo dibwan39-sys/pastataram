@@ -43,11 +43,11 @@ export default function AdminCustomersPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search customers..."
-          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-[#181015] dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
+          className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-brand-rose/30 bg-[var(--brand-noir-2)] dark:bg-brand-surface/30 text-brand-espresso dark:text-brand-ivory placeholder-brand-latte focus:outline-none focus:border-brand-rose-gold text-sm"
         />
       </div>
 
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-brand-pearl dark:bg-brand-surface/20 text-xs text-brand-latte">

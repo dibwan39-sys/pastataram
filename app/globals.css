@@ -14,14 +14,17 @@
 :root {
   color-scheme: dark;
 
-  /* Base — warm near-black with a rose undertone */
-  --brand-ink:        #0B0709;
-  --brand-noir:       #120C10;
-  --brand-noir-2:     #181015;
-  --brand-surface:    #1F1419;
-  --brand-surface-2:  #2A1B22;
-  --brand-surface-3:  #35222B;
-  --brand-line:       #3A2730;
+  /* Base — rose-black. Not neutral near-black: every step carries a visible
+     rose cast (hue ~335°, saturation ~40%) so the brand colour is the room
+     itself, not just the accents sitting in it. Kept dark enough that food
+     photography still reads as the brightest thing on screen. */
+  --brand-ink:        #16070D;
+  --brand-noir:       #241019;
+  --brand-noir-2:     #2E1521;
+  --brand-surface:    #3A1B2A;
+  --brand-surface-2:  #472233;
+  --brand-surface-3:  #54293D;
+  --brand-line:       #6B3550;
 
   /* Signature rose */
   --brand-rose:       #FD657D;
@@ -49,7 +52,7 @@
   --rose-rgb:      253, 101, 125;
   --champagne-rgb: 231, 198, 164;
   --cream-rgb:     255, 243, 238;
-  --ink-rgb:       11, 7, 9;
+  --ink-rgb:       22, 7, 13;
 
   /* Fixed chrome heights, shared by layout and scroll-margin */
   --nav-h: 4.5rem;
@@ -85,6 +88,28 @@ body {
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Rose light in the room.
+     A flat dark fill reads as black no matter which hue it carries — at ~10%
+     lightness the eye cannot resolve a hue. What actually makes the page read
+     as PINK is light: three large, soft rose sources sitting behind everything,
+     the way a restaurant is lit rather than painted. They are attached to the
+     viewport so the light stays put while content moves through it, which is
+     what gives the scroll its depth. */
+  background-image:
+    radial-gradient(85rem 55rem at 88% -10%, rgba(var(--rose-rgb), 0.22), transparent 62%),
+    radial-gradient(65rem 50rem at 4% 28%, rgba(var(--rose-rgb), 0.14), transparent 60%),
+    radial-gradient(75rem 55rem at 55% 112%, rgba(var(--rose-rgb), 0.16), transparent 62%);
+  background-attachment: fixed;
+}
+
+/* A fixed background layer forces the compositor to repaint it on every scroll
+   frame, which is cheap on a desktop GPU and expensive on a phone. Mobile keeps
+   the same light, painted once with the document instead. */
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* ── Colour lock ─────────────────────────────
@@ -194,14 +219,14 @@ html.dark body {
    the food photography keeps its contrast.
    ════════════════════════════════════════════ */
 .glass {
-  background: rgba(24, 16, 21, 0.72);
+  background: rgba(46, 21, 33, 0.72);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid rgba(var(--champagne-rgb), 0.14);
 }
 
 .glass-card {
-  background: rgba(31, 20, 25, 0.88);
+  background: rgba(58, 27, 42, 0.88);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   border: 1px solid rgba(var(--champagne-rgb), 0.16);
@@ -210,7 +235,7 @@ html.dark body {
 
 /* Solid editorial panel — the default for content */
 .premium-card {
-  background: linear-gradient(145deg, #1F1419 0%, #181015 100%);
+  background: linear-gradient(145deg, var(--brand-surface) 0%, var(--brand-noir-2) 100%);
   border: 1px solid rgba(var(--champagne-rgb), 0.14);
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
@@ -338,11 +363,11 @@ html.dark body {
 }
 
 .bg-brand-gradient {
-  background: linear-gradient(160deg, #120C10 0%, #181015 55%, #1F1419 100%);
+  background: linear-gradient(160deg, var(--brand-noir) 0%, var(--brand-noir-2) 55%, var(--brand-surface) 100%);
 }
 
 .admin-sidebar {
-  background: linear-gradient(180deg, #120C10 0%, #1F1419 100%);
+  background: linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-surface) 100%);
 }
 
 /* ════════════════════════════════════════════
@@ -363,7 +388,7 @@ html.dark body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(18, 12, 16, 0.94);
+  background: rgba(36, 16, 25, 0.94);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-top: 1px solid rgba(var(--champagne-rgb), 0.14);
@@ -375,7 +400,7 @@ html.dark body {
    content — go solid on small screens. */
 @media (max-width: 767px) {
   .mobile-nav {
-    background: #120C10;
+    background: var(--brand-noir);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -421,7 +446,7 @@ html.dark body {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #181015 25%, #2A1B22 50%, #181015 75%);
+  background: linear-gradient(90deg, var(--brand-noir-2) 25%, var(--brand-surface-2) 50%, var(--brand-noir-2) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }

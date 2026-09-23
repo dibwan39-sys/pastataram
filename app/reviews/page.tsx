@@ -31,7 +31,7 @@ export default function ReviewsPage() {
     <PageWrapper>
       <section
         className="relative overflow-hidden py-20 md:py-24"
-        style={{ background: 'linear-gradient(180deg, #0B0709 0%, #120C10 70%, #120C10 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-ink) 0%, var(--brand-noir) 70%, var(--brand-noir) 100%)' }}
         aria-labelledby="reviews-page-heading"
       >
         <AmbientParticles density={20} />

@@ -61,7 +61,7 @@ export default function ExperienceSection() {
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, #120C10 0%, rgba(11,7,9,0.9) 22%, rgba(11,7,9,0.88) 78%, #120C10 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, rgba(22, 7, 13,0.9) 22%, rgba(22, 7, 13,0.88) 78%, var(--brand-noir) 100%)' }}
       />
 
       <div className="section relative mx-auto max-w-6xl px-6">
@@ -93,7 +93,7 @@ export default function ExperienceSection() {
                 transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="rounded-[1.5rem] p-6 text-center"
                 style={{
-                  background: 'rgba(31,20,25,0.7)',
+                  background: 'rgba(58, 27, 42,0.7)',
                   border: '1px solid rgba(231,198,164,0.16)',
                   backdropFilter: 'blur(14px)',
                 }}

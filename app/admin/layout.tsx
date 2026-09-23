@@ -73,10 +73,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   // The gate. See the note above: a deterrent, not a security boundary.
   if (!isAdminLoggedIn) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-6" style={{ background: '#120C10' }}>
+      <div className="flex min-h-screen items-center justify-center px-6" style={{ background: 'var(--brand-noir)' }}>
         <div
           className="w-full max-w-sm rounded-[1.75rem] p-8 text-center"
-          style={{ background: 'linear-gradient(150deg, #1F1419, #181015)', border: '1px solid rgba(231,198,164,0.18)' }}
+          style={{ background: 'linear-gradient(150deg, var(--brand-surface), var(--brand-noir-2))', border: '1px solid rgba(231,198,164,0.18)' }}
         >
           <Logo size="md" href="/" className="mx-auto mb-5 justify-center" />
           <h1 className="font-display text-xl font-bold text-brand-cream">لوحة إدارة باستاتا رام</h1>
@@ -109,7 +109,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen flex bg-[#181015] dark:bg-[#120C10]">
+    <div className="min-h-screen flex bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir)]">
       {/* Sidebar */}
       <AnimatePresence>
         {(sidebarOpen || true) && (
@@ -191,7 +191,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#181015]/80 backdrop-blur-lg border-b border-brand-rose/20 px-4 py-3 flex items-center justify-between gap-4">
+        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[var(--brand-noir-2)]/80 backdrop-blur-lg border-b border-brand-rose/20 px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -230,7 +230,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute end-0 top-12 w-72 bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-brand-lg border border-brand-rose/20 overflow-hidden"
+                    className="absolute end-0 top-12 w-72 bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl shadow-brand-lg border border-brand-rose/20 overflow-hidden"
                   >
                     <div className="p-3 border-b border-brand-rose/20">
                       <p className="font-bold text-brand-espresso dark:text-brand-ivory text-sm">Notifications</p>

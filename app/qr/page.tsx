@@ -23,13 +23,13 @@ export default function QRPage() {
   return (
     <main
       className="min-h-screen flex flex-col items-center justify-center px-5 py-10"
-      style={{ background: 'linear-gradient(135deg, #1F1419 0%, #120C10 55%, #181015 100%)' }}
+      style={{ background: 'linear-gradient(135deg, var(--brand-surface) 0%, var(--brand-noir) 55%, var(--brand-noir-2) 100%)' }}
       dir={isAr ? 'rtl' : 'ltr'}
     >
       <div
         className="w-full max-w-md rounded-[2rem] px-7 py-9 text-center"
         style={{
-          background: 'linear-gradient(145deg, rgba(31,20,25,0.96) 0%, rgba(31,20,25,0.85) 100%)',
+          background: 'linear-gradient(145deg, rgba(58, 27, 42,0.96) 0%, rgba(58, 27, 42,0.85) 100%)',
           border: '1px solid rgba(231,198,164,0.32)',
           boxShadow: '0 24px 70px rgba(253,101,125,0.22)',
         }}
@@ -45,7 +45,7 @@ export default function QRPage() {
 
         {/* QR */}
         <div
-          className="rounded-3xl bg-[#181015] p-5 mx-auto mb-6"
+          className="rounded-3xl bg-[var(--brand-noir-2)] p-5 mx-auto mb-6"
           style={{ border: '2px solid rgba(231,198,164,0.35)', boxShadow: '0 8px 28px rgba(253,101,125,0.16)' }}
         >
           <img src={ORDER_QR} alt={isAr ? 'باركود الطلب' : 'Order QR code'} className="w-full h-auto" />
@@ -61,7 +61,7 @@ export default function QRPage() {
             const Icon = stepIcons[i]
             return (
               <div key={label} className="flex flex-col items-center gap-1.5 w-24">
-                <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1F1419, #F0D3B0)' }}>
+                <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--brand-surface), #F0D3B0)' }}>
                   <Icon className="w-5 h-5" style={{ color: '#D8C2BD' }} />
                 </div>
                 <span className="text-[11px] font-bold leading-tight" style={{ color: '#F3E2DC' }}>{label}</span>
@@ -86,7 +86,7 @@ export default function QRPage() {
         <Link
           href="/menu"
           className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-bold text-sm"
-          style={{ background: 'rgba(31,20,25,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
+          style={{ background: 'rgba(58, 27, 42,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
         >
           {isAr ? 'افتح المنيو' : 'Open the menu'}
           {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}

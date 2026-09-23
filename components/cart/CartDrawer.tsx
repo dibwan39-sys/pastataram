@@ -219,7 +219,7 @@ export default function CartDrawer() {
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
                   className="w-full block text-center py-3 rounded-full font-bold text-sm"
-                  style={{ background: 'rgba(31,20,25,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
+                  style={{ background: 'rgba(58, 27, 42,0.7)', border: '1.5px solid rgba(231,198,164,0.5)', color: '#D8C2BD' }}
                 >
                   {isAr ? 'توصيل · طلب مسبق · فاتورة' : 'Delivery · Pre-order · Invoice'}
                 </Link>

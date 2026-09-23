@@ -50,11 +50,11 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative overflow-hidden bg-brand-surface dark:bg-[#120C10] text-brand-ivory/90">
+    <footer className="relative overflow-hidden bg-brand-surface dark:bg-[var(--brand-noir)] text-brand-ivory/90">
       {/* Top wave */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-brand-cream dark:bg-[#120C10]">
+      <div className="absolute top-0 left-0 right-0 h-16 bg-brand-cream dark:bg-[var(--brand-noir)]">
         <svg viewBox="0 0 1440 64" fill="none" className="absolute bottom-0 w-full h-full">
-          <path d="M0 64L1440 64L1440 0C1200 48 720 64 0 0V64Z" fill="#1F1419" />
+          <path d="M0 64L1440 64L1440 0C1200 48 720 64 0 0V64Z" fill="var(--brand-surface)" />
         </svg>
       </div>
 

@@ -55,7 +55,7 @@ export default function HeroSection() {
     <section
       ref={sectionRef}
       className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
-      style={{ background: '#0B0709' }}
+      style={{ background: 'var(--brand-ink)' }}
       aria-label={isAr ? 'باستاتا رام' : 'PASTATARAM'}
     >
       {/* ── Layer 1 · the food ───────────────────────────────── */}
@@ -79,12 +79,12 @@ export default function HeroSection() {
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, rgba(11,7,9,0.72) 0%, rgba(11,7,9,0.45) 38%, rgba(11,7,9,0.86) 100%)' }}
+        style={{ background: 'linear-gradient(180deg, rgba(22, 7, 13,0.72) 0%, rgba(22, 7, 13,0.45) 38%, rgba(22, 7, 13,0.86) 100%)' }}
       />
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 70% 55% at 50% 45%, transparent 0%, rgba(11,7,9,0.55) 100%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 55% at 50% 45%, transparent 0%, rgba(22, 7, 13,0.55) 100%)' }}
       />
       {/* A single rose bloom — the brand colour entering the frame */}
       <div
@@ -151,7 +151,7 @@ export default function HeroSection() {
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mb-8 inline-flex items-center gap-3 rounded-full py-2 ps-2 pe-5"
-          style={{ background: 'rgba(31,20,25,0.72)', border: '1px solid rgba(253,101,125,0.32)', backdropFilter: 'blur(14px)' }}
+          style={{ background: 'rgba(58, 27, 42,0.72)', border: '1px solid rgba(253,101,125,0.32)', backdropFilter: 'blur(14px)' }}
         >
           <span className="relative h-10 w-10 overflow-hidden rounded-full">
             <Image

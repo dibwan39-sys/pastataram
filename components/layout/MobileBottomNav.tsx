@@ -37,7 +37,7 @@ export default function MobileBottomNav() {
               >
                 <div className="relative -mt-6">
                   {/* Logo as cart button centerpiece */}
-                  <div className="w-14 h-14 rounded-full shadow-lg overflow-hidden border-2 border-[#1F1419]" style={{ background: '#1F1419' }}>
+                  <div className="w-14 h-14 rounded-full shadow-lg overflow-hidden border-2 border-[var(--brand-surface)]" style={{ background: 'var(--brand-surface)' }}>
                     <Image
                       src="/images/logo.png"
                       alt="PASTATARAM"

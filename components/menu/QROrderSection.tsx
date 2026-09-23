@@ -29,7 +29,7 @@ export default function QROrderSection() {
       ]
 
   return (
-    <section className="section relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #1F1419 0%, #120C10 100%)' }}>
+    <section className="section relative overflow-hidden" style={{ background: 'linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-noir) 100%)' }}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -65,7 +65,7 @@ export default function QROrderSection() {
               return (
                 <div key={s.title} className="flex items-start gap-4">
                   <div className="relative flex-shrink-0">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1F1419, #F0D3B0)' }}>
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--brand-surface), #F0D3B0)' }}>
                       <Icon className="w-5 h-5" style={{ color: '#D8C2BD' }} />
                     </div>
                     <span className="absolute -top-1.5 -end-1.5 w-5 h-5 rounded-full text-white text-[11px] font-black flex items-center justify-center" style={{ background: '#FD657D' }}>
@@ -104,12 +104,12 @@ export default function QROrderSection() {
             <div
               className="rounded-3xl p-6 sm:p-8 text-center max-w-xs w-full"
               style={{
-                background: 'linear-gradient(145deg, rgba(31,20,25,0.96) 0%, rgba(31,20,25,0.7) 100%)',
+                background: 'linear-gradient(145deg, rgba(58, 27, 42,0.96) 0%, rgba(58, 27, 42,0.7) 100%)',
                 border: '1px solid rgba(231,198,164,0.3)',
                 boxShadow: '0 18px 60px rgba(253,101,125,0.2)',
               }}
             >
-              <div className="rounded-2xl bg-[#181015] p-4 mb-4" style={{ border: '2px solid rgba(231,198,164,0.35)', boxShadow: '0 6px 22px rgba(253,101,125,0.16)' }}>
+              <div className="rounded-2xl bg-[var(--brand-noir-2)] p-4 mb-4" style={{ border: '2px solid rgba(231,198,164,0.35)', boxShadow: '0 6px 22px rgba(253,101,125,0.16)' }}>
                 <img src={ORDER_QR} alt={isAr ? 'باركود الطلب' : 'Order QR code'} className="w-full h-auto" />
               </div>
               <p className="font-black text-base mb-1" style={{ color: '#FFF3EE' }}>PASTATARAM</p>

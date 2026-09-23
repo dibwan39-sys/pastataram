@@ -61,7 +61,7 @@ export default function AdminAnalyticsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-5 shadow-card"
+              className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-5 shadow-card"
             >
               <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center mb-3`}>
                 <Icon className="w-5 h-5 text-white" />
@@ -79,7 +79,7 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Revenue Chart */}
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-6 shadow-card">
         <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Revenue Trend (Last 6 Months)</h3>
         <ResponsiveContainer width="100%" height={250}>
           <AreaChart data={monthlyRevenue}>
@@ -89,10 +89,10 @@ export default function AdminAnalyticsPage() {
                 <stop offset="95%" stopColor="#E7C6A4" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1F1419" />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--brand-surface)" />
             <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#A88E8E' }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 12, fill: '#A88E8E' }} axisLine={false} tickLine={false} />
-            <Tooltip contentStyle={{ background: '#120C10', border: '1px solid #F6E0C4', borderRadius: 12 }} />
+            <Tooltip contentStyle={{ background: 'var(--brand-noir)', border: '1px solid #F6E0C4', borderRadius: 12 }} />
             <Area type="monotone" dataKey="revenue" stroke="#E7C6A4" strokeWidth={2} fill="url(#revenueGrad)" />
           </AreaChart>
         </ResponsiveContainer>
@@ -100,21 +100,21 @@ export default function AdminAnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Peak Hours */}
-        <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
+        <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-6 shadow-card">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Peak Order Hours</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={peakHours}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1F1419" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--brand-surface)" />
               <XAxis dataKey="hour" tick={{ fontSize: 11, fill: '#A88E8E' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 11, fill: '#A88E8E' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ background: '#120C10', border: '1px solid #F6E0C4', borderRadius: 12 }} />
+              <Tooltip contentStyle={{ background: 'var(--brand-noir)', border: '1px solid #F6E0C4', borderRadius: 12 }} />
               <Bar dataKey="orders" fill="#F0D3B0" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Customer Types */}
-        <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
+        <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-6 shadow-card">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory mb-5">Customer Breakdown</h3>
           <ResponsiveContainer width="100%" height={160}>
             <PieChart>
@@ -123,7 +123,7 @@ export default function AdminAnalyticsPage() {
                   <Cell key={i} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ background: '#120C10', border: '1px solid #F6E0C4', borderRadius: 12 }} />
+              <Tooltip contentStyle={{ background: 'var(--brand-noir)', border: '1px solid #F6E0C4', borderRadius: 12 }} />
             </PieChart>
           </ResponsiveContainer>
           <div className="flex items-center justify-center gap-6 mt-2">
@@ -138,7 +138,7 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Top Items Table */}
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl shadow-card overflow-hidden">
         <div className="p-5 border-b border-brand-rose/20">
           <h3 className="font-bold text-brand-espresso dark:text-brand-ivory">Top Performing Items</h3>
         </div>

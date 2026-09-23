@@ -59,7 +59,7 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
       {item.featured && !item.bestseller && (
         <span
           className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold"
-          style={{ background: 'rgba(11,7,9,0.72)', color: '#F6E0C4' }}
+          style={{ background: 'rgba(22, 7, 13,0.72)', color: '#F6E0C4' }}
         >
           <Star className="h-3 w-3" aria-hidden />
           {isAr ? 'مميز' : 'Featured'}
@@ -80,7 +80,7 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(to top, rgba(18,12,16,0.86) 0%, rgba(18,12,16,0.12) 52%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(to top, rgba(36, 16, 25,0.86) 0%, rgba(36, 16, 25,0.12) 52%, transparent 100%)' }}
       />
       <div className="absolute top-3 start-3">{badges}</div>
       {!isWide && (
@@ -102,7 +102,7 @@ export default function ProductCard({ item, index = 0, variant = 'standard' }: P
           isWide ? 'flex-col sm:flex-row' : 'flex-col'
         }`}
         style={{
-          background: 'linear-gradient(150deg, #1F1419 0%, #181015 100%)',
+          background: 'linear-gradient(150deg, var(--brand-surface) 0%, var(--brand-noir-2) 100%)',
           border: '1px solid rgba(231,198,164,0.16)',
           boxShadow: '0 8px 28px rgba(0,0,0,0.38)',
         }}

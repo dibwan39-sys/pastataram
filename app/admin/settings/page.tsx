@@ -70,7 +70,7 @@ export default function AdminSettingsPage() {
       {sections.map((section) => {
         const Icon = section.icon
         return (
-          <div key={section.title} className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
+          <div key={section.title} className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-6 shadow-card">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-8 h-8 rounded-lg bg-brand-blush flex items-center justify-center">
                 <Icon className="w-4 h-4 text-brand-rose-gold" />
@@ -98,7 +98,7 @@ export default function AdminSettingsPage() {
       })}
 
       {/* Business Hours */}
-      <div className="bg-[#181015] dark:bg-[#181015] rounded-2xl p-6 shadow-card">
+      <div className="bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir-2)] rounded-2xl p-6 shadow-card">
         <div className="flex items-center gap-2 mb-5">
           <div className="w-8 h-8 rounded-lg bg-brand-blush flex items-center justify-center">
             <Clock className="w-4 h-4 text-brand-rose-gold" />

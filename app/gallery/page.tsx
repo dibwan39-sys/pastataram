@@ -31,7 +31,7 @@ export default function GalleryPage() {
   return (
     <PageWrapper>
       {/* Header */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[#120C10] dark:via-[#181015] dark:to-[#120C10]">
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-brand-cream via-brand-blush/30 to-brand-pearl dark:from-[var(--brand-noir)] dark:via-[var(--brand-noir-2)] dark:to-[var(--brand-noir)]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-rose-gold text-sm font-bold mb-6">
@@ -58,7 +58,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[#120C10]/90 border-b border-brand-rose/20 py-4">
+      <section className="sticky top-20 z-30 bg-brand-cream/90 dark:bg-[var(--brand-noir)]/90 border-b border-brand-rose/20 py-4">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto">
             {galleryCategories.map((cat) => (
@@ -190,7 +190,7 @@ export default function GalleryPage() {
       </AnimatePresence>
 
       {/* Instagram CTA */}
-      <section className="section bg-brand-pearl dark:bg-[#181015]">
+      <section className="section bg-brand-pearl dark:bg-[var(--brand-noir-2)]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

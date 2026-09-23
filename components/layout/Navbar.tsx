@@ -76,7 +76,7 @@ export default function Navbar() {
         style={
           scrolled
             ? {
-                background: 'rgba(18,12,16,0.82)',
+                background: 'rgba(36, 16, 25,0.82)',
                 backdropFilter: 'blur(22px) saturate(140%)',
                 WebkitBackdropFilter: 'blur(22px) saturate(140%)',
                 borderBottom: '1px solid rgba(231,198,164,0.14)',
@@ -160,7 +160,7 @@ export default function Navbar() {
                   animate={reduce ? undefined : { scale: 1 }}
                   aria-hidden
                   className="absolute -end-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold text-brand-cream"
-                  style={{ background: '#1F1419', border: '1px solid rgba(253,101,125,0.6)' }}
+                  style={{ background: 'var(--brand-surface)', border: '1px solid rgba(253,101,125,0.6)' }}
                 >
                   {count}
                 </motion.span>
@@ -196,7 +196,7 @@ export default function Navbar() {
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden lg:hidden"
               style={{
-                background: 'rgba(18,12,16,0.97)',
+                background: 'rgba(36, 16, 25,0.97)',
                 backdropFilter: 'blur(22px)',
                 borderTop: '1px solid rgba(231,198,164,0.14)',
               }}

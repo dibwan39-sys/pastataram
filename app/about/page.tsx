@@ -68,7 +68,7 @@ export default function AboutPage() {
     <PageWrapper>
       {/* Hero */}
       <section className="relative py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-espresso via-[#1F1419] to-brand-espresso" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-espresso via-[var(--brand-surface)] to-brand-espresso" />
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #E7C6A4 0%, transparent 50%), radial-gradient(circle at 80% 50%, #F6E0C4 0%, transparent 50%)' }} />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
@@ -88,7 +88,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section className="section bg-brand-cream dark:bg-[#120C10]">
+      <section className="section bg-brand-cream dark:bg-[var(--brand-noir)]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -173,7 +173,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="section bg-brand-pearl dark:bg-[#181015]">
+      <section className="section bg-brand-pearl dark:bg-[var(--brand-noir-2)]">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -217,7 +217,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="section bg-brand-cream dark:bg-[#120C10]">
+      <section className="section bg-brand-cream dark:bg-[var(--brand-noir)]">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -253,7 +253,7 @@ export default function AboutPage() {
       </section>
 
       {/* Location section */}
-      <section className="section bg-brand-pearl dark:bg-[#181015]">
+      <section className="section bg-brand-pearl dark:bg-[var(--brand-noir-2)]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

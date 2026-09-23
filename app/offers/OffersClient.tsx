@@ -159,7 +159,7 @@ export default function OffersClient() {
       </section>
 
       {/* CTA */}
-      <section className="section bg-brand-pearl dark:bg-[#181015]">
+      <section className="section bg-brand-pearl dark:bg-[var(--brand-noir-2)]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

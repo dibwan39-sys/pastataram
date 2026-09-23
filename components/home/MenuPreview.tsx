@@ -29,7 +29,7 @@ export default function MenuPreview() {
   return (
     <section
       className="section relative overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #120C10 0%, #181015 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-noir-2) 100%)' }}
       aria-labelledby="menu-preview-heading"
     >
       <div className="relative mx-auto max-w-6xl px-6">

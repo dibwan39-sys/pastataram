@@ -19,7 +19,7 @@ export default function BranchesSection() {
   return (
     <section
       className="section relative overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #120C10 0%, #1F1419 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-surface) 100%)' }}
       aria-labelledby="branches-heading"
     >
       <div className="relative mx-auto max-w-5xl px-6">

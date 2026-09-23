@@ -47,7 +47,7 @@ export default function ReviewsSection({ limit = 6, showHeading = true }: Review
   return (
     <section
       className="section relative overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #120C10 0%, #1F1419 55%, #120C10 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--brand-noir) 0%, var(--brand-surface) 55%, var(--brand-noir) 100%)' }}
       aria-labelledby="reviews-heading"
     >
       <div
@@ -115,7 +115,7 @@ export default function ReviewsSection({ limit = 6, showHeading = true }: Review
                 transition={{ duration: 0.55, delay: Math.min(i, 5) * 0.07, ease: [0.16, 1, 0.3, 1] }}
                 className="relative flex flex-col rounded-[1.5rem] p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1"
                 style={{
-                  background: 'linear-gradient(150deg, rgba(31,20,25,0.92) 0%, rgba(24,16,21,0.92) 100%)',
+                  background: 'linear-gradient(150deg, rgba(58, 27, 42,0.92) 0%, rgba(46, 21, 33,0.92) 100%)',
                   border: '1px solid rgba(231,198,164,0.16)',
                 }}
               >
