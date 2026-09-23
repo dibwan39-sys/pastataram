@@ -21,32 +21,40 @@ export default function Footer() {
     return () => clearInterval(id)
   }, [language])
 
+  /**
+   * Customer-facing links only.
+   *
+   * The admin dashboard used to be listed here, which put a link to an
+   * unauthenticated management panel in the footer of every public page.
+   * /offers is absent too: no promotion in lib/data.ts is still valid, and
+   * nothing should link to a page advertising expired deals.
+   */
   const links = isAr ? [
     { href: '/', label: 'الرئيسية' },
     { href: '/menu', label: 'المنيو' },
-    { href: '/offers', label: 'العروض' },
+    { href: '/build-your-pasta', label: 'صمّم باستاتك' },
+    { href: '/gallery', label: 'المعرض' },
+    { href: '/reviews', label: 'التقييمات' },
     { href: '/about', label: 'عن العلامة' },
     { href: '/contact', label: 'تواصل معنا' },
-    { href: '/reviews', label: 'التقييمات' },
     { href: '/track-order', label: 'تتبع طلبك' },
-    { href: '/admin', label: 'لوحة الإدارة' },
   ] : [
     { href: '/', label: 'Home' },
     { href: '/menu', label: 'Menu' },
-    { href: '/offers', label: 'Offers' },
+    { href: '/build-your-pasta', label: 'Build Your Pasta' },
+    { href: '/gallery', label: 'Gallery' },
+    { href: '/reviews', label: 'Reviews' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
-    { href: '/reviews', label: 'Reviews' },
     { href: '/track-order', label: 'Track Order' },
-    { href: '/admin', label: 'Admin' },
   ]
 
   return (
-    <footer className="relative overflow-hidden bg-brand-surface dark:bg-[#14110F] text-brand-ivory/90">
+    <footer className="relative overflow-hidden bg-brand-surface dark:bg-[#120C10] text-brand-ivory/90">
       {/* Top wave */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-brand-cream dark:bg-[#14110F]">
+      <div className="absolute top-0 left-0 right-0 h-16 bg-brand-cream dark:bg-[#120C10]">
         <svg viewBox="0 0 1440 64" fill="none" className="absolute bottom-0 w-full h-full">
-          <path d="M0 64L1440 64L1440 0C1200 48 720 64 0 0V64Z" fill="#211C19" />
+          <path d="M0 64L1440 64L1440 0C1200 48 720 64 0 0V64Z" fill="#1F1419" />
         </svg>
       </div>
 
@@ -164,7 +172,7 @@ export default function Footer() {
                       <span
                         className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold"
                         style={{
-                          background: status.open ? 'rgba(34,77,46,0.4)' : 'rgba(94,21,33,0.4)',
+                          background: status.open ? 'rgba(34,77,46,0.4)' : 'rgba(196,62,87,0.4)',
                           color: status.open ? '#7FD89A' : '#E0A0A8',
                         }}
                       >
