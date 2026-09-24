@@ -36,9 +36,19 @@ export default function QRPage() {
       >
         {/* Brand */}
         <div className="relative w-20 h-20 mx-auto mb-3">
-          <Image src="/images/logo.webp" alt="PASTATARAM" fill className="object-contain" unoptimized priority />
+          {/*
+            Same reasoning as components/ui/Logo.tsx: `unoptimized` served the
+            full 1536px master for a mark drawn small, and `priority` put it
+            ahead of the page's own content in the fetch queue.
+          */}
+          <Image src="/images/logo.webp" alt="PASTATARAM" fill sizes="96px" className="object-contain" />
         </div>
-        <p className="logo-text font-black text-2xl tracking-wide gradient-text mb-1">PASTATARAM</p>
+        {/*
+          An <h1>, not a <p>. The page had no heading at all, so assistive
+          technology and search engines had nothing to name it by. The element
+          changes; the type does not — the classes are unchanged.
+        */}
+        <h1 className="logo-text font-black text-2xl tracking-wide gradient-text mb-1">PASTATARAM</h1>
         <p className="text-xs font-bold uppercase tracking-[0.3em] mb-6" style={{ color: '#FD657D' }}>
           {isAr ? 'اطلب عبر الباركود' : 'QR Ordering'}
         </p>

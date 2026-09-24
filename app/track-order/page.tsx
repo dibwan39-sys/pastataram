@@ -182,7 +182,12 @@ function TrackOrderContent() {
           <div className="text-center py-16">
             <Package className="w-16 h-16 text-brand-latte mx-auto mb-4" />
             <p className="text-brand-brown dark:text-brand-mocha font-medium">
-              {isAr ? 'ابحث عن طلبك أو قم بطلب جديد' : 'Search for your order or place a new one'}
+              {isAr ? 'لا توجد طلبات محفوظة في هذا المتصفح' : 'No orders saved in this browser'}
+            </p>
+            <p className="mx-auto mt-3 max-w-sm text-[13px] leading-7 text-brand-muted">
+              {isAr
+                ? 'إن كنت قد طلبت من جهاز آخر فلن يظهر الطلب هنا. تواصل معنا عبر واتساب لمتابعته.'
+                : 'An order placed on another device will not appear here. Message us on WhatsApp to follow it.'}
             </p>
           </div>
         )}
@@ -209,7 +214,23 @@ export default function TrackOrderPage() {
               {isAr ? 'تتبع طلبك' : 'Track Your Order'}
             </h1>
             <p className="text-brand-brown dark:text-brand-mocha">
-              {isAr ? 'أدخل رقم الطلب لمتابعة حالة طلبك' : 'Enter your order number to track its status'}
+              {isAr
+                ? 'اعرض الطلبات التي أنشأتها من هذا المتصفح.'
+                : 'View the orders you placed from this browser.'}
+            </p>
+
+            {/*
+              Said plainly, because the page cannot do what its name suggests.
+              Orders live in this browser's storage (the `pastataram-orders`
+              key) and nowhere else — there is no server holding them. A
+              customer who ordered on their phone will find nothing here on a
+              laptop, and the honest thing is to say so before they search
+              rather than after they fail.
+            */}
+            <p className="mx-auto mt-4 max-w-md text-[13px] leading-7 text-brand-muted">
+              {isAr
+                ? 'ملاحظة: يُحفظ سجلّ الطلبات على هذا الجهاز وهذا المتصفح فقط، ولا يُزامَن مع المطعم أو مع أجهزتك الأخرى. لمتابعة طلب فعلي تواصل معنا عبر واتساب.'
+                : 'Note: this history is stored on this device and browser only. It is not synced with the restaurant or your other devices. To follow a real order, message us on WhatsApp.'}
             </p>
           </motion.div>
         </div>

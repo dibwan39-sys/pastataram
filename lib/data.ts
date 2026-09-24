@@ -216,7 +216,9 @@ export const menuItems: MenuItem[] = [
     available: true,
     featured: false,
     bestseller: false,
-    calories: 140,
+    // No `calories`. The official menu prints a figure for every dish and none
+    // for the drinks, so 140 was not approved data — it was a guess, and a
+    // guess about nutrition is the kind a customer can act on.
   },
   {
     id: '5',

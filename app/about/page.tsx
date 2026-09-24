@@ -87,8 +87,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Story */}
-      <section className="section bg-brand-cream dark:bg-[var(--brand-noir)]">
+      {/*
+        Story — `overflow-x: clip` is containment, not a patch.
+
+        The two columns below arrive from the side (`x: ±50`), and the
+        milestones after them from `x: ±30`. Both sit under the fold, so they
+        rest at that offset until a scroll triggers `whileInView` — and at
+        390px, resting 50px to the right in RTL put them outside the viewport
+        and added 35px to the document's scrollWidth, measured in a real
+        browser and holding for as long as the page went untouched.
+
+        The offset is the animation, so the fix is to give it somewhere to
+        happen rather than to shrink it into meaninglessness: this section owns
+        the transform, so this section contains it. `clip` rather than `hidden`
+        because `hidden` on one axis forces the other to `auto`, which would
+        turn the section into a scroll container and break `position: sticky`
+        for anything inside it. Scoped to the section that has the effect — the
+        rest of the page is untouched.
+      */}
+      <section className="section overflow-x-clip bg-brand-cream dark:bg-[var(--brand-noir)]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -152,7 +169,7 @@ export default function AboutPage() {
                 What replaces it is something the project can actually stand
                 behind: the trading hours, from lib/data.ts.
               */}
-              <div className="absolute -bottom-6 -start-6 glass-card p-5 rounded-2xl shadow-brand">
+              <div className="absolute -bottom-6 start-0 sm:-start-6 glass-card p-5 rounded-2xl shadow-brand">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #C43E57, #FD657D)' }}>
                     <Clock className="w-6 h-6 text-white" aria-hidden />
@@ -217,7 +234,8 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="section bg-brand-cream dark:bg-[var(--brand-noir)]">
+      {/* Journey — same containment: the milestones arrive from `x: ±30`. */}
+      <section className="section overflow-x-clip bg-brand-cream dark:bg-[var(--brand-noir)]">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

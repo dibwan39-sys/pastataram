@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import { menuItems } from '@/lib/data'
-import { BUILD_BASE_PRICE } from '@/lib/buildYourPasta'
+import { BUILD_BASE_PRICE, BUILD_PRICING_APPROVED } from '@/lib/buildYourPasta'
 import { useUIStore } from '@/lib/store'
 
 /**
@@ -56,9 +56,20 @@ export default function BuildTeaser() {
             </p>
 
             <p className="mt-6 text-sm text-brand-cream-soft">
-              {isAr ? 'تبدأ من' : 'Starts at'}{' '}
-              <span className="text-lg font-black text-brand-rose tabular-nums">{BUILD_BASE_PRICE}</span>{' '}
-              <span className="font-bold text-brand-champagne">{isAr ? 'ر.س' : 'SAR'}</span>
+              {/* Quoting a starting price the menu does not carry is the same
+                  promise as taking the order at it, so it waits for the same
+                  approval. */}
+              {BUILD_PRICING_APPROVED ? (
+                <>
+                  {isAr ? 'تبدأ من' : 'Starts at'}{' '}
+                  <span className="text-lg font-black text-brand-rose tabular-nums">{BUILD_BASE_PRICE}</span>{' '}
+                  <span className="font-bold text-brand-champagne">{isAr ? 'ر.س' : 'SAR'}</span>
+                </>
+              ) : (
+                <span className="text-brand-cream-dim">
+                  {isAr ? 'الأسعار قيد الاعتماد — التصميم متاح للاستعراض' : 'Pricing pending approval — the builder is open to explore'}
+                </span>
+              )}
             </p>
 
             <Link href="/build-your-pasta" className="btn-primary mt-7 inline-flex items-center gap-2 py-3.5 text-sm">

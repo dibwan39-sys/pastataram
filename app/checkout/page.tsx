@@ -178,9 +178,11 @@ export default function CheckoutPage() {
               >
                 <Check className="w-10 h-10 text-white" />
               </motion.div>
-              <h2 className="text-2xl font-black text-brand-espresso dark:text-brand-ivory mb-2">
+              {/* The confirmation screen is its own page to a reader; it needs
+                  the top-level heading, not a second-level one under nothing. */}
+              <h1 className="text-2xl font-black text-brand-espresso dark:text-brand-ivory mb-2">
                 {isAr ? 'تم إرسال الفاتورة! 🎉' : 'Invoice Sent! 🎉'}
-              </h2>
+              </h1>
               <p className="text-brand-brown dark:text-brand-mocha mb-2">
                 {isAr ? 'رقم طلبك:' : 'Order Number:'}
               </p>
@@ -215,9 +217,9 @@ export default function CheckoutPage() {
         <section className="min-h-[80vh] flex items-center justify-center py-20">
           <div className="text-center">
             <ShoppingBag className="w-16 h-16 text-brand-latte mx-auto mb-4" />
-            <h2 className="text-2xl font-black text-brand-espresso dark:text-brand-ivory mb-4">
+            <h1 className="text-2xl font-black text-brand-espresso dark:text-brand-ivory mb-4">
               {isAr ? 'السلة فارغة' : 'Cart is Empty'}
-            </h2>
+            </h1>
             <Link href="/menu" className="btn-primary px-8 py-3">
               {isAr ? 'استكشف المنيو' : 'Browse Menu'}
             </Link>

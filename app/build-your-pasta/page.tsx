@@ -13,6 +13,7 @@ import {
   buildCustomPasta,
   buildSummary,
   buildUnitPrice,
+  BUILD_PRICING_APPROVED,
   cheeses,
   pastaTypes,
   proteins,
@@ -67,6 +68,11 @@ export default function BuildYourPastaPage() {
   }
 
   const handleAddToCart = () => {
+    // Guarded rather than merely hidden: a disabled button is a suggestion, and
+    // this path must not be reachable by any route — keyboard, a stale render,
+    // or a future caller — while the prices are unconfirmed.
+    if (!BUILD_PRICING_APPROVED) return
+
     // The item carries isCustom and a deterministic id, so the cart keeps it
     // across a version bump and merges two identical builds onto one line.
     const customItem = buildCustomPasta(selection, isAr)
@@ -268,10 +274,13 @@ export default function BuildYourPastaPage() {
                 ) : (
                   <button
                     onClick={handleAddToCart}
+                    disabled={!BUILD_PRICING_APPROVED}
                     className="btn-primary px-6 py-2.5 text-sm flex items-center gap-2"
                   >
-                    <ShoppingCart className="w-4 h-4" />
-                    {isAr ? 'أضف للسلة' : 'Add to Cart'}
+                    <ShoppingCart className="w-4 h-4" aria-hidden />
+                    {BUILD_PRICING_APPROVED
+                      ? isAr ? 'أضف للسلة' : 'Add to Cart'
+                      : isAr ? 'الطلب غير متاح بعد' : 'Ordering not available yet'}
                   </button>
                 )}
               </div>
@@ -357,17 +366,33 @@ export default function BuildYourPastaPage() {
                       {isAr ? 'الإجمالي' : 'Total'}
                     </span>
                     <span className="text-2xl font-black gradient-text">
-                      {formatPrice(totalPrice, language)}
+                      {BUILD_PRICING_APPROVED
+                        ? formatPrice(totalPrice, language)
+                        : isAr ? 'السعر قيد الاعتماد' : 'Price pending approval'}
                     </span>
                   </div>
 
+                  {/* The summary panel has its own order button. It is guarded
+                      the same way as the one in the wizard footer — the handler
+                      already refuses, but a button that looks live and silently
+                      does nothing is a worse answer than one that says why. */}
                   <button
                     onClick={handleAddToCart}
+                    disabled={!BUILD_PRICING_APPROVED}
                     className="btn-primary w-full flex items-center justify-center gap-2"
                   >
-                    <ShoppingCart className="w-4 h-4" />
-                    {isAr ? 'أضف للسلة' : 'Add to Cart'}
+                    <ShoppingCart className="w-4 h-4" aria-hidden />
+                    {BUILD_PRICING_APPROVED
+                      ? isAr ? 'أضف للسلة' : 'Add to Cart'
+                      : isAr ? 'الطلب غير متاح بعد' : 'Ordering not available yet'}
                   </button>
+                  {!BUILD_PRICING_APPROVED && (
+                    <p className="mt-3 text-[12px] leading-6 text-brand-muted">
+                      {isAr
+                        ? 'أسعار التصميم الخاص لم تُعتمد بعد، فلا يمكن إتمام الطلب بها. يمكنك تصفّح المنيو المعتمد والطلب منه.'
+                        : 'Custom-build pricing is not approved yet, so an order cannot be placed on it. The approved menu is available to order from.'}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

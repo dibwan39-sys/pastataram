@@ -56,6 +56,25 @@ export const toppings: BuildOption[] = [
   { id: 'chili', nameAr: 'فلفل حار', nameEn: 'Chili Flakes', emoji: '🌶️', price: 1 },
 ]
 
+/**
+ * ⚠️  Ordering is OFF until these prices are approved.
+ *
+ * The base price and every surcharge below exist only in this file. They
+ * appear nowhere in the official menu artwork (public/images/menu-final-v2.webp),
+ * which is the source of truth for what PASTATARAM charges, and no other
+ * approved record backs them. Numbers in a repository are not a price list.
+ *
+ * So the builder stays visible — a customer can compose a pasta and see what
+ * it would contain — but it cannot create a cart line, because doing so would
+ * quote a customer a figure the restaurant never agreed to and carry it into a
+ * WhatsApp order as if it had.
+ *
+ * To turn ordering on: confirm the base and every surcharge with the
+ * restaurant, reconcile them with the menu, then flip this to `true`. It is
+ * the only switch — the page, the teaser and the cart all read it.
+ */
+export const BUILD_PRICING_APPROVED = false
+
 export const BUILD_BASE_PRICE = 22
 /** A composed pasta never costs less than this, whatever is omitted. */
 export const BUILD_MIN_PRICE = 15

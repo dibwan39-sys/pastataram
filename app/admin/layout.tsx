@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -8,8 +8,6 @@ import {
   LayoutDashboard, ShoppingBag, UtensilsCrossed, Users, Star, Tag,
   Image, Settings, LogOut, Menu, X, Bell, FileText, BarChart2
 } from 'lucide-react'
-import { useAuthStore } from '@/lib/store'
-import toast from 'react-hot-toast'
 import Logo from '@/components/ui/Logo'
 
 const navItems = [
@@ -28,36 +26,18 @@ const navItems = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
-  const { isAdminLoggedIn, adminUser, adminLogout, adminLogin } = useAuthStore()
+  // No auth state is read here on purpose. Access is decided in middleware.ts,
+  // before this layout renders, so a client-side flag could only ever weaken
+  // the boundary or lie about it.
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
 
   /**
-   * ⚠️  THIS IS NOT AUTHENTICATION.
-   *
-   * It is a client-side gate: it stops someone who simply types /admin from
-   * landing inside the dashboard, and nothing more. Anyone willing to edit
-   * localStorage or read the bundle gets straight past it, so it must never be
-   * described as securing anything.
-   *
-   * What it replaces was worse. This effect used to run
-   *   adminLogin({ role: 'super_admin' })
-   * unconditionally on mount, so every visitor arrived already signed in as a
-   * super admin — and the site footer linked here from every public page.
-   *
-   * Real protection needs a server: a session the browser cannot forge, and
-   * authorisation enforced on the API that reads and writes restaurant data.
-   * No such API exists in this project yet. Until it does, treat the admin
-   * screens as an internal preview, not as a control panel for live data.
+   * Basic authentication has no logout: the browser holds the credentials
+   * until it is closed, and nothing the page does can make it forget them.
+   * So this leaves the panel rather than claiming to sign anyone out.
    */
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    // Nothing to do — access is decided by the gate rendered below.
-  }, [])
-
-  const handleLogout = () => {
-    adminLogout()
-    toast.success('Logged out successfully')
+  const handleLeave = () => {
     router.push('/')
   }
 
@@ -71,43 +51,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     exact ? pathname === href : pathname.startsWith(href)
 
   // The gate. See the note above: a deterrent, not a security boundary.
-  if (!isAdminLoggedIn) {
-    return (
-      <div className="flex min-h-screen items-center justify-center px-6" style={{ background: 'var(--brand-noir)' }}>
-        <div
-          className="w-full max-w-sm rounded-[1.75rem] p-8 text-center"
-          style={{ background: 'linear-gradient(150deg, var(--brand-surface), var(--brand-noir-2))', border: '1px solid rgba(231,198,164,0.18)' }}
-        >
-          <Logo size="md" href="/" className="mx-auto mb-5 justify-center" />
-          <h1 className="font-display text-xl font-bold text-brand-cream">لوحة إدارة باستاتا رام</h1>
-          <p className="mx-auto mt-3 text-sm leading-7 text-brand-cream-dim">
-            هذه المنطقة مخصّصة لفريق العمل.
-          </p>
-
-          <button
-            type="button"
-            onClick={() =>
-              adminLogin({ id: '1', name: 'Super Admin', email: 'admin@pastataram.com', role: 'super_admin' })
-            }
-            className="btn-primary mt-7 w-full py-3 text-sm"
-          >
-            الدخول إلى اللوحة
-          </button>
-
-          {/* Stated plainly so nobody mistakes this screen for protection. */}
-          <p className="mt-5 text-[11px] leading-6 text-brand-muted">
-            تنبيه: لا توجد مصادقة حقيقية بعد — هذه الشاشة لا تحمي البيانات.
-            تتطلب الحماية الفعلية ربط اللوحة بخادم يتحقق من الهوية.
-          </p>
-
-          <Link href="/" className="mt-5 inline-block text-xs font-semibold text-brand-rose hover:underline">
-            ← العودة إلى الموقع
-          </Link>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen flex bg-[var(--brand-noir-2)] dark:bg-[var(--brand-noir)]">
       {/* Sidebar */}
@@ -168,15 +111,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <div className="p-4 border-t border-white/10">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-rose-gold to-brand-champagne flex items-center justify-center text-white font-bold text-sm">
-                    {adminUser?.name.charAt(0) || 'A'}
+                    P
                   </div>
+                  {/*
+                    No name and no role, because the server cannot tell who this
+                    is. Basic auth proves possession of one shared secret, not
+                    identity, and printing "Super Admin" would claim otherwise.
+                  */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">{adminUser?.name}</p>
-                    <p className="text-xs text-white/40 capitalize">{adminUser?.role.replace('_', ' ')}</p>
+                    <p className="text-sm font-semibold text-white truncate">فريق باستاتا رام</p>
+                    <p className="text-xs text-white/40">دخول مُصرّح</p>
                   </div>
                 </div>
                 <button
-                  onClick={handleLogout}
+                  onClick={handleLeave}
                   className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-red-400 hover:bg-red-400/10 transition-colors text-sm"
                 >
                   <LogOut className="w-4 h-4" />
