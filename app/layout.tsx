@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   applicationName: SITE_NAME,
   description:
-    'باستاتا رام — تجربة باستا إيطالية فاخرة في جدة. فرعا القرنية والسنابل، يومياً من ٣:٠٠ مساءً حتى ٣:٠٠ فجراً. تصفّح المنيو واطلب عبر واتساب.',
+    'باستاتا رام — تجربة باستا إيطالية فاخرة في جدة. فرعا القرنية والسنابل، مفتوح ٢٤ ساعة. تصفّح المنيو واطلب عبر واتساب.',
   keywords: [
     'PASTATARAM', 'باستاتا رام', 'باستا جدة', 'مطعم باستا', 'باستا إيطالية',
     'pasta Jeddah', 'Italian pasta', 'القرنية', 'السنابل',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   icons: {
-    // A dedicated small icon — logo.png is a 2.29 MB master and far too heavy
+    // A dedicated small icon. The full-size logo master is far too heavy
     // to serve as a favicon on every request.
     icon: '/images/logo-icon.png',
     apple: '/images/logo-icon.png',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'PASTATARAM — باستاتا رام',
     siteName: SITE_NAME,
-    description: 'تجربة باستا إيطالية فاخرة في جدة · فرعا القرنية والسنابل · يومياً ٣ مساءً – ٣ فجراً',
+    description: 'تجربة باستا إيطالية فاخرة في جدة · فرعا القرنية والسنابل · مفتوح ٢٤ ساعة',
     type: 'website',
     locale: 'ar_SA',
     alternateLocale: 'en_US',

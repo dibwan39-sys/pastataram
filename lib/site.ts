@@ -67,8 +67,9 @@ export function restaurantJsonLd() {
       ? [{
           '@type': 'OpeningHoursSpecification',
           dayOfWeek: businessHours.filter((h) => !h.closed).map((h) => h.day),
-          opens: '15:00',
-          closes: '03:00',
+          // 00:00 → 23:59 is how schema.org expresses a full day.
+          opens: '00:00',
+          closes: '23:59',
         }]
       : [],
     address: branches.map((b) => ({

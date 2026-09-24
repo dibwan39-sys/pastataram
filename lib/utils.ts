@@ -65,20 +65,25 @@ export function t(key: string, lang: Language, translations: Record<string, { ar
 }
 
 /**
- * PASTATARAM trading hours: open daily 3:00 PM → 3:00 AM (next day).
- * Computed against real Jeddah local time (Asia/Riyadh, UTC+3) so the
- * status is correct regardless of the visitor's device timezone.
+ * PASTATARAM trading hours: open 24 hours, every day.
+ *
+ * The Asia/Riyadh clock below is kept rather than deleted. It costs nothing
+ * while the restaurant trades around the clock, and it is what the badge will
+ * need again the day the hours narrow — deleting it would mean rebuilding the
+ * timezone handling from scratch, which is the part that is easy to get wrong.
  */
 export interface OpenStatus {
   open: boolean
   /** Short bilingual label, e.g. "Open Now" / "مفتوح الآن". */
   label: string
-  /** Secondary line, e.g. "Closes 3:00 AM" / "يفتح ٣:٠٠ مساءً". */
+  /** Secondary line, e.g. "Open around the clock" / "مفتوح على مدار الساعة". */
   detail: string
 }
 
-const OPEN_HOUR = 15 // 3 PM
-const CLOSE_HOUR = 3 // 3 AM (next day)
+/** Flip to false and set the two hours below if the hours ever narrow again. */
+const OPEN_24_HOURS = true
+const OPEN_HOUR = 15 // 3 PM  — unused while OPEN_24_HOURS is true
+const CLOSE_HOUR = 3 // 3 AM  — unused while OPEN_24_HOURS is true
 
 /** Current hour+minute in Asia/Riyadh as decimal hours (e.g. 15.5 = 3:30 PM). */
 function riyadhDecimalHours(now: Date = new Date()): number {
@@ -90,19 +95,19 @@ function riyadhDecimalHours(now: Date = new Date()): number {
 
 export function getOpenStatus(lang: Language = 'ar', now: Date = new Date()): OpenStatus {
   const h = riyadhDecimalHours(now)
-  // Open if 15:00 ≤ h < 24:00 OR 0:00 ≤ h < 3:00
-  const open = h >= OPEN_HOUR || h < CLOSE_HOUR
+  // Open if 15:00 ≤ h < 24:00 OR 0:00 ≤ h < 3:00 — bypassed while trading 24h.
+  const open = OPEN_24_HOURS || h >= OPEN_HOUR || h < CLOSE_HOUR
 
   if (lang === 'ar') {
     return {
       open,
       label: open ? 'مفتوح الآن' : 'مغلق الآن',
-      detail: open ? 'يغلق ٣:٠٠ فجراً' : 'يفتح ٣:٠٠ مساءً',
+      detail: OPEN_24_HOURS ? 'مفتوح على مدار الساعة' : open ? 'يغلق ٣:٠٠ فجراً' : 'يفتح ٣:٠٠ مساءً',
     }
   }
   return {
     open,
     label: open ? 'Open Now' : 'Closed',
-    detail: open ? 'Closes 3:00 AM' : 'Opens 3:00 PM',
+    detail: OPEN_24_HOURS ? 'Open around the clock' : open ? 'Closes 3:00 AM' : 'Opens 3:00 PM',
   }
 }

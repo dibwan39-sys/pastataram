@@ -380,20 +380,22 @@ export const galleryImages: GalleryImage[] = [
   { id: '10', url: '/images/f5.webp', alt: 'Mineral Water', altAr: 'مياه معدنية', category: 'drinks', featured: false, width: 1448, height: 1086 },
 ]
 
-// Working hours — daily 3:00 PM to 3:00 AM
+// Working hours — open 24 hours, every day.
+// Changed on the owner's instruction. Every surface that states the hours
+// reads from here or from lib/utils.ts, so the two must move together.
 export const workingHours = {
-  ar: 'يومياً · ٣:٠٠ مساءً – ٣:٠٠ فجراً',
-  en: 'Daily · 3:00 PM – 3:00 AM',
+  ar: 'يومياً · مفتوح ٢٤ ساعة',
+  en: 'Daily · Open 24 hours',
 }
 
 export const businessHours: BusinessHours[] = [
-  { day: 'Sunday', dayAr: 'الأحد', open: '3:00 PM', close: '3:00 AM', closed: false },
-  { day: 'Monday', dayAr: 'الاثنين', open: '3:00 PM', close: '3:00 AM', closed: false },
-  { day: 'Tuesday', dayAr: 'الثلاثاء', open: '3:00 PM', close: '3:00 AM', closed: false },
-  { day: 'Wednesday', dayAr: 'الأربعاء', open: '3:00 PM', close: '3:00 AM', closed: false },
-  { day: 'Thursday', dayAr: 'الخميس', open: '3:00 PM', close: '3:00 AM', closed: false },
-  { day: 'Friday', dayAr: 'الجمعة', open: '3:00 PM', close: '3:00 AM', closed: false },
-  { day: 'Saturday', dayAr: 'السبت', open: '3:00 PM', close: '3:00 AM', closed: false },
+  { day: 'Sunday', dayAr: 'الأحد', open: '12:00 AM', close: '11:59 PM', closed: false },
+  { day: 'Monday', dayAr: 'الاثنين', open: '12:00 AM', close: '11:59 PM', closed: false },
+  { day: 'Tuesday', dayAr: 'الثلاثاء', open: '12:00 AM', close: '11:59 PM', closed: false },
+  { day: 'Wednesday', dayAr: 'الأربعاء', open: '12:00 AM', close: '11:59 PM', closed: false },
+  { day: 'Thursday', dayAr: 'الخميس', open: '12:00 AM', close: '11:59 PM', closed: false },
+  { day: 'Friday', dayAr: 'الجمعة', open: '12:00 AM', close: '11:59 PM', closed: false },
+  { day: 'Saturday', dayAr: 'السبت', open: '12:00 AM', close: '11:59 PM', closed: false },
 ]
 
 /**

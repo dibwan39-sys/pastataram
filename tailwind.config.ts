@@ -6,7 +6,7 @@ import type { Config } from 'tailwindcss'
  * ════════════════════════════════════════════════════════════════
  *
  *  Single source of truth for brand colour. Every value below is
- *  sampled from the official logo (public/images/logo.png) rather
+ *  sampled from the official logo (public/images/logo.webp) rather
  *  than invented:
  *
  *    wordmark / heart ... #FD657D   hsl(351, 97%, 69%)
@@ -87,9 +87,7 @@ const config: Config = {
           mocha: '#D8C2BD',         // muted type            → cream-dim
           latte: '#A88E8E',         // placeholder type      → muted
           pearl: '#330C1E',         // page background       → noir
-          'cream-beige': '#631B39', // raised surface        → surface-2
           'rose-gold': '#FD657D',   // primary accent        → rose
-          wine: '#C43E57',          // deep accent           → rose-deep
           copper: '#E7C6A4',        // secondary accent      → champagne
         },
       },
